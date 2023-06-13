@@ -9,11 +9,15 @@ namespace Dominio
 
     public enum EstadoEnvio
     {
-        RECIBIDO = 1,
+       RECIBIDO = 1,
             
        PREPARACION = 2,
 
-       ENTREGADO = 3
+       ENCAMINO=3,
+
+       ENTREGADO = 4,
+
+       CANCELADO=5
     }
 
 
