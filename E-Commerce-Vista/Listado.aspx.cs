@@ -43,7 +43,21 @@ namespace E_Commerce_Vista
             }
         }
 
+        protected void btnDetalle_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Button btnDetalle = (Button)sender;
+                var id = btnDetalle.CommandArgument;
+                Response.Redirect("DetalleArticulo.aspx?id=" + id);
+            }
+            catch (Exception ex)
+            {
 
+                throw ex;
+            }
+        }
 
+        
     }
 }

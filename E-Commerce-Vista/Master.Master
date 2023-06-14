@@ -79,6 +79,9 @@
                         </div>
                     </div>
 
+
+                     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
                     <%-- ICONO CARRITO --%>
                     <div class="cart-wrapper">
                         <a class="nav-link active" aria-current="page" href="#">
