@@ -4,6 +4,8 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using Dominio;
+using Negocio;
 
 namespace E_Commerce_Vista
 {
@@ -13,5 +15,9 @@ namespace E_Commerce_Vista
         {
 
         }
+
+
+
+
     }
 }

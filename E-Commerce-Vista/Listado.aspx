@@ -19,7 +19,7 @@
                                                 <h5 class="card-title"><%# Eval("Nombre") %> </h5>
                                                 <p class="card-text"><%# Eval("CodigoArticulo")%></p>
                                                 <p class="card-text">$<%# Eval("Precio")%></p>
-                                                <asp:Button Text="Ver Detalle" ID="btnDetalle" CssClass="btn btn-dark " runat="server"   />
+                                                <asp:Button Text="Ver Detalle" ID="btnDetalle" CssClass="btn btn-dark " runat="server" OnClick="btnDetalle_Click" CommandArgument='<%#Eval("Id")%>' />
                                                 <asp:Button Text="Agregar al carrito" ID="btnEjemplo" CssClass="btn btn-success btnAgregar btn-pg-1" runat="server"    />
                                             </div>
                                         </div>
