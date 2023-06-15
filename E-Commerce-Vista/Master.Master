@@ -17,42 +17,44 @@
 <body>
     <form id="form1" runat="server">
         <%-- NavBar --%>
-        <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-body-tertiary">
-            <div class="container-fluid">
-                <%--<a class="navbar-brand" href="#">Navbar</a>--%>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="Default.aspx">Home</a>
-                        </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="Listado.aspx">Productos</a>
-                        </li>
+        <asp:ContentPlaceHolder ID="NavContent" runat="server">
+            <nav class="navbar navbar-expand-lg fixed-top navbar-light bg-body-tertiary">
+                <div class="container-fluid">
+                    <%--<a class="navbar-brand" href="#">Navbar</a>--%>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="Default.aspx">Home</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="Listado.aspx">Filtros</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="Listado.aspx">Productos</a>
+                            </li>
 
-                        <%-- CLIENTE --%>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="MisPedidos.aspx">Mis pedidos</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="Listado.aspx">Filtros</a>
+                            </li>
 
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="MisFavoritos.aspx">Mis favoritos</a>
-                        </li>
+                            <%-- CLIENTE --%>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="MisPedidos.aspx">Mis pedidos</a>
+                            </li>
 
-                        <%-- ADMIN --%>
-                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="PanelGestion.aspx">Administrar</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="MisFavoritos.aspx">Mis favoritos</a>
+                            </li>
+
+                            <%-- ADMIN --%>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="PanelGestion.aspx">Administrar</a>
+                            </li>
 
 
-                        <%--<li class="nav-item dropdown">
+                            <%--<li class="nav-item dropdown">
                          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                            Dropdown
                          </a>
@@ -63,41 +65,66 @@
                            <li><a class="dropdown-item" href="#">Something else here</a></li>
                          </ul>
                        </li>--%>
+                        </ul>
 
-                    </ul>
 
+                        <%-- BUSCADOR --%>
+                        <div class="buscar">
+                            <div class="d-flex">
+                                <asp:TextBox runat="server" ID="txtBuscador" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                                </asp:TextBox>
 
-                    <%-- BUSCADOR --%>
-                    <div class="buscar">
-                        <div class="d-flex">
-                            <asp:TextBox runat="server" ID="txtBuscador" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
-                            </asp:TextBox>
-
-                            <asp:LinkButton Text="Buscar" runat="server" ID="btnBuscar" CssClass="btn btn-outline-dark">
+                                <asp:LinkButton Text="Buscar" runat="server" ID="btnBuscar" CssClass="btn btn-outline-dark">
                                     <i class="fas fa-search"></i>
-                            </asp:LinkButton>
+                                </asp:LinkButton>
+                            </div>
                         </div>
+
+
+                        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+                        <asp:UpdatePanel ID="panelContador" runat="server" UpdateMode="Conditional">
+                            <ContentTemplate>
+                                <%-- ICONO CARRITO --%>
+                                <div class="cart-wrapper">
+                                    <a class="nav-link active" aria-current="page" href="#" onclick="desplazarCarrito(event)">
+                                        <i id="iconoCarrito" class="fas fa-shopping-cart"></i>
+                                        <span id="txtCarrito">Carrito </span>
+                                        <asp:Label ID="lblTotalCantCarrito" runat="server"></asp:Label>
+                                    </a>
+                                </div>
+
+                            </ContentTemplate>
+                        </asp:UpdatePanel>
+
+                        <%-- Mini barra carrito --%>
+                        <div id="miniCartContainer" class="mini-cart-container ">
+                            <iframe id="miniCarritoFrame" frameborder="0" scrolling="no" style="width: 33%; height: 100%;"></iframe>
+                        </div>
+
+
+
+
+
+
                     </div>
-
-
-                     <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
-
-                    <%-- ICONO CARRITO --%>
-                    <div class="cart-wrapper">
-                        <a class="nav-link active" aria-current="page" href="#">
-                            <i id="iconoCarrito" class="fas fa-shopping-cart"></i>
-                            <span id="txtCarrito"> Carrito </span>
-                            <asp:Label ID="lblTotalCantCarrito" runat="server"></asp:Label>
-                        </a>
-                    </div>
-
-
                 </div>
-            </div>
-        </nav>
+            </nav>
+        </asp:ContentPlaceHolder>
 
 
-         <div class="container">
+
+
+
+        <%-- Mensaje Art. agregado --%>
+        <div id="mensajeCarritoo">
+        </div>
+
+        <br />
+        <br />
+        <br />
+
+
+        <div class="container">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
@@ -108,3 +135,216 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
 </body>
 </html>
+
+
+<style>
+    .navbar {
+        background-color: black;
+    }
+
+    .cart-wrapper {
+        display: flex;
+        align-items: center;
+        margin-left: 30px;
+        margin-right: 10px;
+    }
+
+    .cart-details {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        /*background-color: white;*/
+        background-color: black;
+        color: white;
+        padding: 10px;
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    }
+    /*Acomodamos la parte del carrito*/
+    .nav-link {
+        display: flex;
+    }
+
+    #iconoCarrito {
+        margin-right: 10px;
+    }
+
+    /*Vaciamos la carta de detalle*/
+    .cart-details {
+        display: none;
+    }
+
+        .cart-details.show {
+            display: block;
+        }
+
+    #contCarrito {
+        margin-left: 5px;
+    }
+
+
+    .mini-cart-container {
+        width: 1600px;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        right: 0;
+        transition: transform 0.3s ease-out;
+        transform: translateX(100%);
+        z-index: 9999;
+        margin-left: auto;
+    }
+
+        .mini-cart-container.active {
+            transform: translateX(75%);
+        }
+
+    /* Mensaje carrito */
+    #mensajeCarritoo {
+        color: white;
+        background-color: green;
+        position: fixed;
+        top: 6vh;
+        right: 0.5vh;
+        display: none;
+        padding: 10px;
+        z-index: 1;
+    }
+
+    @media (max-width: 549px) {
+        .cart-wrapper {
+            margin-left: 0.2vh;
+            margin-top: 0vh;
+        }
+
+        #mensajeCarritoo {
+            margin-top: 9.2vh;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .barraBuscar {
+            width: 80%;
+        }
+    }
+
+
+
+    @media (min-width:550px) and (max-width:587px) {
+        #mensajeCarritoo {
+            margin-top: 9vh;
+        }
+    }
+
+    @media (min-width:588px) and (max-width:901px) {
+        #mensajeCarritoo {
+            margin-top: 6vh;
+        }
+    }
+
+    @media (min-width:902px) and (max-width:991px) {
+        #mensajeCarritoo {
+            margin-top: 5vh;
+        }
+    }
+
+    @media (min-width:992px) {
+        #mensajeCarritoo {
+            margin-top: 0.5vh;
+        }
+
+        .cart-wrapper {
+            margin-left: 1vh;
+        }
+    }
+</style>
+
+
+<%--JavaScript--%>
+
+
+<script>
+
+
+
+
+    <%-- Hacemos click en carrito y aparece el detalle de lo agregado! --%>
+    function desplazarCarrito(event) {
+        event.preventDefault(); // Evita la acción predeterminada del evento
+
+
+
+        var miniCartContainer = document.getElementById('miniCartContainer');
+
+        if (miniCartContainer.classList.contains('active')) {
+            miniCartContainer.style.transform = 'translateX(100%)';
+            setTimeout(function () {
+                miniCartContainer.style.display = 'none';
+            }, 300);
+        } else {
+            miniCartContainer.style.display = 'block';
+            miniCartContainer.style.transform = 'translateX(20)';
+
+        }
+
+        miniCartContainer.classList.toggle('active');
+
+        var miniCarritoFrame = document.getElementById('miniCarritoFrame');
+        miniCarritoFrame.src = 'miniCarrito.aspx';
+
+    }
+
+    /* Para que no tener que recargar la pagina para volver a poder abrir y cerrar el carrito */
+    window.addEventListener('message', function (event) {
+        if (event.data === 'cerrarMiniCartContainer') {
+            var miniCartContainer = document.getElementById('miniCartContainer');
+            miniCartContainer.style.display = 'none';
+            miniCartContainer.classList.remove('active');
+
+        }
+    });
+
+
+
+
+
+
+
+
+</script>
+
+
+
+<%-- Agregar articulos al carrito --%>
+<script>
+    var contCesta = 0;
+
+    function sumarAlCarrito() {
+        contCesta++;
+        var contElementosCesta = document.getElementById("contCarrito");
+        contElementosCesta.textContent = "(" + contCesta + ")";
+
+        /* Agregamos mensajito */
+        var mensaje = document.getElementById("mensajeCarritoo");
+        mensaje.textContent = "Artículo agregado";
+
+        mensaje.style.display = "block";
+
+
+        setTimeout(function () {
+            mensaje.style.display = "none";
+
+        }, 4000);
+
+
+    }
+
+    // Agregar un evento al enlace "Agregar al carrito". Luego sumarAlCarrito suma 1 al contador
+    var btnAgregarCesta = document.querySelectorAll(".btn.btn-success");
+    btnAgregarCesta.forEach(function (button) {
+        button.addEventListener("click", sumarAlCarrito);
+    });
+
+
+
+
+</script>

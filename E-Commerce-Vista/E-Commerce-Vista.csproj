@@ -52,9 +52,9 @@
     <Content Include="GestionCategorias.aspx" />
     <Content Include="GestionMarcas.aspx" />
     <Content Include="GestionPedidos.aspx" />
+    <Content Include="ListadoCarrito.aspx" />
     <Content Include="MisFavoritos.aspx" />
     <Content Include="PanelGestion.aspx" />
-    <Content Include="Carrito.aspx" />
     <Content Include="DetalleArticulo.aspx" />
     <Content Include="FinalizarCompra.aspx" />
     <Content Include="Listado.aspx" />
@@ -129,6 +129,13 @@
     <Compile Include="GestionPedidos.aspx.designer.cs">
       <DependentUpon>GestionPedidos.aspx</DependentUpon>
     </Compile>
+    <Compile Include="ListadoCarrito.aspx.cs">
+      <DependentUpon>ListadoCarrito.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ListadoCarrito.aspx.designer.cs">
+      <DependentUpon>ListadoCarrito.aspx</DependentUpon>
+    </Compile>
     <Compile Include="MisFavoritos.aspx.cs">
       <DependentUpon>MisFavoritos.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -142,13 +149,6 @@
     </Compile>
     <Compile Include="PanelGestion.aspx.designer.cs">
       <DependentUpon>PanelGestion.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Carrito.aspx.cs">
-      <DependentUpon>Carrito.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Carrito.aspx.designer.cs">
-      <DependentUpon>Carrito.aspx</DependentUpon>
     </Compile>
     <Compile Include="DetalleArticulo.aspx.cs">
       <DependentUpon>DetalleArticulo.aspx</DependentUpon>
@@ -230,12 +230,22 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data.Linq" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.EnterpriseServices" />
     <Reference Include="System.Web" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
