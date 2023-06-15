@@ -21,8 +21,8 @@ namespace Negocio
         //CONEXION A BD
         public AccesoDatos()
         {
-            conexion = new SqlConnection("server=.\\SQLLaboratorio; database=P3_ECOMMERCE_DB; integrated security=true;");
-            //conexion = new SqlConnection("server=.\\SQLEXPRESS; database=P3_ECOMMERCE_DB; integrated security=true;");
+            //conexion = new SqlConnection("server=.\\SQLLaboratorio; database=P3_ECOMMERCE_DB; integrated security=true;");
+            conexion = new SqlConnection("server=.\\SQLEXPRESS; database=P3_ECOMMERCE_DB; integrated security=true;");
             comando = new SqlCommand();
 
         }
@@ -32,6 +32,15 @@ namespace Negocio
         {
             comando.CommandType = System.Data.CommandType.StoredProcedure;
             comando.CommandText = sp;
+        }
+
+
+        //SETEAR CONSULTA
+        public void setearConsulta(string consulta)
+        {
+
+            comando.CommandType = System.Data.CommandType.Text;
+            comando.CommandText = consulta;
         }
 
         //EJECUTAR CONSULTA

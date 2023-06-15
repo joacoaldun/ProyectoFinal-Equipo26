@@ -4,13 +4,14 @@ create DATABASE P3_ECOMMERCE_DB
 GO
 create table Marcas(
     Id int not null primary key identity (1,1),
-    Descripcion varchar(50)
+    Descripcion varchar(50) null,
+    ImagenUrl varchar(1000) not null
 
 );
 GO
 create table Categorias(
     Id int not null primary key identity (1,1),
-    Descripcion varchar(50)
+    Descripcion varchar(50) null
 
 );
 go
@@ -31,8 +32,25 @@ create table Imagenes(
 )
 
 go
-insert into MARCAS values ('Sony'), ('Microsoft'), ('Nintendo'), ('HP'), ('Razer'),('Noganet'),('Edifier'),('Cooler Master'),('Logitech'), ('Redragon')
-insert into CATEGORIAS values ('Consolas'),('Computadoras escritorio'), ('Notebook'), ('Accesorios'),('Videojuegos')
+insert into MARCAS values 
+('Sony','https://historia-biografia.com/wp-content/uploads/2019/10/sony.jpg'), 
+('Microsoft', 'https://img-prod-cms-rt-microsoft-com.akamaized.net/cms/api/am/imageFileData/RWCZER?ver=1433&q=90&m=6&h=195&w=348&b=%23FFFFFFFF&l=f&o=t&aim=true'), 
+('Nintendo','https://1000marcas.net/wp-content/uploads/2019/12/Nintendo-Logo-PNG-1.png'), 
+('HP','https://upload.wikimedia.org/wikipedia/commons/thumb/2/29/HP_New_Logo_2D.svg/2048px-HP_New_Logo_2D.svg.png'), 
+('Razer','https://hardwareviews.com/wp-content/uploads/2019/03/razer-logo.jpg'),
+('Noganet','https://d1yjjnpx0p53s8.cloudfront.net/styles/logo-thumbnail/s3/092019/noga.jpg?bhemwa3OZZKNvMmuKZeromyOdQMY1i2o&itok=C9fALjj4'),
+('Edifier','https://events.channelpronetwork.com/sites/default/files/Edifier_logo_2016.jpg'),
+('Cooler Master','https://cdn.worldvectorlogo.com/logos/cooler-master-logo.svg'),
+('Logitech','https://logodownload.org/wp-content/uploads/2018/03/logitech-logo.png'), 
+('Redragon','https://cdn.worldvectorlogo.com/logos/redragon.svg')
+
+insert into CATEGORIAS values 
+('Consolas'),
+('Computadoras escritorio'),
+('Notebook'),
+('Accesorios'),
+('Videojuegos')
+
 insert into ARTICULOS values 
 ('S01', 'Playstation 4', 'Con tu consola PlayStation 4 tendrás entretenimiento asegurado todos los días.', 1, 1, 200000),
 ('S02', 'Playstation 5', 'Con tu consola PlayStation 5 tendrás entretenimiento asegurado todos los días.', 1, 1, 300000),
@@ -45,6 +63,7 @@ insert into Imagenes values
 (1,'https://http2.mlstatic.com/D_NQ_NP_885600-MLA51045269675_082022-O.webp'),
 (2,'https://images.fravega.com/f300/af1a88e0d12772f769e6f824a3cb236e.jpg.webp'),
 (3,'https://http2.mlstatic.com/D_NQ_NP_880036-MLA53990748326_022023-O.webp'),
+(3,'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2023/01/resident-evil-4-2942734.jpg'),
 (4,'https://http2.mlstatic.com/D_NQ_NP_935185-MLA46504064329_062021-O.webp')
 
 
@@ -74,3 +93,6 @@ select  count (distinct c.Id) from Categorias C
 inner join Articulos A on A.IdCategoria=C.Id
 inner join Marcas M on M.Id=A.IdMarca
 where M.Id=1
+
+
+select id, descripcion, ImagenUrl from marcas

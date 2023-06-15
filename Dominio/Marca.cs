@@ -12,6 +12,8 @@ namespace Dominio
 
         public string NombreMarca { get; set; }
 
+        public string ImagenMarca { get; set; }
+
         public override string ToString()
         {
             return NombreMarca;
