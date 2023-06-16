@@ -73,6 +73,14 @@ namespace E_Commerce_Vista
 
         }
 
+        // Funcion para actualizar y llamar a la funcion despues del updatePanel para que vuelva a asignar los eventos 
+        protected void panel1_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
+            {
+                ScriptManager.RegisterStartupScript(this, GetType(), "AsignarEventos", "asignarEventos();", true);
+            }
+        }
 
     }
 }

@@ -6,6 +6,8 @@
   
 
     <%-- CARDS --%>
+     <asp:UpdatePanel ID="panel1" runat="server" OnLoad="panel1_Load">
+            <ContentTemplate>
      <div class="cards-container">
                     <div class="row row-cols-1 row-cols-md-3 g-4">
                         
@@ -28,12 +30,14 @@
                             </asp:Repeater>
                     </div>
                 </div>
+   </ContentTemplate>
 
+        </asp:UpdatePanel>
 
 
      <style>
        .cards-container{
-           margin-top:10vh;
+           margin-top:5vh;
            
        }
        .card-img-top{
@@ -43,5 +47,49 @@
        
 
    </style>
+
+
+    <%-- volvemos a asignar los eventos al click del carrito-master --%>
+    <script>
+
+
+        function mostrarMensaje() {
+            var mensajeCarrito = document.getElementById("mensajeCarritoo");
+            mensajeCarrito.innerText = "Artículo agregado al carrito";
+            mensajeCarrito.style.display = "block";
+
+            setTimeout(function () {
+                mensajeCarrito.style.display = "none";
+            }, 4000);
+        }
+
+        function toggleFiltros() {
+            var filtros = document.getElementById('filtros');
+            filtros.style.display = (filtros.style.display === 'none') ? 'block' : 'none';
+            return false;
+        }
+
+
+        function asignarEventos() {
+            var btnAgregarCesta = document.querySelectorAll(".btn.btn-success");
+            btnAgregarCesta.forEach(function (button) {
+                button.addEventListener("click", sumarAlCarrito);
+            });
+        }
+
+        Sys.WebForms.PageRequestManager.getInstance().add_endRequest(function () {
+            asignarEventos();
+        });
+
+
+        function redirectToListado() {
+            window.location.href = "ListadoCarrito.aspx";
+        }
+
+
+
+
+    </script>
+
 
 </asp:Content>

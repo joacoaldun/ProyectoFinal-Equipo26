@@ -31,9 +31,7 @@
                 <ContentTemplate>--%>
         <%--<asp:ScriptManager ID="script1" runat="server"></asp:ScriptManager>--%>
 
-        <asp:UpdatePanel ID="updatePanelCarrito" runat="server" UpdateMode="Conditional">
-
-            <ContentTemplate>
+        
                 <div class="containerArticulos">
                     <asp:Repeater ID="repCarrito" runat="server" OnItemDataBound="repCarrito_ItemDataBound">
                         <ItemTemplate>
@@ -71,7 +69,7 @@
 
                     <h4>Total: $<asp:Label ID="lblPrecioTotal" runat="server" Text=""></asp:Label></h4>
 
-                    <asp:Button Text="Pagar" CssClass="btn btn-light" runat="server" OnClientClick="return redirectToPage('Carrito.aspx');" />
+                    <asp:Button Text="Pagar" CssClass="btn btn-light" runat="server" OnClientClick="return redirectToPage('ListadoCarrito.aspx');" />
                 </div>
             </ContentTemplate>
 

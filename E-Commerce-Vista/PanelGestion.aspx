@@ -29,9 +29,9 @@
 
     <%-- HTML --%>
     <style>
-        .containerPrincipal{
+        /*.containerPrincipal{
             margin-top:10vh;
-        }
+        }*/
     </style>
 
 </asp:Content>
