@@ -122,22 +122,22 @@ namespace E_Commerce_Vista
 
         }
 
-        //protected void Page_PreRender(object sender, EventArgs e)
-        //{
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
 
 
-        //    Carrito carrito = (Carrito)Session["Carrito"];
+            Carrito carrito = (Carrito)Session["Carrito"];
 
-        //    if (carrito == null)
-        //    {
-        //        Response.Redirect("Default.aspx");
-        //    }
+            if (carrito == null)
+            {
+                Response.Redirect("Default.aspx");
+            }
 
-        //    repCarrito.DataSource = carrito.ListaArticulo;
-        //    repCarrito.DataBind();
-        //    lblPrecioTotal.Text = carrito.PrecioTotal.ToString();
+            repCarrito.DataSource = carrito.ListaArticulo;
+            repCarrito.DataBind();
+            lblPrecioTotal.Text = carrito.PrecioTotal.ToString();
 
-        //}
+        }
 
 
     }

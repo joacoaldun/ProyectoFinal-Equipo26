@@ -58,6 +58,21 @@ namespace E_Commerce_Vista
             }
         }
 
-        
+        //AGREGAMOS ARTICULOS A LA LISTA DE ARTICULOS DE LA CLASE CARRITO
+        protected void btnAgregarCarrito_Click(object sender, EventArgs e)
+        {
+
+            int id = Convert.ToInt32(((Button)sender).CommandArgument);
+            Carrito carrito = (Carrito)Session["Carrito"];
+            Articulo articulo = new Articulo();
+            ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+            articulo = ListaArticulo.Find(a => a.Id == id);
+            carrito.AgregarArticulo(articulo);
+            Session["Carrito"] = carrito;
+
+
+        }
+
+
     }
 }

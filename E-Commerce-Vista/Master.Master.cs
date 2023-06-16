@@ -37,7 +37,13 @@ namespace E_Commerce_Vista
             try
             {
 
-                if (Session["Carrito"] != null)
+                if (Session["Carrito"] == null)
+                {
+                    Carrito carrito = new Carrito();
+                    Session["Carrito"] = carrito;
+                }
+
+               else if (Session["Carrito"] != null)
                 {
                     Carrito carrito2 = (Carrito)Session["Carrito"];
                     int cantidadTotalArticulos = carrito2.ObtenerCantidadTotalArticulos();
