@@ -9,9 +9,7 @@ namespace Dominio
     public class Domicilio
     {
         public int CodigoPostal { get; set; }
-        public string Calle { get; set; }
-
-        public  int  Numero { get; set; }
+        public string Direccion { get; set; }
 
         public string Vivienda { get; set; }
 

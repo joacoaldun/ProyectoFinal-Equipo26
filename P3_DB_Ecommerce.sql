@@ -96,3 +96,67 @@ where M.Id=1
 
 
 select id, descripcion, ImagenUrl from marcas
+
+
+
+--------------------------------------------------
+--TIPO 1= ADMIN, TIPO 2=CLIENTE
+go
+create table Usuarios(
+    Id int not null primary key identity (1,1),
+    Nombre varchar (30) not null,
+    Apellido varchar(30) not null,
+    Username varchar(30) not null,
+    Pass varchar(20) not null,
+    TipoAcceso int not null check(TipoAcceso=1 or TipoAcceso=2),
+    Email varchar(30) not null,
+    EstadoActivo bit default 1
+)
+
+go
+CREATE TABLE Provincias(
+    IDProvincia int not null primary key identity (1, 1),
+    NombreProvincia varchar(50) not null
+)
+go
+CREATE TABLE Localidades(
+    IDLocalidad int not null primary key identity (1, 1),
+    NombreLocalidad varchar(150) not null,
+    IDProvincia int not null foreign key references Provincias(IDProvincia)
+)
+
+go
+create table Domicilio(
+    Id int not null primary key identity (1,1),
+    IdLocalidad int not null foreign key references Localidades(IdLocalidad),
+    CodigoPostal int not null, 
+    Direccion varchar(30) not null,
+    Vivienda varchar(20) not null,
+    NumeroDepartamento varchar(10) null
+)
+go
+create table Cliente(
+    Id int not null foreign key references Usuarios(Id),
+    Dni varchar(20) not null,
+    FechaNacimiento DATE not null,
+    IDDomicilio int not null foreign key references Domicilio (Id),
+    PRIMARY KEY (Id)
+)
+go
+CREATE TABLE ListaFavoritos (
+    IdCliente INT,
+    IdArticulo INT,
+    PRIMARY KEY (IdCliente, IdArticulo),
+    FOREIGN KEY (IdCliente) REFERENCES Cliente(Id),
+    FOREIGN KEY (IdArticulo) REFERENCES Articulos(Id)
+)
+GO
+create table Stock(
+    IdArticulo int foreign key references Articulos (Id),
+    Cantidad int not null,
+    Primary key (IdArticulo)
+)
+
+
+
+

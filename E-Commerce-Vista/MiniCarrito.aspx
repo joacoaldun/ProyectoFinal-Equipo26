@@ -27,9 +27,10 @@
 
         <%-- LLAMO AL UPDATE Y CREO EL REPETIDOR PARA QUE MUESTRA TODO LO QUE HAY EN CARRITO--%>
     
-        <asp:UpdatePanel ID="updatePanelCarrito" runat="server" UpdateMode="Conditional" >
+        <asp:UpdatePanel ID="updatePanelCarrito" runat="server" UpdateMode="Conditional"  >
 
             <ContentTemplate>
+
                 <div class="containerArticulos">
                     <asp:Repeater ID="repCarrito" runat="server" OnItemDataBound="repCarrito_ItemDataBound">
                         <ItemTemplate>
@@ -44,6 +45,9 @@
                                             <h4 class="card-title"><%# Eval("Nombre") %></h4>
                                             <h5 class="card-title"><%# Eval("Marcas.NombreMarca") %></h5>
                                             <h6 class="card-title">$<%# Eval("Precio") %></h6>
+
+
+
                                             <div class="botonesYcantidad">
 
                                                 <%-- PASAMOS LOS ID COMO ARGUMENTO A LOS BOTONES PARA QUE ENCUENTRE LOS ARTICULOS QUE TIENE Q RESTAR O SUMAR --%>
@@ -54,6 +58,9 @@
                                                 </p>
                                                 <asp:Button ID="btnSumar" Text="+"  runat="server" CssClass="btn btn-light" OnClick="sumarArticulo_Click" CommandArgument='<%#Eval("Id")%>' />
                                             </div>
+
+
+
                                         </div>
                                     </div>
                                 </div>
@@ -69,6 +76,9 @@
 
                     <asp:Button Text="Pagar" CssClass="btn btn-light" runat="server" OnClientClick="return redirectToPage('ListadoCarrito.aspx');" />
                 </div>
+
+
+
             </ContentTemplate>
         </asp:UpdatePanel>
 
