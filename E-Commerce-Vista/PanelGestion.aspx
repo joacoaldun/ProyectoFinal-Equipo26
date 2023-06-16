@@ -4,7 +4,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-
+    <h1>Panel de gestión...</h1>
     <div class="containerPrincipal">
         <div class="row">
 
@@ -29,9 +29,9 @@
 
     <%-- HTML --%>
     <style>
-        /*.containerPrincipal{
-            margin-top:10vh;
-        }*/
+        .containerPrincipal{
+            margin-top:5vh;
+        }
     </style>
 
 </asp:Content>

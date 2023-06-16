@@ -26,12 +26,10 @@
         </div>
 
         <%-- LLAMO AL UPDATE Y CREO EL REPETIDOR PARA QUE MUESTRA TODO LO QUE HAY EN CARRITO--%>
-        <%--<asp:ScriptManager ID="script1" runat="server"></asp:ScriptManager>
-            <asp:UpdatePanel ID="panelCarrito" runat="server" OnLoad="panelCarrito_Load">
-                <ContentTemplate>--%>
-        <%--<asp:ScriptManager ID="script1" runat="server"></asp:ScriptManager>--%>
+    
+        <asp:UpdatePanel ID="updatePanelCarrito" runat="server" UpdateMode="Conditional" >
 
-        
+            <ContentTemplate>
                 <div class="containerArticulos">
                     <asp:Repeater ID="repCarrito" runat="server" OnItemDataBound="repCarrito_ItemDataBound">
                         <ItemTemplate>
@@ -49,12 +47,12 @@
                                             <div class="botonesYcantidad">
 
                                                 <%-- PASAMOS LOS ID COMO ARGUMENTO A LOS BOTONES PARA QUE ENCUENTRE LOS ARTICULOS QUE TIENE Q RESTAR O SUMAR --%>
-                                                <asp:Button ID="btnRestar" Text="-" runat="server" CssClass="btn btn-light" OnClick="restarArticulo_Click" CommandArgument='<%#Eval("Id")%>' />
+                                                <asp:Button ID="btnRestar" Text="-"  runat="server" CssClass="btn btn-light" OnClick="restarArticulo_Click" CommandArgument='<%#Eval("Id")%>'  />
                                                 <p>
                                                     CANTIDAD:
                                             <asp:Label ID="lblCantidad" runat="server"></asp:Label>
                                                 </p>
-                                                <asp:Button ID="btnSumar" Text="+" runat="server" CssClass="btn btn-light" OnClick="sumarArticulo_Click" CommandArgument='<%#Eval("Id")%>' />
+                                                <asp:Button ID="btnSumar" Text="+"  runat="server" CssClass="btn btn-light" OnClick="sumarArticulo_Click" CommandArgument='<%#Eval("Id")%>' />
                                             </div>
                                         </div>
                                     </div>
@@ -72,8 +70,11 @@
                     <asp:Button Text="Pagar" CssClass="btn btn-light" runat="server" OnClientClick="return redirectToPage('ListadoCarrito.aspx');" />
                 </div>
             </ContentTemplate>
-
         </asp:UpdatePanel>
+
+
+
+
     </div>
 
 

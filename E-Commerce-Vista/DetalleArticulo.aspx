@@ -111,4 +111,18 @@
 
     <%  } %>
 
+
+
+    <script>
+        function mostrarMensaje() {
+            var mensajeCarrito = document.getElementById("mensajeCarritoo");
+            mensajeCarrito.innerText = "Artículo agregado al carrito";
+            mensajeCarrito.style.display = "block";
+
+            setTimeout(function () {
+                mensajeCarrito.style.display = "none";
+            }, 4000);
+        }
+    </script>
+
 </asp:Content>

@@ -15,6 +15,15 @@ namespace E_Commerce_Vista
     {
 
         /// <summary>
+        /// Control updatePanelCarrito.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.UpdatePanel updatePanelCarrito;
+
+        /// <summary>
         /// Control repCarrito.
         /// </summary>
         /// <remarks>

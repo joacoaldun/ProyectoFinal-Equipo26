@@ -50,7 +50,12 @@ namespace E_Commerce_Vista
 
             try
             {
-                
+                Carrito carrito = (Carrito)Session["Carrito"];
+
+
+
+                carrito.AgregarArticulo(articulo);
+                Session["Carrito"] = carrito;
             }
             catch (Exception ex)
             {
