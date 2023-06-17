@@ -55,6 +55,89 @@ namespace Negocio
         }
 
 
+        public void agregar(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+
+
+            try
+            {
+                datos.setearConsulta("Insert into Marcas(Descripcion, ImagenUrl) values (@Descripcion, @ImagenUrl)");
+                datos.setearParametros("@Descripcion", marca.NombreMarca);
+                datos.setearParametros("@ImagenUrl", marca.ImagenMarca);
+
+                datos.ejecutarAccion();
+
+
+            }
+            catch (Exception)
+            {
+
+
+                throw;
+            }
+            finally
+            {
+
+                datos.cerrarConexion();
+            }
+
+
+        }
+
+
+        public void modificar(Marca marca)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+                datos.setearConsulta("UPDATE marcas SET descripcion = @descripcion, ImagenUrl=@ImagenUrl WHERE id= @id");
+                datos.setearParametros("@Id", marca.Id);
+                datos.setearParametros("@descripcion", marca.NombreMarca);
+                datos.setearParametros("@ImagenUrl", marca.ImagenMarca);
+
+                datos.ejecutarAccion();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
+        public void eliminar(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+
+                datos.setearConsulta("delete from MARCAS where Id = @Id");
+                datos.setearParametros("@Id", id);
+
+                datos.ejecutarAccion();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+
 
     }
 }

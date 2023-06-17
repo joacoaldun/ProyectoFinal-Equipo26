@@ -8,29 +8,33 @@
     <div class="containerPrincipal">
         <div class="row">
 
-            <div >
-                <a href="GestionArticulos.aspx">Gestionar artículos</a>
+            <div class="mt-1 mb-1 ">
+                <a href="GestionArticulos.aspx" class="btn btn-dark">Gestionar artículos</a>
             </div>
 
-            <div>
-                <a href="GestionMarcas.aspx">Gestionar marcas</a>
+            <div class="mt-1 mb-1 ">
+                <a href="GestionMarcas.aspx" class="btn btn-dark">Gestionar marcas</a>
             </div>
 
-            <div>
-                <a href="GestionCategorias.aspx">Gestionar categorías</a>
+            <div class="mt-1 mb-1 ">
+                <a href="GestionCategorias.aspx" class="btn btn-dark">Gestionar categorías</a>
             </div>
 
-            <div>
-                <a href="GestionPedidos.aspx">Gestionar pedidos</a>
+            <div class="mt-1 mb-1 ">
+                <a href="GestionPedidos.aspx" class="btn btn-dark">Gestionar pedidos</a>
             </div>
 
-            </div>
+       </div>
     </div>
 
     <%-- HTML --%>
     <style>
         .containerPrincipal{
             margin-top:5vh;
+            
+        }
+        .btn{
+            width:20vh;
         }
     </style>
 

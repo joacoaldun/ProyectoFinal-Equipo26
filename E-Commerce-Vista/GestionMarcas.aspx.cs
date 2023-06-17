@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Negocio;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,7 +12,21 @@ namespace E_Commerce_Vista
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            MarcaNegocio negocio= new MarcaNegocio();
+            dgvMarcas.DataSource = negocio.listar();
+            dgvMarcas.DataBind();
+        }
 
+        protected void dgvMarcas_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var id=dgvMarcas.SelectedDataKey.Value.ToString();
+            Response.Redirect("FormularioMarca.aspx?id=" + id);
+        }
+
+        protected void dgvMarcas_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgvMarcas.PageIndex = e.NewPageIndex;
+            dgvMarcas.DataBind();
         }
     }
 }
