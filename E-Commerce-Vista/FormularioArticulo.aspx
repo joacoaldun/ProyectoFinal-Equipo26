@@ -18,7 +18,7 @@
                         <label for="txtId" class="form-label">Id</label>
                         <asp:TextBox runat="server" ID="txtId" CssClass="form-control" />
                     </div>
-                    <% } %>
+                    <% }%>
 
 
 
@@ -61,11 +61,7 @@
                         <label for="ddlCategoria" class="form-label">Categoria</label>
                         <asp:DropDownList ID="ddlCategoria" CssClass="form-select" runat="server"></asp:DropDownList>
                     </div>
-                    <%--                    <div class="mb-3">
-                        <label for="txtImagenUrl" class="form-label">Url Imagen</label>
-                        <asp:TextBox ID="txtImagenUrl" CssClass="form-control is-invalid" AutoPostBack="true" OnTextChanged="txtImagenUrl_TextChanged" runat="server" />
-                        <div id="errorImagen" class="invalid-feedback">Url imagen es obligatorio.</div>
-                    </div>--%>
+
 
 
 
@@ -77,7 +73,7 @@
                     <div class="mb-3">
                         <asp:Button Text="Aceptar" ID="btnAceptar" CssClass="btn btn-success" OnClick="btnAceptar_Click" runat="server" OnClientClick="return validarFormulario();" />
                         <a href="GestionArticulos.aspx" class="btn btn-primary">Cancelar</a>
-                       <%-- <%if (modificando)
+                        <%-- <%if (modificando)
                             {%>
                         <asp:Button Text="Eliminar" ID="btnEliminar" OnClick="btnEliminar_Click"
                             CssClass="btn btn-danger" runat="server" />
@@ -97,22 +93,34 @@
 
                         <%}%>
                     </div>
-                </div>--%>
-
-
-                <div class="col-8">
-
-                    <div class="mt-3">
-                        <asp:Image ImageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png"
-                            runat="server" ID="imgMarca" Width="100%" />
+                
+                        --%>
+                    </div>
+                    </div>
+                    <div class="col-4">   
+                   
+                        <div class="mb-3">
+                            <label for="txtImagenUrl" class="form-label">Url Imagen</label>
+                            <asp:TextBox ID="txtImagenUrl" CssClass="form-control is-invalid"  runat="server" AutoPostBack="true" OnTextChanged="txtImagenUrl_TextChanged"/>
+                            <%--<div id="errorImagen" class="invalid-feedback">Url imagen es obligatorio.</div>--%>
+                        </div>
+                        <div class="mt-3">
+                            <asp:Image ImageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png"
+                                runat="server" ID="imgArticulo" Width="100%" />
+                            
+                            <%if (Session["Imagenes"] != null)
+                                {
+                                    %>
+                            <asp:Button Text="Agregar otra imagen" ID="btnAgregarImagen" CssClass="btn btn-success" OnClick="btnAgregarImagen_Click" runat="server" UseSubmitBehavior="false"/>
+                        <%} %>
+                        
+                        </div>
 
                     </div>
+
+
+
                 </div>
-
-
-
-            </div>
-
         </ContentTemplate>
     </asp:UpdatePanel>
 
@@ -140,6 +148,19 @@
 
         </div>
     </div>--%>
+
+<style>
+
+    .row {
+  display: flex;
+}
+    .col-4 {
+
+        
+  flex-basis: 50%; /* O cualquier otro ancho deseado */
+     }
+</style>
+
 </asp:Content>
 
 

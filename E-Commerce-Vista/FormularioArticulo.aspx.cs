@@ -16,6 +16,8 @@ namespace E_Commerce_Vista
         public bool modificando { get; set; }
 
         public bool verId { get; set; }
+
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -27,51 +29,58 @@ namespace E_Commerce_Vista
                 confirmarEliminar = false;
                 verId = false;
 
-                if (id != "" && !IsPostBack)
+                if (!IsPostBack)
                 {
-                    ArticuloNegocio negocio = new ArticuloNegocio();
-                    List<Articulo> temporal = negocio.listarConSP();
-                    Articulo seleccionada = temporal.Find(x => x.Id == int.Parse(id));
+                    Session.Remove("Imagenes");
 
-                    txtId.Text = seleccionada.Id.ToString();
-                    txtId.ReadOnly = true;
-                    txtNombre.Text = seleccionada.Nombre;
-                    txtCodigoArticulo.Text = seleccionada.CodigoArticulo;
-                    txtDescripcion.Text = seleccionada.Descripcion;
-                    txtPrecio.Text = seleccionada.Precio.ToString();
-                   
-                    txtNombre.CssClass = "form-control is-valid";
-                    txtCodigoArticulo.CssClass = "form-control is-valid";
-                    txtDescripcion.CssClass = "form-control is-valid";
-                    txtPrecio.CssClass = "form-control is-valid";
+                    if (id != "")
+                    {
+                        ArticuloNegocio negocio = new ArticuloNegocio();
+                        List<Articulo> temporal = negocio.listarConSP();
+
+                        Articulo seleccionada = temporal.Find(x => x.Id == int.Parse(id));
+
+                        txtId.Text = seleccionada.Id.ToString();
+                        txtId.ReadOnly = true;
+                        txtNombre.Text = seleccionada.Nombre;
+                        txtCodigoArticulo.Text = seleccionada.CodigoArticulo;
+                        txtDescripcion.Text = seleccionada.Descripcion;
+                        txtPrecio.Text = seleccionada.Precio.ToString();
+                        //txtImagenUrl.Text = seleccionada.Imagenes.Url
+                        txtNombre.CssClass = "form-control is-valid";
+                        txtCodigoArticulo.CssClass = "form-control is-valid";
+                        txtDescripcion.CssClass = "form-control is-valid";
+                        txtPrecio.CssClass = "form-control is-valid";
 
 
-                    modificando = true;
-                    updatePanelArticulo.Update();
+                        modificando = true;
+                        updatePanelArticulo.Update();
 
+                    }
+                    else
+                    {
+                        MarcaNegocio marcaNegocio = new MarcaNegocio();
+                        CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+
+                        List<Marca> listaMarcas = marcaNegocio.listar();
+                        List<Categoria> listaCategorias = categoriaNegocio.listar();
+
+
+                        ddlMarca.DataSource = listaMarcas;
+                        ddlMarca.DataValueField = "Id";
+                        ddlMarca.DataTextField = "NombreMarca";
+                        ddlMarca.DataBind();
+
+                        ddlCategoria.DataSource = listaCategorias;
+                        ddlCategoria.DataValueField = "Id";
+                        ddlCategoria.DataTextField = "NombreCategoria";
+                        ddlCategoria.DataBind();
+
+
+
+                    }
                 }
-                else
-                {
-                    MarcaNegocio marcaNegocio = new MarcaNegocio();
-                    CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-
-                    List<Marca> listaMarcas = marcaNegocio.listar();
-                    List<Categoria> listaCategorias = categoriaNegocio.listar();
-
-
-                    ddlMarca.DataSource = listaMarcas;
-                    ddlMarca.DataValueField = "Id";
-                    ddlMarca.DataTextField = "NombreMarca";
-                    ddlMarca.DataBind();
-
-                    ddlCategoria.DataSource = listaCategorias;
-                    ddlCategoria.DataValueField = "Id";
-                    ddlCategoria.DataTextField = "NombreCategoria";
-                    ddlCategoria.DataBind();
-
-
-
-                }
+                
 
             }
             catch (Exception ex)
@@ -113,10 +122,11 @@ namespace E_Commerce_Vista
 
 
             }
-            else {
+            else
+            {
 
                 return true;
-            
+
             }
 
 
@@ -175,7 +185,43 @@ namespace E_Commerce_Vista
             }
             updatePanelArticulo.Update();
         }
+        protected void txtImagenUrl_TextChanged(object sender, EventArgs e)
+        {
 
+
+            if (string.IsNullOrEmpty(txtImagenUrl.Text.Trim()) && Session["Imagenes"] == null)
+            {
+
+                txtImagenUrl.CssClass = "form-control is-invalid";
+            }
+            else
+            {
+                if (Session["Imagenes"] == null)
+                {
+
+                    Imagen imagen = new Imagen();
+                    imagen.UrlImagen = txtImagenUrl.Text;
+                    Session.Add("Imagenes", imagen);
+                    imgArticulo.ImageUrl = imagen.UrlImagen;
+                    txtImagenUrl.Text = "";
+                    txtImagenUrl.CssClass = "form-control is-valid";
+                }
+                else if (Session["Imagenes"] != null && txtImagenUrl.Text != "") {
+
+                    Imagen imagen = new Imagen();
+                    imagen.UrlImagen = txtImagenUrl.Text;
+                    Session.Add("Imagenes", imagen);
+                    imgArticulo.ImageUrl = imagen.UrlImagen;
+                    txtImagenUrl.Text = "";
+                    txtImagenUrl.CssClass = "form-control is-valid";
+
+                }
+
+
+            }
+
+            updatePanelArticulo.Update();
+        }
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             try
@@ -190,21 +236,33 @@ namespace E_Commerce_Vista
                     articulo.Marcas = new Marca();
                     articulo.Categorias = new Categoria();
 
+
+
+                    articulo.Imagenes = new List<Imagen>();
+
+
+
                     articulo.Nombre = txtNombre.Text;
                     articulo.CodigoArticulo = txtCodigoArticulo.Text;
                     articulo.Descripcion = txtDescripcion.Text;
                     articulo.Precio = decimal.Parse(txtPrecio.Text);
                     articulo.Marcas.Id = int.Parse(ddlMarca.SelectedValue);
                     articulo.Categorias.Id = int.Parse(ddlCategoria.SelectedValue);
-                         //articuloNegocio.agregar(articulo);
+
+                    foreach (Imagen imagen in (List<Imagen>)Session["Imagenes"])
+                    {
+                        articulo.Imagenes.Add(imagen);
+                    }
+
+                    //articuloNegocio.agregar(articulo);
                     // if (Request.QueryString["id"] != null)
                     //{
                     //    nuevaMarca.Id = int.Parse(txtId.Text);
                     //    negocio.modificar(nuevaMarca);
                     //}
-                    
 
-                    
+
+
                     //else
                     //{
                     //   
@@ -219,13 +277,36 @@ namespace E_Commerce_Vista
                 }
 
                 Response.Redirect("GestionArticulos.aspx", false);
-
+                Session.Remove("Imagenes");
 
             }
             catch (Exception ex)
             {
                 Session.Add("error", ex);
                 throw ex;
+            }
+        }
+
+
+        public void btnAgregarImagen_Click(object sender, EventArgs e)
+        {
+
+
+
+            txtImagenUrl.Text = "";
+            updatePanelArticulo.Update();
+
+
+
+
+        }
+
+        protected void Page_PreRender(object sender, EventArgs e)
+        {
+
+            if (Session["Imagenes"] != null)
+            {
+                updatePanelArticulo.Update();
             }
         }
 
