@@ -78,6 +78,8 @@ namespace E_Commerce_Vista
                         updatePanelArticulo.Update();
 
                     }
+                  
+
                     else
                     {
                         //MarcaNegocio marcaNegocio = new MarcaNegocio();
@@ -100,7 +102,9 @@ namespace E_Commerce_Vista
 
 
                     }
+
                 }
+
                 
 
             }
@@ -234,6 +238,8 @@ namespace E_Commerce_Vista
                     imgArticulo.ImageUrl = txtImagenUrl.Text;
                     //txtImagenUrl.Text = "";
                     txtImagenUrl.CssClass = "form-control is-valid";
+
+
                 }
                 else if (Session["Imagenes"] != null && txtImagenUrl.Text != "") {
 
