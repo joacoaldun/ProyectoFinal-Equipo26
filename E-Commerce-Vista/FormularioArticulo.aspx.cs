@@ -32,6 +32,23 @@ namespace E_Commerce_Vista
                 if (!IsPostBack)
                 {
                     Session.Remove("Imagenes");
+                    MarcaNegocio marcaNegocio = new MarcaNegocio();
+                    CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+
+                    List<Marca> listaMarcas = marcaNegocio.listar();
+                    List<Categoria> listaCategorias = categoriaNegocio.listar();
+
+
+                    ddlMarca.DataSource = listaMarcas;
+                    ddlMarca.DataValueField = "Id";
+                    ddlMarca.DataTextField = "NombreMarca";
+                    ddlMarca.DataBind();
+
+                    ddlCategoria.DataSource = listaCategorias;
+                    ddlCategoria.DataValueField = "Id";
+                    ddlCategoria.DataTextField = "NombreCategoria";
+                    ddlCategoria.DataBind();
+
 
                     if (id != "")
                     {
@@ -46,6 +63,10 @@ namespace E_Commerce_Vista
                         txtCodigoArticulo.Text = seleccionada.CodigoArticulo;
                         txtDescripcion.Text = seleccionada.Descripcion;
                         txtPrecio.Text = seleccionada.Precio.ToString();
+                        ddlMarca.SelectedValue = seleccionada.Marcas.Id.ToString();
+                        ddlCategoria.SelectedValue = seleccionada.Categorias.Id.ToString();
+                       
+
                         //txtImagenUrl.Text = seleccionada.Imagenes.Url
                         txtNombre.CssClass = "form-control is-valid";
                         txtCodigoArticulo.CssClass = "form-control is-valid";
@@ -59,22 +80,22 @@ namespace E_Commerce_Vista
                     }
                     else
                     {
-                        MarcaNegocio marcaNegocio = new MarcaNegocio();
-                        CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
+                        //MarcaNegocio marcaNegocio = new MarcaNegocio();
+                        //CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
 
-                        List<Marca> listaMarcas = marcaNegocio.listar();
-                        List<Categoria> listaCategorias = categoriaNegocio.listar();
+                        //List<Marca> listaMarcas = marcaNegocio.listar();
+                        //List<Categoria> listaCategorias = categoriaNegocio.listar();
 
 
-                        ddlMarca.DataSource = listaMarcas;
-                        ddlMarca.DataValueField = "Id";
-                        ddlMarca.DataTextField = "NombreMarca";
-                        ddlMarca.DataBind();
+                        //ddlMarca.DataSource = listaMarcas;
+                        //ddlMarca.DataValueField = "Id";
+                        //ddlMarca.DataTextField = "NombreMarca";
+                        //ddlMarca.DataBind();
 
-                        ddlCategoria.DataSource = listaCategorias;
-                        ddlCategoria.DataValueField = "Id";
-                        ddlCategoria.DataTextField = "NombreCategoria";
-                        ddlCategoria.DataBind();
+                        //ddlCategoria.DataSource = listaCategorias;
+                        //ddlCategoria.DataValueField = "Id";
+                        //ddlCategoria.DataTextField = "NombreCategoria";
+                        //ddlCategoria.DataBind();
 
 
 
@@ -199,21 +220,39 @@ namespace E_Commerce_Vista
                 if (Session["Imagenes"] == null)
                 {
 
-                    Imagen imagen = new Imagen();
-                    imagen.UrlImagen = txtImagenUrl.Text;
-                    Session.Add("Imagenes", imagen);
-                    imgArticulo.ImageUrl = imagen.UrlImagen;
-                    txtImagenUrl.Text = "";
+                    //Imagen imagen = new Imagen();
+                    //imagen.UrlImagen = txtImagenUrl.Text;
+
+                    //Session.Add("Imagenes", imagen);
+                    //imgArticulo.ImageUrl = imagen.UrlImagen;
+                    
+                    List<string> urlsImagenes= new List<string>();
+                    urlsImagenes.Add(txtImagenUrl.Text);
+
+                    Session.Add("Imagenes", urlsImagenes);
+
+                    imgArticulo.ImageUrl = txtImagenUrl.Text;
+                    //txtImagenUrl.Text = "";
                     txtImagenUrl.CssClass = "form-control is-valid";
                 }
                 else if (Session["Imagenes"] != null && txtImagenUrl.Text != "") {
 
-                    Imagen imagen = new Imagen();
-                    imagen.UrlImagen = txtImagenUrl.Text;
-                    Session.Add("Imagenes", imagen);
-                    imgArticulo.ImageUrl = imagen.UrlImagen;
-                    txtImagenUrl.Text = "";
+                    //Imagen imagen = new Imagen();
+                    //imagen.UrlImagen = txtImagenUrl.Text;
+
+                    //Session.Add("Imagenes", imagen);
+                    //imgArticulo.ImageUrl = imagen.UrlImagen;
+
+
+                    List<string> urlsImagenes= new List<string>();
+                    urlsImagenes = (List<string>)Session["Imagenes"];
+                    urlsImagenes.Add(txtImagenUrl.Text);
+
+                    imgArticulo.ImageUrl = txtImagenUrl.Text;
+                    //txtImagenUrl.Text = "";
                     txtImagenUrl.CssClass = "form-control is-valid";
+
+                    Session.Add("Imagenes", urlsImagenes);
 
                 }
 
@@ -249,9 +288,13 @@ namespace E_Commerce_Vista
                     articulo.Marcas.Id = int.Parse(ddlMarca.SelectedValue);
                     articulo.Categorias.Id = int.Parse(ddlCategoria.SelectedValue);
 
-                    foreach (Imagen imagen in (List<Imagen>)Session["Imagenes"])
+
+                    List<string> urlsImagenes = new List<string>();
+                    urlsImagenes = (List<string>)Session["Imagenes"];
+
+                    foreach (string urlImagen in urlsImagenes)
                     {
-                        articulo.Imagenes.Add(imagen);
+                        articulo.Imagenes.Add(new Imagen { UrlImagen=urlImagen});
                     }
 
                     //articuloNegocio.agregar(articulo);
