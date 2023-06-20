@@ -4,10 +4,10 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <%-- CON VALIDACION REQUIRED Y JS --%>
+    <%-- FORM CON VALIDACIONES --%>
 
     <asp:UpdatePanel runat="server" ID="updatePanelArticulo" UpdateMode="Conditional">
-        <ContentTemplate>
+        <contenttemplate>
             <div class="row">
 
                 <div class="col-4">
@@ -18,8 +18,10 @@
                         <label for="txtId" class="form-label">Id</label>
                         <asp:TextBox runat="server" ID="txtId" CssClass="form-control" />
                     </div>
-                    <% }%>
+                    <% }
 
+
+                    %>
 
 
 
@@ -64,12 +66,6 @@
 
 
 
-
-
-
-
-
-
                     <div class="mb-3">
                         <asp:Button Text="Aceptar" ID="btnAceptar" CssClass="btn btn-success" OnClick="btnAceptar_Click" runat="server" OnClientClick="return validarFormulario();" />
                         <a href="GestionArticulos.aspx" class="btn btn-primary">Cancelar</a>
@@ -98,77 +94,54 @@
                     </div>
                 </div>
 
-                <%--  --%>
+                <%-- IMAGENES! --%>
+
                 <div class="col-4">
 
-                    <div class="mb-3">
+                    <div class="mb-3 mt-3">
                         <label for="txtImagenUrl" class="form-label">Url Imagen</label>
                         <asp:TextBox ID="txtImagenUrl" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtImagenUrl_TextChanged" />
                     </div>
-                    <div class="mt-3">
+
+                    <div class="mt-3 ">
 
 
-                  <% if (Session["Imagenes"] != null)
-                            {
-                                List<string> urlsImagenes = (List<string>)Session["Imagenes"];
-
-                       
-                        %>
-                        <div ID="carouselExampleControls" class="carousel slide">
-                            <div class="carousel-inner">
-                                
-                                
-                                
-                                <% for (int i = 0; i < urlsImagenes.Count; i++)
-                                    {
-                                        string imageUrl = urlsImagenes[i];
-
-                                %>
-                                <div class="carousel-item <% if (i == 0)
-                                    { %>active<% } %>">
-                                    <%-- <img src="<%= imageUrl %>" class="d-block w-100" alt="Imagen <%= i + 1 %>">--%>
-                                    <asp:Image ImageUrl= "<%= urlsImagenes[i] %>" CssClass="d-block w-100" runat="server" ID="imgArticulo" Width="100%" />
+                        <div id="carouselExampleControls" class="carousel slide">
+                            <div class="carousel-inner carousel-container">
 
 
-                                </div>
-                                <% } %>
+                                <asp:Image ID="imgCarrusel" runat="server" CssClass="d-block w-100" Style="width: 50vh; height: 50vh;" />
+                                <%List<string> urls_imagenes = (List<string>)Session["Imagenes"];
 
+                                    if (Session["Imagenes"] != null && urls_imagenes.Count > 1)
+                                    {%>
+                                <asp:Button Text="<" ID="btnAnterior" OnClick="btnAnterior_Click" CssClass="btn carousel-control-prev btnCarrusel" runat="server" UseSubmitBehavior="false" />
+                                <asp:Button Text=">" ID="btnSiguiente" OnClick="btnSiguiente_Click" CssClass="btn carousel-control-next btnCarrusel" runat="server" UseSubmitBehavior="false" />
 
-
-
+                                <%}                        %>
                             </div>
-                            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-bs-slide="prev">
-                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Anterior</span>
-                            </a>
-                            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-bs-slide="next">
-                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span class="visually-hidden">Siguiente</span>
-                            </a>
                         </div>
-                        
-                        <asp:Button Text="Agregar otra imagen" ID="btnAgregarImagen" CssClass="btn btn-success" OnClick="btnAgregarImagen_Click" runat="server" UseSubmitBehavior="false" />
-                        <asp:Button Text="Modificar" ID="btnModificarImagen" CssClass="btn btn-primary" runat="server" UseSubmitBehavior="false" />
-                        <asp:Button Text="Eliminar" ID="btnEliminarImagen" CssClass="btn btn-danger" runat="server" UseSubmitBehavior="false" />
-
-                        <%  }
-                            else
+                        <%if (Session["Imagenes"] != null)
                             {%>
+                        <asp:Button Text="Agregar otra imagen" ID="btnAgregarImagen" CssClass="btn btn-success" OnClick="btnAgregarImagen_Click" runat="server" UseSubmitBehavior="false" />
+                        <asp:Button Text="Modificar" ID="btnModificar" OnClick="btnModificarImagen_Click" CssClass="btn btn-primary" runat="server" UseSubmitBehavior="false" />
+                        <asp:Button Text="Eliminar" ID="btnEliminar" OnClick="btnEliminar_Click" CssClass="btn btn-danger" runat="server" UseSubmitBehavior="false" />
 
-                        <asp:Image ImageUrl="https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png" runat="server" Width="100%" />
 
-                        <% }%>
+
+                        <%}
+
+                            else
+                            { %>
+                        <asp:Button Text="Agregar imagen" ID="Button1" CssClass="btn btn-success" OnClick="btnAgregarImagen_Click" runat="server" UseSubmitBehavior="false" />
+
+                        <%}%>
                     </div>
-
-
-
 
                 </div>
 
-
-
             </div>
-        </ContentTemplate>
+        </contenttemplate>
     </asp:UpdatePanel>
 
 
@@ -204,12 +177,35 @@
         .col-4 {
             flex-basis: 50%; /* O cualquier otro ancho deseado */
         }
+        .carousel-container {
+    position: relative;
+    display: inline-block;
+}
 
-        ImageUrl, img {
-            width: 50vh;
-            height: 50vh;
-        }
+.btnCarrusel {
+    position: absolute;
+    top: 45%;
+    background-color: black;
+    color: white;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btnAnterior {
+    left: 0;
+}
+
+.btnSiguiente {
+    right: 0;
+}
+
     </style>
+
+
 
 </asp:Content>
 

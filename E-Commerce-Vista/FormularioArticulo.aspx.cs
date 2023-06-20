@@ -11,12 +11,13 @@ namespace E_Commerce_Vista
 {
     public partial class FormularioArticulo : System.Web.UI.Page
     {
-
+        string imgReemplazo = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
         public bool confirmarEliminar { get; set; }
         public bool modificando { get; set; }
 
         public bool verId { get; set; }
 
+        public int indiceActual { get; set; }
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -37,7 +38,6 @@ namespace E_Commerce_Vista
 
                     List<Marca> listaMarcas = marcaNegocio.listar();
                     List<Categoria> listaCategorias = categoriaNegocio.listar();
-
 
                     ddlMarca.DataSource = listaMarcas;
                     ddlMarca.DataValueField = "Id";
@@ -65,7 +65,6 @@ namespace E_Commerce_Vista
                         txtPrecio.Text = seleccionada.Precio.ToString();
                         ddlMarca.SelectedValue = seleccionada.Marcas.Id.ToString();
                         ddlCategoria.SelectedValue = seleccionada.Categorias.Id.ToString();
-                       
 
                         //txtImagenUrl.Text = seleccionada.Imagenes.Url
                         txtNombre.CssClass = "form-control is-valid";
@@ -78,35 +77,28 @@ namespace E_Commerce_Vista
                         updatePanelArticulo.Update();
 
                     }
-                  
 
+                    // Obtener la lista de URLs de imágenes de la sesión
+                    List<string> urls_imagenes = (List<string>)Session["Imagenes"];
+
+                    // Verificar si existen imagenes en la session
+                    if (urls_imagenes != null && urls_imagenes.Count > 0)
+                    {
+                        // Mostrar la primera imagen
+                        imgCarrusel.ImageUrl = urls_imagenes[0];
+                        Session["IndiceImagenActual"] = 0; 
+                    }
                     else
                     {
-                        //MarcaNegocio marcaNegocio = new MarcaNegocio();
-                        //CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
-
-                        //List<Marca> listaMarcas = marcaNegocio.listar();
-                        //List<Categoria> listaCategorias = categoriaNegocio.listar();
-
-
-                        //ddlMarca.DataSource = listaMarcas;
-                        //ddlMarca.DataValueField = "Id";
-                        //ddlMarca.DataTextField = "NombreMarca";
-                        //ddlMarca.DataBind();
-
-                        //ddlCategoria.DataSource = listaCategorias;
-                        //ddlCategoria.DataValueField = "Id";
-                        //ddlCategoria.DataTextField = "NombreCategoria";
-                        //ddlCategoria.DataBind();
-
-
-
+                        if (urls_imagenes == null)
+                        {
+                            imgCarrusel.ImageUrl = imgReemplazo;
+                        }
+                        
                     }
 
                 }
-
                 
-
             }
             catch (Exception ex)
             {
@@ -125,35 +117,22 @@ namespace E_Commerce_Vista
             }
             else if (string.IsNullOrEmpty(txtCodigoArticulo.Text.Trim()))
             {
-
-
                 return false;
-
-
             }
             else if (string.IsNullOrEmpty(txtDescripcion.Text.Trim()))
             {
 
-
                 return false;
-
 
             }
             else if (string.IsNullOrEmpty(txtPrecio.Text.Trim()))
             {
-
-
                 return false;
-
-
             }
             else
             {
-
                 return true;
-
             }
-
 
         }
 
@@ -213,65 +192,25 @@ namespace E_Commerce_Vista
         protected void txtImagenUrl_TextChanged(object sender, EventArgs e)
         {
 
-
             if (string.IsNullOrEmpty(txtImagenUrl.Text.Trim()) && Session["Imagenes"] == null)
             {
 
                 txtImagenUrl.CssClass = "form-control is-invalid";
             }
-            else
+            else if (Session["Imagenes"] != null && txtImagenUrl.Text != "")
             {
-                if (Session["Imagenes"] == null)
-                {
+                
+                txtImagenUrl.CssClass = "form-control is-valid";
 
-                    //Imagen imagen = new Imagen();
-                    //imagen.UrlImagen = txtImagenUrl.Text;
-
-                    //Session.Add("Imagenes", imagen);
-                    //imgArticulo.ImageUrl = imagen.UrlImagen;
-                    
-                    List<string> urlsImagenes= new List<string>();
-                    urlsImagenes.Add(txtImagenUrl.Text);
-
-                    Session.Add("Imagenes", urlsImagenes);
-
-                    imgArticulo.ImageUrl = txtImagenUrl.Text;
-                    //txtImagenUrl.Text = "";
-                    txtImagenUrl.CssClass = "form-control is-valid";
-
-
-                }
-                else if (Session["Imagenes"] != null && txtImagenUrl.Text != "") {
-
-                    //Imagen imagen = new Imagen();
-                    //imagen.UrlImagen = txtImagenUrl.Text;
-
-                    //Session.Add("Imagenes", imagen);
-                    //imgArticulo.ImageUrl = imagen.UrlImagen;
-
-
-                    List<string> urlsImagenes= new List<string>();
-                    urlsImagenes = (List<string>)Session["Imagenes"];
-                    urlsImagenes.Add(txtImagenUrl.Text);
-
-                    imgArticulo.ImageUrl = txtImagenUrl.Text;
-                    //txtImagenUrl.Text = "";
-                    txtImagenUrl.CssClass = "form-control is-valid";
-
-                    Session.Add("Imagenes", urlsImagenes);
-
-                }
-
-
+                updatePanelArticulo.Update();
             }
-
+            
             updatePanelArticulo.Update();
         }
         protected void btnAceptar_Click(object sender, EventArgs e)
         {
             try
             {
-
 
                 if (validarFormulario())
                 {
@@ -281,11 +220,7 @@ namespace E_Commerce_Vista
                     articulo.Marcas = new Marca();
                     articulo.Categorias = new Categoria();
 
-
-
                     articulo.Imagenes = new List<Imagen>();
-
-
 
                     articulo.Nombre = txtNombre.Text;
                     articulo.CodigoArticulo = txtCodigoArticulo.Text;
@@ -318,7 +253,6 @@ namespace E_Commerce_Vista
                     //}
 
 
-
                 }
                 else
                 {
@@ -340,13 +274,36 @@ namespace E_Commerce_Vista
         public void btnAgregarImagen_Click(object sender, EventArgs e)
         {
 
+            if (Session["Imagenes"] == null)
+            {
+
+                List<string> urlsImagenes = new List<string>();
+                urlsImagenes.Add(txtImagenUrl.Text);
+
+                Session.Add("Imagenes", urlsImagenes);
+
+                imgCarrusel.ImageUrl = txtImagenUrl.Text;
+                Session.Add("IndiceImagenActual", urlsImagenes.Count - 1);
+
+
+            }
+            else if (Session["Imagenes"] != null && txtImagenUrl.Text != "")
+            {
+
+                List<string> urlsImagenes = new List<string>();
+                urlsImagenes = (List<string>)Session["Imagenes"];
+                urlsImagenes.Add(txtImagenUrl.Text);
+
+                imgCarrusel.ImageUrl = txtImagenUrl.Text;
+
+                Session.Add("Imagenes", urlsImagenes);
+                Session.Add("IndiceImagenActual", urlsImagenes.Count - 1);
+
+            }
 
 
             txtImagenUrl.Text = "";
             updatePanelArticulo.Update();
-
-
-
 
         }
 
@@ -360,6 +317,57 @@ namespace E_Commerce_Vista
         }
 
 
+
+        protected void btnAnterior_Click(object sender, EventArgs e)
+        {
+            List<string> urls_imagenes = (List<string>)Session["Imagenes"];
+            indiceActual = (int)Session["IndiceImagenActual"];
+
+            if (urls_imagenes != null && indiceActual > 0)
+            {
+               
+                indiceActual--;
+                imgCarrusel.ImageUrl = urls_imagenes[indiceActual];
+                txtImagenUrl.Text= urls_imagenes[indiceActual];
+                Session["IndiceImagenActual"] = indiceActual;
+            }
+        }
+
+        protected void btnSiguiente_Click(object sender, EventArgs e)
+        {
+            List<string> urls_imagenes = (List<string>)Session["Imagenes"];
+
+            indiceActual = (int)Session["IndiceImagenActual"];
+
+            if (urls_imagenes != null && indiceActual < urls_imagenes.Count - 1)
+            {
+               
+                indiceActual++;
+                imgCarrusel.ImageUrl = urls_imagenes[indiceActual];
+                txtImagenUrl.Text = urls_imagenes[indiceActual];
+                Session["IndiceImagenActual"] = indiceActual;
+            }
+        }
+
+        protected void btnModificarImagen_Click(object sender, EventArgs e)
+        {
+            //int indice = Convert.ToInt32(hiddenCurrentSlideIndex.Value);
+
+            //List<string> urlsImagenes = new List<string>();
+            //urlsImagenes = (List<string>)Session["Imagenes"];
+
+
+
+            //urlsImagenes[indice] = txtImagenUrl.Text;
+
+            //updatePanelArticulo.Update();
+        }
+
+
+        protected void btnEliminar_Click(object sender, EventArgs e)
+        {
+
+        }
 
 
     }
