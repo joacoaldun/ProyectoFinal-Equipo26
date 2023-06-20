@@ -86,7 +86,7 @@ namespace Negocio
 
 
                 }
-                
+
                 return
                     lista;
             }
@@ -103,7 +103,111 @@ namespace Negocio
             }
         }
 
+        public void agregarArticuloConSp(Articulo nuevo)
+        {
 
+            AccesoDatos datos = new AccesoDatos();
+
+
+            try
+            {
+                datos.setearProcedimiento("SpAgregarArticulo");
+                datos.setearParametros("@Nombre", nuevo.Nombre);
+                datos.setearParametros("@Codigo", nuevo.CodigoArticulo);
+                datos.setearParametros("@Descripcion", nuevo.Descripcion);
+                datos.setearParametros("@IdMarca", nuevo.Marcas.Id);
+                datos.setearParametros("@IdCategoria", nuevo.Categorias.Id);
+                datos.setearParametros("@Precio", nuevo.Precio);
+
+                datos.ejecutarAccion();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+
+
+
+            }
+
+
+        }
+
+        public int devolverUltimoIdArticulo()
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+            //Obtengo el id de este ultimo articulo para guardarlo en imagenes.
+            try
+            {
+                datos.setearConsulta("select max(id) as MaxId from Articulos");
+                datos.ejecutarConsulta();
+
+                if (datos.Lector.Read())
+                {
+                    int id = (int)datos.Lector["MaxId"];
+                    return id;
+                }
+                else
+                {
+                    return 0;
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+
+                datos.cerrarConexion();
+            }
+
+        }
+
+        public void guardarListaImagenes(Articulo nuevo)
+        {
+
+            //Obtengo el id de este ultimo articulo para guardarlo en imagenes.
+
+            int id = devolverUltimoIdArticulo();
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                foreach (var item in nuevo.Imagenes)
+                {
+                    datos.setearConsulta("insert into imagenes(idArticulo, ImagenUrl) values (" + id + ", '" + item.UrlImagen.ToString() + "' )");
+
+                   
+
+
+
+                    datos.ejecutarAccion();
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+
+            }
+        }
 
 
     }

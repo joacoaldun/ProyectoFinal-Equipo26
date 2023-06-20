@@ -100,7 +100,7 @@
 
                     <div class="mb-3 mt-3">
                         <label for="txtImagenUrl" class="form-label">Url Imagen</label>
-                        <asp:TextBox ID="txtImagenUrl" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtImagenUrl_TextChanged" />
+                        <asp:TextBox ID="txtImagenUrl" CssClass="form-control is-invalid" runat="server"  OnTextChanged="txtImagenUrl_TextChanged" />
                     </div>
 
                     <div class="mt-3 ">
@@ -123,7 +123,7 @@
                         </div>
                         <%if (Session["Imagenes"] != null)
                             {%>
-                        <asp:Button Text="Agregar otra imagen" ID="btnAgregarImagen" CssClass="btn btn-success" OnClick="btnAgregarImagen_Click" runat="server" UseSubmitBehavior="false" />
+                        <asp:Button Text="Agregar otra imagen" ID="btnAgregarOtraImagen" CssClass="btn btn-success" OnClick="btnAgregarImagen_Click" runat="server" UseSubmitBehavior="false" />
                         <asp:Button Text="Modificar" ID="btnModificar" OnClick="btnModificarImagen_Click" CssClass="btn btn-primary" runat="server" UseSubmitBehavior="false" />
                         <asp:Button Text="Eliminar" ID="btnEliminar" OnClick="btnEliminar_Click" CssClass="btn btn-danger" runat="server" UseSubmitBehavior="false" />
 
@@ -133,7 +133,7 @@
 
                             else
                             { %>
-                        <asp:Button Text="Agregar imagen" ID="Button1" CssClass="btn btn-success" OnClick="btnAgregarImagen_Click" runat="server" UseSubmitBehavior="false" />
+                        <asp:Button Text="Agregar imagen" ID="AgregarImagen" CssClass="btn btn-success" OnClick="btnAgregarImagen_Click" runat="server" UseSubmitBehavior="false" />
 
                         <%}%>
                     </div>

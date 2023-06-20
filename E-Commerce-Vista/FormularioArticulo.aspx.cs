@@ -86,7 +86,8 @@ namespace E_Commerce_Vista
                     {
                         // Mostrar la primera imagen
                         imgCarrusel.ImageUrl = urls_imagenes[0];
-                        Session["IndiceImagenActual"] = 0; 
+                        Session["IndiceImagenActual"] = 0;
+                        indiceActual = 0;
                     }
                     else
                     {
@@ -94,11 +95,11 @@ namespace E_Commerce_Vista
                         {
                             imgCarrusel.ImageUrl = imgReemplazo;
                         }
-                        
+
                     }
 
                 }
-                
+
             }
             catch (Exception ex)
             {
@@ -199,12 +200,12 @@ namespace E_Commerce_Vista
             }
             else if (Session["Imagenes"] != null && txtImagenUrl.Text != "")
             {
-                
+
                 txtImagenUrl.CssClass = "form-control is-valid";
 
                 updatePanelArticulo.Update();
             }
-            
+
             updatePanelArticulo.Update();
         }
         protected void btnAceptar_Click(object sender, EventArgs e)
@@ -235,10 +236,17 @@ namespace E_Commerce_Vista
 
                     foreach (string urlImagen in urlsImagenes)
                     {
-                        articulo.Imagenes.Add(new Imagen { UrlImagen=urlImagen});
+                        articulo.Imagenes.Add(new Imagen { UrlImagen = urlImagen });
                     }
 
-                    //articuloNegocio.agregar(articulo);
+                    
+
+
+
+                    articuloNegocio.agregarArticuloConSp(articulo);
+                   articuloNegocio.guardarListaImagenes(articulo);
+
+
                     // if (Request.QueryString["id"] != null)
                     //{
                     //    nuevaMarca.Id = int.Parse(txtId.Text);
@@ -274,7 +282,7 @@ namespace E_Commerce_Vista
         public void btnAgregarImagen_Click(object sender, EventArgs e)
         {
 
-            if (Session["Imagenes"] == null)
+            if (Session["Imagenes"] == null && txtImagenUrl.Text != "")
             {
 
                 List<string> urlsImagenes = new List<string>();
@@ -284,7 +292,7 @@ namespace E_Commerce_Vista
 
                 imgCarrusel.ImageUrl = txtImagenUrl.Text;
                 Session.Add("IndiceImagenActual", urlsImagenes.Count - 1);
-
+                txtImagenUrl.CssClass = "form-control is-valid";
 
             }
             else if (Session["Imagenes"] != null && txtImagenUrl.Text != "")
@@ -301,6 +309,11 @@ namespace E_Commerce_Vista
 
             }
 
+            if (txtImagenUrl.Text == "")
+            {
+                txtImagenUrl.CssClass = "form-control is-invalid";
+            }
+
 
             txtImagenUrl.Text = "";
             updatePanelArticulo.Update();
@@ -309,11 +322,9 @@ namespace E_Commerce_Vista
 
         protected void Page_PreRender(object sender, EventArgs e)
         {
-
             if (Session["Imagenes"] != null)
-            {
                 updatePanelArticulo.Update();
-            }
+
         }
 
 
@@ -325,10 +336,10 @@ namespace E_Commerce_Vista
 
             if (urls_imagenes != null && indiceActual > 0)
             {
-               
+
                 indiceActual--;
                 imgCarrusel.ImageUrl = urls_imagenes[indiceActual];
-                txtImagenUrl.Text= urls_imagenes[indiceActual];
+                txtImagenUrl.Text = urls_imagenes[indiceActual];
                 Session["IndiceImagenActual"] = indiceActual;
             }
         }
@@ -341,7 +352,7 @@ namespace E_Commerce_Vista
 
             if (urls_imagenes != null && indiceActual < urls_imagenes.Count - 1)
             {
-               
+
                 indiceActual++;
                 imgCarrusel.ImageUrl = urls_imagenes[indiceActual];
                 txtImagenUrl.Text = urls_imagenes[indiceActual];
@@ -351,21 +362,64 @@ namespace E_Commerce_Vista
 
         protected void btnModificarImagen_Click(object sender, EventArgs e)
         {
-            //int indice = Convert.ToInt32(hiddenCurrentSlideIndex.Value);
-
-            //List<string> urlsImagenes = new List<string>();
-            //urlsImagenes = (List<string>)Session["Imagenes"];
 
 
+            List<string> urlsImagenes = new List<string>();
+            urlsImagenes = (List<string>)Session["Imagenes"];
 
-            //urlsImagenes[indice] = txtImagenUrl.Text;
 
-            //updatePanelArticulo.Update();
+
+            urlsImagenes[(int)Session["IndiceImagenActual"]] = txtImagenUrl.Text;
+            Session["Imagenes"] = urlsImagenes;
+            imgCarrusel.ImageUrl = txtImagenUrl.Text;
+            txtImagenUrl.Text = "";
+            updatePanelArticulo.Update();
         }
 
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
+
+            List<string> urlsImagenes = new List<string>();
+            urlsImagenes = (List<string>)Session["Imagenes"];
+            if (urlsImagenes.Count > 1)
+            {
+                urlsImagenes.RemoveAt((int)Session["IndiceImagenActual"]);
+
+                List<string> nuevaLista = new List<string>(urlsImagenes.Count); // Crear nueva lista con capacidad inicial igual al número de elementos restantes
+
+                for (int i = 0; i < urlsImagenes.Count; i++)
+                {
+                    nuevaLista.Add(urlsImagenes[i]);
+                }
+                Session["Imagenes"] = nuevaLista;
+
+                if ((int)Session["IndiceImagenActual"] >= 1)
+                {
+                    imgCarrusel.ImageUrl = nuevaLista[(int)Session["IndiceImagenActual"] - 1];
+
+                    updatePanelArticulo.Update();
+                }
+                else {
+                    imgCarrusel.ImageUrl = nuevaLista[(int)Session["IndiceImagenActual"]];
+
+                    updatePanelArticulo.Update();
+
+                }
+
+
+
+            }
+            else
+            {
+                txtImagenUrl.CssClass = "form-control is-invalid";
+                Session.Remove("Imagenes");
+
+                imgCarrusel.ImageUrl = imgReemplazo;
+                updatePanelArticulo.Update();
+
+            }
+
 
         }
 

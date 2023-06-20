@@ -158,5 +158,19 @@ create table Stock(
 )
 
 
+CREATE PROCEDURE SpAgregarArticulo
+@Nombre varchar(50),
+@Codigo VARCHAR(50),
+@Descripcion varchar(150),
+@IdMarca int,
+@IdCategoria int,
+@Precio money
+as
+insert into Articulos values (@Nombre,@Codigo,@Descripcion,@IdMarca,@IdCategoria,@Precio)
+
+
+select * from Articulos
+select * from Imagenes
+select max(id) from Articulos
 
 
