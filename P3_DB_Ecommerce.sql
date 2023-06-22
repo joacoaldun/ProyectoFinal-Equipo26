@@ -1,6 +1,7 @@
 --CREACION BD TP FINAL PROGRAMACION 3--
 create DATABASE P3_ECOMMERCE_DB
 
+use P3_ECOMMERCE_DB
 GO
 create table Marcas(
     Id int not null primary key identity (1,1),
@@ -200,7 +201,7 @@ select max(id) from Articulos
 
 -----------------SP STOCK-----------------
 go 
-alter Procedure SPagregarStock
+create Procedure SPagregarStock
 @Cantidad int,
 @IdArticulo int
 AS
@@ -223,4 +224,5 @@ insert into Stock values
 (3,0),
 (4,0),
 (5,0),
-(6,0)
+(10,0)
+

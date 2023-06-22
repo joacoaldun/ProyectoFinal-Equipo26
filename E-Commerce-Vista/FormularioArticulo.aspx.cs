@@ -19,24 +19,31 @@ namespace E_Commerce_Vista
 
         public int indiceActual { get; set; }
 
+        public bool ModificarImagen { get; set; }
+
+        
+
+        
+
         protected void Page_Load(object sender, EventArgs e)
         {
 
             txtId.Enabled = false;
             try
             {
-                
+
                 confirmarEliminar = false;
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
-                
+
 
                 if (id == "")
                 {
                     verId = false;
                     modificando = false;
                 }
-                else { 
-                
+                else
+                {
+
                     verId = true;
                     modificando = true;
 
@@ -46,10 +53,12 @@ namespace E_Commerce_Vista
                 if (!IsPostBack)
                 {
 
-                   
+
 
                     Session.Remove("Imagenes");
                     Session.Remove("ImagenesId");
+                    Session.Remove("ObjectoImagen");
+                    Session.Remove("Chequeo");
                     MarcaNegocio marcaNegocio = new MarcaNegocio();
                     CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
 
@@ -69,8 +78,8 @@ namespace E_Commerce_Vista
 
                     if (id != "")
                     {
-                        
-                        
+
+
                         ArticuloNegocio negocio = new ArticuloNegocio();
                         List<Articulo> temporal = negocio.listarConSP();
 
@@ -78,7 +87,7 @@ namespace E_Commerce_Vista
 
                         //LISTA DE URLS PARA CREAR IMAGENES EN ARTICULOS NUEVOS, Y HACER VALIDACIONES EN MODIFICACION
                         List<string> listaImagenesModificar = new List<string>();
-                        
+
                         //LISTA DONDE VAMOS A CAMBIAR O ELIMINAR LOS URLS PERO DEJAR LOS ID, PARA HACER MODIFICACIONES
                         List<Imagen> imagenes = seleccionada.Imagenes;
 
@@ -92,7 +101,7 @@ namespace E_Commerce_Vista
                         ddlMarca.SelectedValue = seleccionada.Marcas.Id.ToString();
                         ddlCategoria.SelectedValue = seleccionada.Categorias.Id.ToString();
 
-                        txtStock.Text=seleccionada.StockArticulo.Cantidad.ToString();
+                        txtStock.Text = seleccionada.StockArticulo.Cantidad.ToString();
 
                         //txtImagenUrl.Text = seleccionada.Imagenes.Url
                         txtNombre.CssClass = "form-control is-valid";
@@ -100,11 +109,12 @@ namespace E_Commerce_Vista
                         txtDescripcion.CssClass = "form-control is-valid";
                         txtPrecio.CssClass = "form-control is-valid";
 
-                        foreach (var item in seleccionada.Imagenes) { 
-                        
-                        listaImagenesModificar.Add(item.UrlImagen.ToString());
-                           
-                        
+                        foreach (var item in seleccionada.Imagenes)
+                        {
+
+                            listaImagenesModificar.Add(item.UrlImagen.ToString());
+
+
                         }
 
                         if (imagenes.Count > 0)
@@ -116,7 +126,7 @@ namespace E_Commerce_Vista
 
                         Session["ObjetoImagen"] = imagenes;
                         Session["Imagenes"] = listaImagenesModificar;
-                       
+
 
                         modificando = true;
                         updatePanelArticulo.Update();
@@ -288,12 +298,13 @@ namespace E_Commerce_Vista
 
                 if (validarFormulario())
                 {
-                   
-                    
-                    
+
+
+
                     ArticuloNegocio articuloNegocio = new ArticuloNegocio();
+                    ImagenNegocio imagenNegocio = new ImagenNegocio();
                     Articulo articulo = new Articulo();
-                    StockNegocio stockNegocio= new StockNegocio();  
+                    StockNegocio stockNegocio = new StockNegocio();
                     articulo.Marcas = new Marca();
                     articulo.Categorias = new Categoria();
                     articulo.StockArticulo = new Stock();
@@ -308,11 +319,11 @@ namespace E_Commerce_Vista
                     articulo.Categorias.Id = int.Parse(ddlCategoria.SelectedValue);
 
 
-                   
+
                     int cantidad = txtStock.Text != "" ? int.Parse(txtStock.Text) : 0;
                     articulo.StockArticulo.Cantidad = cantidad;
 
-
+                    //SI NO TIENE ID ES PARA CREAR UN NUEVO ARTICULO Y SUS IMAGENES
                     if (id == "")
                     {
                         List<string> urlsImagenes = new List<string>();
@@ -324,18 +335,37 @@ namespace E_Commerce_Vista
                         }
 
                         articuloNegocio.agregarArticuloConSp(articulo);
-                        articuloNegocio.guardarListaImagenes(articulo);
+                        imagenNegocio.guardarListaImagenes(articulo);
                         stockNegocio.agregarStockConSP(articulo);
                     }
-                    else {
+                    //SI TIENE ID, VA A MODIFICAR ARTICULO Y SUS IMAGENES
+                    else
+                    {
+                        List<Imagen> imagenes = (List<Imagen>)Session["ObjetoImagen"];
+                        List<int> idImagenes = (List<int>)Session["ImagenesId"];
+
                         articulo.Id = int.Parse(id);
                         articuloNegocio.modificarArticulo(articulo);
                         stockNegocio.modificarStockConSP(articulo);
-                    
-                    
+
+                        if (Session["Chequeo"] != null) { 
+                        ModificarImagen = (bool)Session["Chequeo"];
+                        }
+
+                        
+
+                        if (ModificarImagen)
+                        {
+                            imagenNegocio.AgregarModificarImagenes(imagenes);
+                        }
+
+                        if (idImagenes != null)
+                        {
+                            imagenNegocio.eliminarImagenes(idImagenes);
+                        }
                     }
 
-                   
+
 
 
                 }
@@ -344,9 +374,12 @@ namespace E_Commerce_Vista
                     return;
                 }
 
-                Response.Redirect("GestionArticulos.aspx", false);
                 Session.Remove("Imagenes");
                 Session.Remove("Stock");
+                Session.Remove("ObjetoImagen");
+                Session.Remove("ImagenesId");
+                Session.Remove("Chequeo");
+                Response.Redirect("GestionArticulos.aspx", false);
                 
             }
             catch (Exception ex)
@@ -368,9 +401,38 @@ namespace E_Commerce_Vista
 
                 Session.Add("Imagenes", urlsImagenes);
 
+                //SOLO VA A ENTRAR EN EL IF SI ES PARA AGREGAR IMAGENES A UN ARTICULO A MODIFICAR Y ESTE ARTICULO NO TIENE IMAGENES
+                if (Request.QueryString["id"] != null)
+                {
+
+                    int id = int.Parse(Request.QueryString["id"]);
+                    List<Imagen> imagenes = new List<Imagen>();
+                    //CREO UN OBJETO IMAGEN, LE PASO TODA LA INFROMACION NECESARIA, Y LO MANDO A LA LISTA
+                    Imagen primeraImagen = new Imagen
+                    {
+                        UrlImagen = txtImagenUrl.Text,
+                        Id = 0,
+                        IdArticulo = id
+
+
+                    };
+
+                    imagenes.Add(primeraImagen);
+
+                    Session["ObjetoImagen"] = imagenes;
+                    Session["Chequeo"] = true;
+                }
+
+
+
                 imgCarrusel.ImageUrl = txtImagenUrl.Text;
                 Session.Add("IndiceImagenActual", urlsImagenes.Count - 1);
                 txtImagenUrl.CssClass = "form-control is-valid";
+
+
+
+
+
 
             }
             else if (Session["Imagenes"] != null && txtImagenUrl.Text != "")
@@ -380,10 +442,39 @@ namespace E_Commerce_Vista
                 urlsImagenes = (List<string>)Session["Imagenes"];
                 urlsImagenes.Add(txtImagenUrl.Text);
 
+                //SOLO VA A ENTRAR EN EL IF SI ES PARA AGREGAR IMAGENES A UN ARTICULO A MODIFICAR Y ESTE ARTICULO TIENE IMAGENES
+                if (Request.QueryString["id"] != null)
+                {
+
+                    int id = int.Parse(Request.QueryString["id"]);
+                    List<Imagen> imagenes = new List<Imagen>();
+                    imagenes = (List<Imagen>)Session["ObjetoImagen"];
+
+                    //CREO UN OBJETO IMAGEN, LE PASO TODA LA INFROMACION NECESARIA, Y LO MANDO A LA LISTA
+                    Imagen nuevaImagen = new Imagen
+                    {
+                        UrlImagen = txtImagenUrl.Text,
+                        Id = 0,
+                        IdArticulo = id
+
+
+                    };
+
+                    imagenes.Add(nuevaImagen);
+
+                    Session["ObjetoImagen"] = imagenes;
+                    Session["Chequeo"] = true;
+
+                }
+
+
+
+
                 imgCarrusel.ImageUrl = txtImagenUrl.Text;
 
                 Session.Add("Imagenes", urlsImagenes);
                 Session.Add("IndiceImagenActual", urlsImagenes.Count - 1);
+
 
             }
 
@@ -440,35 +531,58 @@ namespace E_Commerce_Vista
 
         protected void btnModificarImagen_Click(object sender, EventArgs e)
         {
+            if (txtImagenUrl.Text != "")
+            {
+                List<Imagen> imagenes = new List<Imagen>();
+                List<string> urlsImagenes = new List<string>();
 
-            List<Imagen> imagenes = new List<Imagen>(); 
-            List<string> urlsImagenes = new List<string>();
-           
-            urlsImagenes = (List<string>)Session["Imagenes"];
-            imagenes = (List<Imagen>)Session["ObjectoImagen"];
-
-
-            urlsImagenes[(int)Session["IndiceImagenActual"]] = txtImagenUrl.Text;
-            imagenes[(int)Session["IndiceImagenActual"]].UrlImagen = txtImagenUrl.Text;
+                urlsImagenes = (List<string>)Session["Imagenes"];
+                imagenes = (List<Imagen>)Session["ObjetoImagen"];
 
 
-            Session["Imagenes"] = urlsImagenes;
-            Session["ObjectoImagen"] = imagenes;
-            imgCarrusel.ImageUrl = txtImagenUrl.Text;
-            txtImagenUrl.Text = "";
-            updatePanelArticulo.Update();
+                urlsImagenes[(int)Session["IndiceImagenActual"]] = txtImagenUrl.Text;
+                imagenes[(int)Session["IndiceImagenActual"]].UrlImagen = txtImagenUrl.Text;
+
+
+                Session["Imagenes"] = urlsImagenes;
+                Session["ObjectoImagen"] = imagenes;
+                imgCarrusel.ImageUrl = txtImagenUrl.Text;
+                txtImagenUrl.Text = "";
+                updatePanelArticulo.Update();
+                
+            }
         }
 
 
         protected void btnEliminar_Click(object sender, EventArgs e)
         {
-
+            List<Imagen> imagenes = new List<Imagen>();
             List<string> urlsImagenes = new List<string>();
+            List<int> idImagen = new List<int>();
+
+
             urlsImagenes = (List<string>)Session["Imagenes"];
+            imagenes = (List<Imagen>)Session["ObjetoImagen"];
+
+            if (Session["ImagenesId"] != null)
+            {
+                idImagen = (List<int>)Session["ImagenesId"];
+            }
+
+
             if (urlsImagenes.Count > 1)
             {
-                urlsImagenes.RemoveAt((int)Session["IndiceImagenActual"]);
 
+
+
+                idImagen.Add(imagenes[(int)Session["IndiceImagenActual"]].Id);
+
+                urlsImagenes.RemoveAt((int)Session["IndiceImagenActual"]);
+                imagenes.RemoveAt((int)Session["IndiceImagenActual"]);
+
+                Session["ImagenesId"] = idImagen;
+                
+                //ORDENO LA LISTA DE URLS EN UNA NUEVA LISTA
                 List<string> nuevaLista = new List<string>(urlsImagenes.Count); // Crear nueva lista con capacidad inicial igual al número de elementos restantes
 
                 for (int i = 0; i < urlsImagenes.Count; i++)
@@ -477,13 +591,25 @@ namespace E_Commerce_Vista
                 }
                 Session["Imagenes"] = nuevaLista;
 
+                //ORDENA LA LISTA DE IMAGENES EN UNA NUEVA LISTA, PARA QUE QUEDE IGUAL QUE LA LISTA DE URLS
+                List<Imagen> nuevaListaImagenes = new List<Imagen>(imagenes.Count); // Crear nueva lista con capacidad inicial igual al número de elementos restantes
+
+                for (int i = 0; i < imagenes.Count; i++)
+                {
+                    nuevaListaImagenes.Add(imagenes[i]);
+                }
+                Session["ObjetoImagen"] = nuevaListaImagenes;
+
+
+
                 if ((int)Session["IndiceImagenActual"] >= 1)
                 {
                     imgCarrusel.ImageUrl = nuevaLista[(int)Session["IndiceImagenActual"] - 1];
 
                     updatePanelArticulo.Update();
                 }
-                else {
+                else
+                {
                     imgCarrusel.ImageUrl = nuevaLista[(int)Session["IndiceImagenActual"]];
 
                     updatePanelArticulo.Update();
@@ -495,9 +621,15 @@ namespace E_Commerce_Vista
             }
             else
             {
+                idImagen.Add(imagenes[0].Id);
+
+                Session["ImagenesId"] = idImagen;
+
+                
+
                 txtImagenUrl.CssClass = "form-control is-invalid";
                 Session.Remove("Imagenes");
-
+                Session.Remove("ObjectoImagen");
                 imgCarrusel.ImageUrl = imgReemplazo;
                 updatePanelArticulo.Update();
 
@@ -508,7 +640,7 @@ namespace E_Commerce_Vista
 
         protected void txtStock_TextChanged(object sender, EventArgs e)
         {
-            
+
             if (!soloNumeros(txtStock.Text))
             {
                 txtStock.CssClass = "form-control is-invalid";
@@ -519,7 +651,7 @@ namespace E_Commerce_Vista
                 txtStock.CssClass = "form-control is-valid";
             }
             int stock;
-            if(int.TryParse(txtStock.Text, out stock))
+            if (int.TryParse(txtStock.Text, out stock))
             {
                 if (stock < 0)
                 {
