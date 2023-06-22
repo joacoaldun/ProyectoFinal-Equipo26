@@ -543,7 +543,7 @@ namespace E_Commerce_Vista
                 urlsImagenes[(int)Session["IndiceImagenActual"]] = txtImagenUrl.Text;
                 imagenes[(int)Session["IndiceImagenActual"]].UrlImagen = txtImagenUrl.Text;
 
-
+                Session["Chequeo"] = true;
                 Session["Imagenes"] = urlsImagenes;
                 Session["ObjectoImagen"] = imagenes;
                 imgCarrusel.ImageUrl = txtImagenUrl.Text;

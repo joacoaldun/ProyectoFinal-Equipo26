@@ -95,7 +95,7 @@ namespace Negocio
         {
             AccesoDatos datos = new AccesoDatos();
 
-            List<Imagen> imagenesBD = listarImagenes();
+           
 
             foreach (var item in imagenes)
             {
@@ -124,7 +124,7 @@ namespace Negocio
         public void agregarImagenBD(Imagen imagen)
         {
             AccesoDatos datos = new AccesoDatos();
-
+           
             try
             {
                 datos.setearConsulta("insert into Imagenes(IdArticulo, ImagenUrl) values(@IdArticulo, @ImagenUrl)");
@@ -157,7 +157,7 @@ namespace Negocio
                 datos.setearParametros("@ImagenUrl", imagen.UrlImagen);
                 datos.setearParametros("@Id", imagen.Id);
 
-                datos.ejecutarConsulta();
+                datos.ejecutarAccion();
 
             }
             catch (Exception ex)
