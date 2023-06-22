@@ -23,7 +23,7 @@ namespace E_Commerce_Vista
             { 
                 ArticuloNegocio negocio = new ArticuloNegocio();
 
-                Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.StockArticulo.Cantidad > 0).ToList());
+                Session.Add("ListaArticulo", negocio.listarConSP());
                 ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
 
 

@@ -56,7 +56,7 @@
                                                     CANTIDAD:
                                             <asp:Label ID="lblCantidad" runat="server"></asp:Label>
                                                 </p>
-                                                <asp:Button ID="btnSumar" Text="+"  runat="server" CssClass="btn btn-light" OnClick="sumarArticulo_Click" CommandArgument='<%#Eval("Id")%>' />
+                                                <asp:Button ID="btnSumar" Text="+"  runat="server" CssClass="btn btn-light btnSumar" OnClick="sumarArticulo_Click" CommandArgument='<%#Eval("Id")%>' />
                                             </div>
 
 

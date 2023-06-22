@@ -70,6 +70,21 @@ namespace E_Commerce_Vista
                 }
                 //updatePanelCarrito.Update();
 
+               
+
+
+            }
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Articulo articulo = e.Item.DataItem as Articulo;
+                Button btnAgregar = e.Item.FindControl("btnSumar") as Button;
+
+                if (articulo.StockArticulo.Cantidad == 0)
+                {
+                    btnAgregar.Enabled = false;
+                    
+                }
             }
 
         }

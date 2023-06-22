@@ -14,17 +14,27 @@ namespace E_Commerce_Vista
         public List<Articulo> ListaArticulo { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!IsPostBack && Session["ListaArticulo"]==null)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
-                Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.StockArticulo.Cantidad > 0).ToList());
+                Session.Add("ListaArticulo", negocio.listarConSP());
                 ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
                 repRepetidor.DataSource = ListaArticulo;
                 repRepetidor.DataBind();
-                
-            }
-           
 
+
+            }
+            else
+            {
+                if(!IsPostBack && Session["ListaArticulo"] != null)
+                {
+                    repRepetidor.DataSource = (List<Articulo>)Session["ListaArticulo"];
+                    repRepetidor.DataBind();
+                }
+               
+            }
+            
+           
         }
 
 
@@ -42,6 +52,22 @@ namespace E_Commerce_Vista
                 imgImagen.ImageUrl = urlImagenOriginal;
                 imgImagen.Attributes["onerror"] = "this.onerror=null;this.src='" + urlImagenReemplazo + "';";
             }
+
+
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Articulo articulo = e.Item.DataItem as Articulo;
+                Button btnAgregar = e.Item.FindControl("btnEjemplo") as Button;
+
+                if (articulo.StockArticulo.Cantidad == 0)
+                {
+                    btnAgregar.Enabled = false;
+                    btnAgregar.CssClass = "btn btn-danger btn-pg-1";
+                    btnAgregar.Text = "Sin stock";
+                }
+            }
+
         }
 
         protected void btnDetalle_Click(object sender, EventArgs e)
@@ -68,10 +94,11 @@ namespace E_Commerce_Vista
             Articulo articulo = new Articulo();
             ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
             articulo = ListaArticulo.Find(a => a.Id == id);
+
             carrito.AgregarArticulo(articulo);
             Session["Carrito"] = carrito;
-
-
+          
+         
         }
 
         // Funcion para actualizar y llamar a la funcion despues del updatePanel para que vuelva a asignar los eventos 

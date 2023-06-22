@@ -1,29 +1,30 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="DetalleArticulo.aspx.cs" Inherits="E_Commerce_Vista.DetalleArticulo" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <style>
-        .card{
-            margin-top:10vh;
-        }
-         .carousel-image {
-            height: 500px; 
-            object-fit: fill; 
+        .card {
+            margin-top: 10vh;
         }
 
+        .carousel-image {
+            height: 500px;
+            object-fit: fill;
+        }
     </style>
 
 
-     <%
+    <%
         if (articulo.Id != 0)
         {
     %>
-    
+
     <asp:UpdatePanel runat="server">
         <ContentTemplate>
-            
-           <div class="container">
+
+            <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
                         <div class="card">
@@ -66,14 +67,26 @@
                                     <p><span class="label">Precio:</span> <%:"$" + articulo.Precio %></p>
                                 </div>
                                 <div class="add-to-cart">
+                                    <% if (articulo.StockArticulo.Cantidad > 0)
+                                        {
+
+                                    %>
                                     <asp:Button Text="Agregar al carrito" ID="btnAgregar" CssClass="btn btn-success" runat="server" OnClick="btnAgregar_Click" OnClientClick="mostrarMensaje();" />
+
+                                    <%}
+                                        else
+                                        {%>
+                                      <asp:Button Text="Sin stock" ID="Button1" CssClass="btn btn-danger btn-pg-1" runat="server"  enabled="false" />
+
+                                        <%}%>
                                     <asp:Button ID="btnVolver" runat="server" CssClass="btn btn-dark green-text" Text="Volver atras" OnClick="btnVolver_Click" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>--%>
+            </div>
+            --%>
 
         </ContentTemplate>
     </asp:UpdatePanel>

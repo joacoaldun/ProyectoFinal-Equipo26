@@ -96,6 +96,19 @@ namespace Negocio
 
         }
 
+        public bool descontarStock(Articulo articulo)
+        {
+            if (articulo.StockArticulo.Cantidad  > 0)
+            {
+                articulo.StockArticulo.Cantidad--;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
 
     }
 }

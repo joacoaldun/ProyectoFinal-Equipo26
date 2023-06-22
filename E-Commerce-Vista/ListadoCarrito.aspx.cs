@@ -1,4 +1,5 @@
 ﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,9 +27,6 @@ namespace E_Commerce_Vista
                     repCarrito.DataBind();
                     lblPrecioTotal.Text = "$" + carrito.PrecioTotal.ToString();
                 }
-
-
-
 
 
 
@@ -83,6 +81,17 @@ namespace E_Commerce_Vista
 
 
             }
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Articulo articulo = e.Item.DataItem as Articulo;
+                Button btnAgregar = e.Item.FindControl("btnSumar") as Button;
+
+                if (articulo.StockArticulo.Cantidad == 0)
+                {
+                    btnAgregar.Enabled = false;
+
+                }
+            }
             //updatePanelCarrito.Update();
         }
         //SUMAR Y RESTAR ART. DEL CARRITO
@@ -105,7 +114,9 @@ namespace E_Commerce_Vista
             int id = int.Parse(btnSumar.CommandArgument);
 
             Articulo art = carritoAct.ListaArticulo.FirstOrDefault(a => a.Id == id);
+            
             carritoAct.AgregarArticulo(art);
+
             Session["Carrito"] = carritoAct;
             updatePanelCarrito.Update();
         }
