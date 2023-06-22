@@ -157,6 +157,7 @@ create table Stock(
     Primary key (IdArticulo)
 )
 
+use P3_ECOMMERCE_DB
 
 CREATE PROCEDURE SpAgregarArticulo
 @Nombre varchar(50),
@@ -167,6 +168,20 @@ CREATE PROCEDURE SpAgregarArticulo
 @Precio money
 as
 insert into Articulos values (@Nombre,@Codigo,@Descripcion,@IdMarca,@IdCategoria,@Precio)
+
+
+Create Procedure SpModificarArticulo
+@Nombre varchar(50),
+@Codigo VARCHAR(50),
+@Descripcion varchar(150),
+@IdMarca int,
+@IdCategoria int,
+@Precio money,
+@Id int
+as
+Update Articulos set Nombre = @Nombre, Codigo = @Codigo, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, Precio = @Precio
+where Id = @Id
+
 
 
 select * from Articulos

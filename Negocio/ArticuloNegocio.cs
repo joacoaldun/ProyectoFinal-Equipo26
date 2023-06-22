@@ -189,7 +189,7 @@ namespace Negocio
                 {
                     datos.setearConsulta("insert into imagenes(idArticulo, ImagenUrl) values (" + id + ", '" + item.UrlImagen.ToString() + "' )");
 
-                   
+
 
 
 
@@ -207,6 +207,38 @@ namespace Negocio
                 datos.cerrarConexion();
 
             }
+        }
+
+        public void modificarArticulo(Articulo articulo)
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+
+                datos.setearProcedimiento("SpModificarArticulo");
+                datos.setearParametros("@Nombre", articulo.Nombre);
+                datos.setearParametros("@Codigo", articulo.CodigoArticulo);
+                datos.setearParametros("@Descripcion", articulo.Descripcion);
+                datos.setearParametros("@IdMarca", articulo.Marcas.Id);
+                datos.setearParametros("@IdCategoria", articulo.Categorias.Id);
+                datos.setearParametros("@Precio", articulo.Precio);
+                datos.setearParametros("@Id", articulo.Id);
+
+                datos.ejecutarAccion();
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally { 
+                datos.cerrarConexion();
+            
+            }
+
         }
 
 

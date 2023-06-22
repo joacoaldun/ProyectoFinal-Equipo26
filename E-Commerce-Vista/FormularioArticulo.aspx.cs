@@ -28,11 +28,22 @@ namespace E_Commerce_Vista
                 modificando = false;
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
                 confirmarEliminar = false;
-                verId = false;
+
+                if (id == "")
+                {
+                    verId = false;
+                }
+                else { 
+                
+                verId = true;
+                
+                }
+
 
                 if (!IsPostBack)
                 {
                     Session.Remove("Imagenes");
+                    Session.Remove("ImagenesId");
                     MarcaNegocio marcaNegocio = new MarcaNegocio();
                     CategoriaNegocio categoriaNegocio = new CategoriaNegocio();
 
@@ -57,6 +68,12 @@ namespace E_Commerce_Vista
 
                         Articulo seleccionada = temporal.Find(x => x.Id == int.Parse(id));
 
+                        //LISTA DE URLS PARA CREAR IMAGENES EN ARTICULOS NUEVOS, Y HACER VALIDACIONES EN MODIFICACION
+                        List<string> listaImagenesModificar = new List<string>();
+                        
+                        //LISTA DONDE VAMOS A CAMBIAR O ELIMINAR LOS URLS PERO DEJAR LOS ID, PARA HACER MODIFICACIONES
+                        List<Imagen> imagenes = seleccionada.Imagenes;
+
                         txtId.Text = seleccionada.Id.ToString();
                         txtId.ReadOnly = true;
                         txtNombre.Text = seleccionada.Nombre;
@@ -72,6 +89,23 @@ namespace E_Commerce_Vista
                         txtDescripcion.CssClass = "form-control is-valid";
                         txtPrecio.CssClass = "form-control is-valid";
 
+                        foreach (var item in seleccionada.Imagenes) { 
+                        
+                        listaImagenesModificar.Add(item.UrlImagen.ToString());
+                           
+                        
+                        }
+
+                        if (imagenes.Count > 0)
+                        {
+
+                            txtImagenUrl.CssClass = "form-control is-valid";
+
+                        }
+
+                        Session["ObjetoImagen"] = imagenes;
+                        Session["Imagenes"] = listaImagenesModificar;
+                       
 
                         modificando = true;
                         updatePanelArticulo.Update();
@@ -212,10 +246,13 @@ namespace E_Commerce_Vista
         {
             try
             {
+                string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
 
                 if (validarFormulario())
                 {
-
+                   
+                    
+                    
                     ArticuloNegocio articuloNegocio = new ArticuloNegocio();
                     Articulo articulo = new Articulo();
                     articulo.Marcas = new Marca();
@@ -231,34 +268,31 @@ namespace E_Commerce_Vista
                     articulo.Categorias.Id = int.Parse(ddlCategoria.SelectedValue);
 
 
-                    List<string> urlsImagenes = new List<string>();
-                    urlsImagenes = (List<string>)Session["Imagenes"];
-
-                    foreach (string urlImagen in urlsImagenes)
+                    if (id == "")
                     {
-                        articulo.Imagenes.Add(new Imagen { UrlImagen = urlImagen });
+                        List<string> urlsImagenes = new List<string>();
+                        urlsImagenes = (List<string>)Session["Imagenes"];
+
+                        foreach (string urlImagen in urlsImagenes)
+                        {
+                            articulo.Imagenes.Add(new Imagen { UrlImagen = urlImagen });
+                        }
+
+
+
+
+
+                        articuloNegocio.agregarArticuloConSp(articulo);
+                        articuloNegocio.guardarListaImagenes(articulo);
+                    }
+                    else {
+                        articulo.Id = int.Parse(id);
+                     articuloNegocio.modificarArticulo(articulo);
+                    
+                    
                     }
 
-                    
-
-
-
-                    articuloNegocio.agregarArticuloConSp(articulo);
-                   articuloNegocio.guardarListaImagenes(articulo);
-
-
-                    // if (Request.QueryString["id"] != null)
-                    //{
-                    //    nuevaMarca.Id = int.Parse(txtId.Text);
-                    //    negocio.modificar(nuevaMarca);
-                    //}
-
-
-
-                    //else
-                    //{
-                    //   
-                    //}
+                   
 
 
                 }
@@ -269,7 +303,7 @@ namespace E_Commerce_Vista
 
                 Response.Redirect("GestionArticulos.aspx", false);
                 Session.Remove("Imagenes");
-
+                
             }
             catch (Exception ex)
             {
@@ -363,14 +397,19 @@ namespace E_Commerce_Vista
         protected void btnModificarImagen_Click(object sender, EventArgs e)
         {
 
-
+            List<Imagen> imagenes = new List<Imagen>(); 
             List<string> urlsImagenes = new List<string>();
+           
             urlsImagenes = (List<string>)Session["Imagenes"];
-
+            imagenes = (List<Imagen>)Session["ObjectoImagen"];
 
 
             urlsImagenes[(int)Session["IndiceImagenActual"]] = txtImagenUrl.Text;
+            imagenes[(int)Session["IndiceImagenActual"]].UrlImagen = txtImagenUrl.Text;
+
+
             Session["Imagenes"] = urlsImagenes;
+            Session["ObjectoImagen"] = imagenes;
             imgCarrusel.ImageUrl = txtImagenUrl.Text;
             txtImagenUrl.Text = "";
             updatePanelArticulo.Update();
