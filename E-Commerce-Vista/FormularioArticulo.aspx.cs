@@ -228,11 +228,38 @@ namespace E_Commerce_Vista
             if (string.IsNullOrEmpty(txtPrecio.Text.Trim()))
             {
                 txtPrecio.CssClass = "form-control is-invalid";
+                errorPrecio.InnerText = "Campo obligatorio";
             }
             else
             {
                 txtPrecio.CssClass = "form-control is-valid";
             }
+
+
+            if (!soloNumeros(txtPrecio.Text))
+            {
+                txtPrecio.CssClass = "form-control is-invalid";
+                errorPrecio.InnerText = "Ingrese un campo numérico.";
+            }
+            else
+            {
+                txtPrecio.CssClass = "form-control is-valid";
+            }
+            int stock;
+            if (int.TryParse(txtPrecio.Text, out stock))
+            {
+                if (stock < 0)
+                {
+                    txtPrecio.CssClass = "form-control is-invalid";
+                    errorPrecio.InnerText = "Ingrese un valor positivo.";
+                }
+                else
+                {
+                    txtPrecio.CssClass = "form-control is-valid";
+                }
+            }
+
+
             updatePanelArticulo.Update();
         }
         protected void txtImagenUrl_TextChanged(object sender, EventArgs e)
@@ -482,14 +509,44 @@ namespace E_Commerce_Vista
         protected void txtStock_TextChanged(object sender, EventArgs e)
         {
             
-            
+            if (!soloNumeros(txtStock.Text))
+            {
+                txtStock.CssClass = "form-control is-invalid";
+                errorStock.InnerText = "Ingrese un campo numérico.";
+            }
+            else
+            {
+                txtStock.CssClass = "form-control is-valid";
+            }
+            int stock;
+            if(int.TryParse(txtStock.Text, out stock))
+            {
+                if (stock < 0)
+                {
+                    txtStock.CssClass = "form-control is-invalid";
+                    errorStock.InnerText = "Ingrese un valor positivo.";
+                }
+                else
+                {
+                    txtStock.CssClass = "form-control is-valid";
+                }
+            }
+        }
 
 
+        private bool soloNumeros(string cadena)
+        {
+            foreach (char caracter in cadena)
+            {
+                if ((char.IsNumber(caracter)))
+                    return true;
+            }
+            return false;
         }
 
         protected void btnActualizarStock_Click(object sender, EventArgs e)
         {
-            Session.Add("Stock", txtStock.Text);
+            //Session.Add("Stock", txtStock.Text);
         }
     }
 }

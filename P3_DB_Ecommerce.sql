@@ -160,6 +160,8 @@ create table Stock(
 
 drop table stock
 
+
+---------------SP ARTICULOS-----------------
 go
 CREATE PROCEDURE SpAgregarArticulo
 @Nombre varchar(50),
@@ -196,7 +198,7 @@ select * from Articulos
 select * from Imagenes
 select max(id) from Articulos
 
-
+-----------------SP STOCK-----------------
 go 
 alter Procedure SPagregarStock
 @Cantidad int,
@@ -212,4 +214,13 @@ as
 Update Stock set Cantidad = @Cantidad
 where IdArticulo = @IdArticulo
 
+select * from articulos a 
+left join stock s on s.IdArticulo= a.Id
 
+insert into Stock values 
+(1,0),
+(2,0),
+(3,0),
+(4,0),
+(5,0),
+(6,0)

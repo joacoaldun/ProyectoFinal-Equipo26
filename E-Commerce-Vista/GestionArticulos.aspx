@@ -14,6 +14,7 @@
             <asp:BoundField  HeaderText="Marca" DataField="Marcas.NombreMarca"/> 
             <asp:BoundField  HeaderText="Categoria" DataField="Categorias.NombreCategoria"/> 
             <asp:BoundField  HeaderText="Precio" DataField="Precio"/> 
+            <asp:BoundField  HeaderText="Stock" DataField="StockArticulo.Cantidad"/> 
             <asp:CommandField ShowSelectButton="true" SelectText="♦" HeaderText="Gestionar" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
 
         </Columns>

@@ -52,7 +52,7 @@
                     <div class="mb-3 mt-3">
                         <label for="txtPrecio" class="form-label">Precio</label>
                         <asp:TextBox ID="txtPrecio" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtPrecio_TextChanged" />
-                        <div id="errorPrecio" class="invalid-feedback ">Campo obligatorio.</div>
+                        <div id="errorPrecio" class="invalid-feedback " runat="server">Campo obligatorio.</div>
 
                     </div>
 
@@ -103,8 +103,8 @@
                     <div class="mb-3 mt-3">
                         <label for="txtStock" class="form-label">Stock articulo</label>
 
-
-                        <asp:TextBox ID="txtStock" CssClass="form-control is-invalid" OnTextChanged="txtStock_TextChanged" runat="server" />
+                        <asp:TextBox ID="txtStock" CssClass="form-control " AutoPostBack="true" OnTextChanged="txtStock_TextChanged" runat="server" />
+                        <div id="errorStock" class="invalid-feedback " runat="server"></div>
                         <%--<%if (modificando)
                             {%>
                         <asp:Button Text="Actualizar Stock" Id="btnActualizarStock" OnClick="btnActualizarStock_Click" CssClass="btn btn-success" runat="server" />

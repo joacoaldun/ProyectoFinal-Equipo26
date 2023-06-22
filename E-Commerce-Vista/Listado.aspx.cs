@@ -17,10 +17,11 @@ namespace E_Commerce_Vista
             if (!IsPostBack)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
-                Session.Add("ListaArticulo", negocio.listarConSP());
+                Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.StockArticulo.Cantidad > 0).ToList());
                 ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
                 repRepetidor.DataSource = ListaArticulo;
                 repRepetidor.DataBind();
+                
             }
            
 
