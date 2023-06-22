@@ -25,23 +25,29 @@ namespace E_Commerce_Vista
             txtId.Enabled = false;
             try
             {
-                modificando = false;
-                string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
+                
                 confirmarEliminar = false;
+                string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
+                
 
                 if (id == "")
                 {
                     verId = false;
+                    modificando = false;
                 }
                 else { 
                 
-                verId = true;
-                
+                    verId = true;
+                    modificando = true;
+
                 }
 
 
                 if (!IsPostBack)
                 {
+
+                   
+
                     Session.Remove("Imagenes");
                     Session.Remove("ImagenesId");
                     MarcaNegocio marcaNegocio = new MarcaNegocio();
@@ -63,6 +69,8 @@ namespace E_Commerce_Vista
 
                     if (id != "")
                     {
+                        
+                        
                         ArticuloNegocio negocio = new ArticuloNegocio();
                         List<Articulo> temporal = negocio.listarConSP();
 
@@ -74,6 +82,7 @@ namespace E_Commerce_Vista
                         //LISTA DONDE VAMOS A CAMBIAR O ELIMINAR LOS URLS PERO DEJAR LOS ID, PARA HACER MODIFICACIONES
                         List<Imagen> imagenes = seleccionada.Imagenes;
 
+
                         txtId.Text = seleccionada.Id.ToString();
                         txtId.ReadOnly = true;
                         txtNombre.Text = seleccionada.Nombre;
@@ -82,6 +91,8 @@ namespace E_Commerce_Vista
                         txtPrecio.Text = seleccionada.Precio.ToString();
                         ddlMarca.SelectedValue = seleccionada.Marcas.Id.ToString();
                         ddlCategoria.SelectedValue = seleccionada.Categorias.Id.ToString();
+
+                        txtStock.Text=seleccionada.StockArticulo.Cantidad.ToString();
 
                         //txtImagenUrl.Text = seleccionada.Imagenes.Url
                         txtNombre.CssClass = "form-control is-valid";
@@ -255,8 +266,10 @@ namespace E_Commerce_Vista
                     
                     ArticuloNegocio articuloNegocio = new ArticuloNegocio();
                     Articulo articulo = new Articulo();
+                    StockNegocio stockNegocio= new StockNegocio();  
                     articulo.Marcas = new Marca();
                     articulo.Categorias = new Categoria();
+                    articulo.StockArticulo = new Stock();
 
                     articulo.Imagenes = new List<Imagen>();
 
@@ -266,6 +279,11 @@ namespace E_Commerce_Vista
                     articulo.Precio = decimal.Parse(txtPrecio.Text);
                     articulo.Marcas.Id = int.Parse(ddlMarca.SelectedValue);
                     articulo.Categorias.Id = int.Parse(ddlCategoria.SelectedValue);
+
+
+                   
+                    int cantidad = txtStock.Text != "" ? int.Parse(txtStock.Text) : 0;
+                    articulo.StockArticulo.Cantidad = cantidad;
 
 
                     if (id == "")
@@ -278,16 +296,14 @@ namespace E_Commerce_Vista
                             articulo.Imagenes.Add(new Imagen { UrlImagen = urlImagen });
                         }
 
-
-
-
-
                         articuloNegocio.agregarArticuloConSp(articulo);
                         articuloNegocio.guardarListaImagenes(articulo);
+                        stockNegocio.agregarStockConSP(articulo);
                     }
                     else {
                         articulo.Id = int.Parse(id);
-                     articuloNegocio.modificarArticulo(articulo);
+                        articuloNegocio.modificarArticulo(articulo);
+                        stockNegocio.modificarStockConSP(articulo);
                     
                     
                     }
@@ -303,6 +319,7 @@ namespace E_Commerce_Vista
 
                 Response.Redirect("GestionArticulos.aspx", false);
                 Session.Remove("Imagenes");
+                Session.Remove("Stock");
                 
             }
             catch (Exception ex)
@@ -462,6 +479,17 @@ namespace E_Commerce_Vista
 
         }
 
+        protected void txtStock_TextChanged(object sender, EventArgs e)
+        {
+            
+            
 
+
+        }
+
+        protected void btnActualizarStock_Click(object sender, EventArgs e)
+        {
+            Session.Add("Stock", txtStock.Text);
+        }
     }
 }

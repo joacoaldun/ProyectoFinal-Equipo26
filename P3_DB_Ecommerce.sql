@@ -68,19 +68,20 @@ insert into Imagenes values
 
 
 
---SP LISTAR--
+--SP LISTAR CON STOCK--
 go
-create procedure storedListar as
+alter procedure storedListar as
 SELECT a.Id, Codigo, Nombre, a.Descripcion 
 as DescripcionArticulo, 
 Precio,m.Id as IdMarca, 
 m.Descripcion as NombreMarca,
 c.Id as IdCategoria, 
 c.Descripcion as NombreCategoria, 
-i.ImagenUrl as imagen,i.Id as IdImagen ,i.IdArticulo as idArticuloImagen from ARTICULOS a 
+i.ImagenUrl as imagen,i.Id as IdImagen ,i.IdArticulo as idArticuloImagen , s.cantidad as Stock from ARTICULOS a 
 left join MARCAS m on a.IdMarca=m.Id 
 left join CATEGORIAS c on a.IdCategoria=c.Id 
 left join IMAGENES i on a.Id=i.IdArticulo
+left join stock s on a.Id=s.IdArticulo
 
 --JUEGOS DE LA MARCA SONY
 select A.nombre, M.Descripcion from Articulos A
@@ -153,12 +154,13 @@ CREATE TABLE ListaFavoritos (
 GO
 create table Stock(
     IdArticulo int foreign key references Articulos (Id),
-    Cantidad int not null,
+    Cantidad int default 0,
     Primary key (IdArticulo)
 )
 
-use P3_ECOMMERCE_DB
+drop table stock
 
+go
 CREATE PROCEDURE SpAgregarArticulo
 @Nombre varchar(50),
 @Codigo VARCHAR(50),
@@ -170,6 +172,12 @@ as
 insert into Articulos values (@Nombre,@Codigo,@Descripcion,@IdMarca,@IdCategoria,@Precio)
 
 
+select * from Articulos
+select * from Imagenes
+select max(id) from Articulos
+
+
+go
 Create Procedure SpModificarArticulo
 @Nombre varchar(50),
 @Codigo VARCHAR(50),
@@ -187,5 +195,21 @@ where Id = @Id
 select * from Articulos
 select * from Imagenes
 select max(id) from Articulos
+
+
+go 
+alter Procedure SPagregarStock
+@Cantidad int,
+@IdArticulo int
+AS
+INSERT INTO Stock (Cantidad, IdArticulo) VALUES (@Cantidad, @IdArticulo)
+
+go
+Create Procedure SPmodificarStock
+@Cantidad int,
+@IdArticulo int
+as
+Update Stock set Cantidad = @Cantidad
+where IdArticulo = @IdArticulo
 
 

@@ -7,7 +7,7 @@
     <%-- FORM CON VALIDACIONES --%>
 
     <asp:UpdatePanel runat="server" ID="updatePanelArticulo" UpdateMode="Conditional">
-        <contenttemplate>
+        <ContentTemplate>
             <div class="row">
 
                 <div class="col-4">
@@ -19,6 +19,8 @@
                         <asp:TextBox runat="server" ID="txtId" CssClass="form-control" />
                     </div>
                     <% }
+
+
 
 
                     %>
@@ -99,8 +101,20 @@
                 <div class="col-4">
 
                     <div class="mb-3 mt-3">
+                        <label for="txtStock" class="form-label">Stock articulo</label>
+
+
+                        <asp:TextBox ID="txtStock" CssClass="form-control is-invalid" OnTextChanged="txtStock_TextChanged" runat="server" />
+                        <%--<%if (modificando)
+                            {%>
+                        <asp:Button Text="Actualizar Stock" Id="btnActualizarStock" OnClick="btnActualizarStock_Click" CssClass="btn btn-success" runat="server" />
+                        <% } %>--%>
+                    </div>
+
+
+                    <div class="mb-3 mt-3">
                         <label for="txtImagenUrl" class="form-label">Url Imagen</label>
-                        <asp:TextBox ID="txtImagenUrl" CssClass="form-control is-invalid" runat="server"  OnTextChanged="txtImagenUrl_TextChanged" />
+                        <asp:TextBox ID="txtImagenUrl" CssClass="form-control is-invalid" runat="server" OnTextChanged="txtImagenUrl_TextChanged" />
                     </div>
 
                     <div class="mt-3 ">
@@ -141,7 +155,7 @@
                 </div>
 
             </div>
-        </contenttemplate>
+        </ContentTemplate>
     </asp:UpdatePanel>
 
 
@@ -177,32 +191,32 @@
         .col-4 {
             flex-basis: 50%; /* O cualquier otro ancho deseado */
         }
+
         .carousel-container {
-    position: relative;
-    display: inline-block;
-}
+            position: relative;
+            display: inline-block;
+        }
 
-.btnCarrusel {
-    position: absolute;
-    top: 45%;
-    background-color: black;
-    color: white;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+        .btnCarrusel {
+            position: absolute;
+            top: 45%;
+            background-color: black;
+            color: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-.btnAnterior {
-    left: 0;
-}
+        .btnAnterior {
+            left: 0;
+        }
 
-.btnSiguiente {
-    right: 0;
-}
-
+        .btnSiguiente {
+            right: 0;
+        }
     </style>
 
 

@@ -30,7 +30,8 @@ namespace Negocio
                     string descripcion = datos.Lector["DescripcionArticulo"] == DBNull.Value ? "Sin descripcion" : (string)datos.Lector["DescripcionArticulo"];
                     decimal precio = datos.Lector["Precio"] == DBNull.Value ? 0 : (decimal)datos.Lector["Precio"];
                     string nombre = datos.Lector["Nombre"] == DBNull.Value ? "Sin nombre" : (string)datos.Lector["Nombre"];
-
+                    
+                    int stock = datos.Lector["Stock"] == DBNull.Value ? 0 : (int)datos.Lector["Stock"];
 
                     int idArticuloImagen = datos.Lector["IdArticuloImagen"] == DBNull.Value ? -1 : (int)datos.Lector["IdArticuloImagen"];
                     int idImagen = datos.Lector["IdImagen"] == DBNull.Value ? -1 : (int)datos.Lector["IdImagen"];
@@ -65,6 +66,12 @@ namespace Negocio
                             {
                                 Id = idMarcas,
                                 NombreMarca = marcas
+                            },
+                            StockArticulo=new Stock
+                            {
+                                IdArticulo=id,
+                                Cantidad=stock
+
                             },
 
 
@@ -118,6 +125,7 @@ namespace Negocio
                 datos.setearParametros("@IdMarca", nuevo.Marcas.Id);
                 datos.setearParametros("@IdCategoria", nuevo.Categorias.Id);
                 datos.setearParametros("@Precio", nuevo.Precio);
+                
 
                 datos.ejecutarAccion();
 
