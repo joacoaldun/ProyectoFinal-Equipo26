@@ -75,6 +75,14 @@ namespace E_Commerce_Vista
                     ddlCategoria.DataTextField = "NombreCategoria";
                     ddlCategoria.DataBind();
 
+                    //bool estado = true;
+                    //txtPublicar.Text = estado.ToString();
+                    
+                    List<string> valores= new List<string>();
+                    valores.Add("Si");
+                    valores.Add("No");
+                    ddlPublicar.DataSource = valores;
+                    ddlPublicar.DataBind();
 
                     if (id != "")
                     {
@@ -100,6 +108,12 @@ namespace E_Commerce_Vista
                         txtPrecio.Text = seleccionada.Precio.ToString();
                         ddlMarca.SelectedValue = seleccionada.Marcas.Id.ToString();
                         ddlCategoria.SelectedValue = seleccionada.Categorias.Id.ToString();
+
+
+
+                        //txtPublicar.Text= seleccionada.Estado.ToString();
+                        string estado = seleccionada.Estado ? "Si" : "No";
+                        ddlPublicar.SelectedValue = estado;
 
                         txtStock.Text = seleccionada.StockArticulo.Cantidad.ToString();
 
@@ -317,6 +331,17 @@ namespace E_Commerce_Vista
                     articulo.Precio = decimal.Parse(txtPrecio.Text);
                     articulo.Marcas.Id = int.Parse(ddlMarca.SelectedValue);
                     articulo.Categorias.Id = int.Parse(ddlCategoria.SelectedValue);
+
+                    //articulo.Estado = bool.Parse(txtPublicar.Text);
+                    if (ddlPublicar.Text == "Si")
+                    {
+                        articulo.Estado = true;
+                    }
+                    else
+                    {
+                        articulo.Estado = false;
+                    }
+                    //articulo.Estado = bool.Parse(ddlPublicar.Text);
 
 
 
@@ -573,8 +598,6 @@ namespace E_Commerce_Vista
             if (urlsImagenes.Count > 1)
             {
 
-
-
                 idImagen.Add(imagenes[(int)Session["IndiceImagenActual"]].Id);
 
                 urlsImagenes.RemoveAt((int)Session["IndiceImagenActual"]);
@@ -604,8 +627,14 @@ namespace E_Commerce_Vista
 
                 if ((int)Session["IndiceImagenActual"] >= 1)
                 {
-                    imgCarrusel.ImageUrl = nuevaLista[(int)Session["IndiceImagenActual"] - 1];
+                    //imgCarrusel.ImageUrl = nuevaLista[(int)Session["IndiceImagenActual"] - 1];
 
+                    //ACTUALIZAMOS INDICE LUEGO DE ELIMINAR =)
+                    indiceActual = (int)Session["IndiceImagenActual"];
+                    indiceActual--;
+                    Session.Add("IndiceImagenActual", indiceActual);
+
+                    imgCarrusel.ImageUrl = nuevaLista[(int)Session["IndiceImagenActual"]];
                     updatePanelArticulo.Update();
                 }
                 else
@@ -679,6 +708,35 @@ namespace E_Commerce_Vista
         protected void btnActualizarStock_Click(object sender, EventArgs e)
         {
             //Session.Add("Stock", txtStock.Text);
+        }
+
+        protected void btnEliminarArticulo_Click(object sender, EventArgs e)
+        {
+
+            confirmarEliminar = true;
+
+
+        }
+
+        protected void btnConfirmaEliminacion_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                if (chkConfirmaEliminacion.Checked)
+                {
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    negocio.eliminarArticulo(int.Parse(txtId.Text));
+                    Response.Redirect("GestionArticulos.aspx");
+                }
+            }
+            catch (Exception ex)
+            {
+                Session.Add("error", ex);
+                throw ex;
+            }
+
+
         }
     }
 }

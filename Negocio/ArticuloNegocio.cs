@@ -32,6 +32,7 @@ namespace Negocio
                     string nombre = datos.Lector["Nombre"] == DBNull.Value ? "Sin nombre" : (string)datos.Lector["Nombre"];
                     
                     int stock = datos.Lector["Stock"] == DBNull.Value ? 0 : (int)datos.Lector["Stock"];
+                    bool estado = datos.Lector["Estado"] == DBNull.Value ? true : (bool)datos.Lector["Estado"]; 
 
                     int idArticuloImagen = datos.Lector["IdArticuloImagen"] == DBNull.Value ? -1 : (int)datos.Lector["IdArticuloImagen"];
                     int idImagen = datos.Lector["IdImagen"] == DBNull.Value ? -1 : (int)datos.Lector["IdImagen"];
@@ -56,6 +57,7 @@ namespace Negocio
                             Nombre = nombre,
                             Descripcion = descripcion,
                             Precio = precio,
+                            Estado=estado,
 
                             Categorias = new Categoria
                             {
@@ -125,6 +127,7 @@ namespace Negocio
                 datos.setearParametros("@IdMarca", nuevo.Marcas.Id);
                 datos.setearParametros("@IdCategoria", nuevo.Categorias.Id);
                 datos.setearParametros("@Precio", nuevo.Precio);
+                datos.setearParametros("@Estado", nuevo.Estado);
                 
 
                 datos.ejecutarAccion();
@@ -233,6 +236,7 @@ namespace Negocio
                 datos.setearParametros("@IdCategoria", articulo.Categorias.Id);
                 datos.setearParametros("@Precio", articulo.Precio);
                 datos.setearParametros("@Id", articulo.Id);
+                datos.setearParametros("@Estado", articulo.Estado);
 
                 datos.ejecutarAccion();
 
@@ -249,6 +253,25 @@ namespace Negocio
 
         }
 
+
+        public void eliminarArticulo(int id)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SPeliminarArticulo");
+                datos.setearParametros("@Id", id);
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
     }
 }

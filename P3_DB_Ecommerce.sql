@@ -15,6 +15,7 @@ create table Categorias(
     Descripcion varchar(50) null
 
 );
+
 go
 create table Articulos(
     Id int not null primary key identity (1,1),
@@ -23,8 +24,14 @@ create table Articulos(
     Descripcion varchar (150) null,
     IdMarca int null,
     IdCategoria int null,
-    Precio money null
+    Precio money null,
+    Estado bit null default 1
 )
+---JOACO! Para dropear la de articulos hay que dropear las de stock y fav por la FK...
+drop table stock
+drop table ListaFavoritos
+drop table Articulos
+
 go
 create table Imagenes(
     Id int not null primary key identity (1,1),
@@ -53,11 +60,11 @@ insert into CATEGORIAS values
 ('Videojuegos')
 
 insert into ARTICULOS values 
-('S01', 'Playstation 4', 'Con tu consola PlayStation 4 tendrás entretenimiento asegurado todos los días.', 1, 1, 200000),
-('S02', 'Playstation 5', 'Con tu consola PlayStation 5 tendrás entretenimiento asegurado todos los días.', 1, 1, 300000),
-('C03', 'Resident Evil 4 Remake', 'Salvando a Ashley por 10° vez.', 1, 5, 30000),
-('D04', 'Teclado Redragon Yama K550', 'Gracias al rgb podrás ser mas habilidoso en los juegos', 10, 4, 30000),
-('F05', 'Notebook', null, 4, 3, 300000)
+('S01', 'Playstation 4', 'Con tu consola PlayStation 4 tendrás entretenimiento asegurado todos los días.', 1, 1, 200000,1),
+('S02', 'Playstation 5', 'Con tu consola PlayStation 5 tendrás entretenimiento asegurado todos los días.', 1, 1, 300000,1),
+('C03', 'Resident Evil 4 Remake', 'Salvando a Ashley por 10° vez.', 1, 5, 30000,1),
+('D04', 'Teclado Redragon Yama K550', 'Gracias al rgb podrás ser mas habilidoso en los juegos', 10, 4, 30000,1),
+('F05', 'Notebook', null, 4, 3, 300000, 1)
 
 
 insert into Imagenes values 
@@ -73,7 +80,7 @@ insert into Imagenes values
 go
 alter procedure storedListar as
 SELECT a.Id, Codigo, Nombre, a.Descripcion 
-as DescripcionArticulo, 
+as DescripcionArticulo, a.Estado as Estado, 
 Precio,m.Id as IdMarca, 
 m.Descripcion as NombreMarca,
 c.Id as IdCategoria, 
@@ -164,15 +171,16 @@ drop table stock
 
 ---------------SP ARTICULOS-----------------
 go
-CREATE PROCEDURE SpAgregarArticulo
+alter PROCEDURE SpAgregarArticulo
 @Nombre varchar(50),
 @Codigo VARCHAR(50),
 @Descripcion varchar(150),
 @IdMarca int,
 @IdCategoria int,
-@Precio money
+@Precio money,
+@Estado bit
 as
-insert into Articulos values (@Nombre,@Codigo,@Descripcion,@IdMarca,@IdCategoria,@Precio)
+insert into Articulos values (@Nombre,@Codigo,@Descripcion,@IdMarca,@IdCategoria,@Precio,@Estado)
 
 
 select * from Articulos
@@ -181,16 +189,17 @@ select max(id) from Articulos
 
 
 go
-Create Procedure SpModificarArticulo
+alter Procedure SpModificarArticulo
 @Nombre varchar(50),
 @Codigo VARCHAR(50),
 @Descripcion varchar(150),
 @IdMarca int,
 @IdCategoria int,
 @Precio money,
-@Id int
+@Id int,
+@Estado bit
 as
-Update Articulos set Nombre = @Nombre, Codigo = @Codigo, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, Precio = @Precio
+Update Articulos set Nombre = @Nombre, Codigo = @Codigo, Descripcion = @Descripcion, IdMarca = @IdMarca, IdCategoria = @IdCategoria, Precio = @Precio, Estado=@Estado
 where Id = @Id
 
 
@@ -225,4 +234,14 @@ insert into Stock values
 (4,0),
 (5,0),
 (10,0)
+
+------BAJA FÍSICA-----
+go
+alter Procedure SPeliminarArticulo (
+    @id int
+)
+As begin
+    delete from Stock where idArticulo=@id
+    delete from Articulos where id=@id
+end
 

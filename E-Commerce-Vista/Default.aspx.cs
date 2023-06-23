@@ -23,7 +23,7 @@ namespace E_Commerce_Vista
             { 
                 ArticuloNegocio negocio = new ArticuloNegocio();
 
-                Session.Add("ListaArticulo", negocio.listarConSP());
+                Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Estado == true).ToList());
                 ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
 
 

@@ -17,7 +17,7 @@ namespace E_Commerce_Vista
             if (!IsPostBack && Session["ListaArticulo"]==null)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
-                Session.Add("ListaArticulo", negocio.listarConSP());
+                Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Estado == true).ToList());
                 ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
                 repRepetidor.DataSource = ListaArticulo;
                 repRepetidor.DataBind();
@@ -28,8 +28,13 @@ namespace E_Commerce_Vista
             {
                 if(!IsPostBack && Session["ListaArticulo"] != null)
                 {
-                    repRepetidor.DataSource = (List<Articulo>)Session["ListaArticulo"];
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Estado == true).ToList());
+                    ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                    repRepetidor.DataSource = ListaArticulo;
                     repRepetidor.DataBind();
+                    //repRepetidor.DataSource = (List<Articulo>)Session["ListaArticulo"];
+                    //repRepetidor.DataBind();
                 }
                
             }

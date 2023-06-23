@@ -19,11 +19,7 @@
                         <asp:TextBox runat="server" ID="txtId" CssClass="form-control" />
                     </div>
                     <% }
-
-
-
-
-                    %>
+                        %>
 
 
 
@@ -71,9 +67,10 @@
                     <div class="mb-3">
                         <asp:Button Text="Aceptar" ID="btnAceptar" CssClass="btn btn-success" OnClick="btnAceptar_Click" runat="server" OnClientClick="return validarFormulario();" />
                         <a href="GestionArticulos.aspx" class="btn btn-primary">Cancelar</a>
-                        <%-- <%if (modificando)
+                      
+                        <%if (modificando)
                             {%>
-                        <asp:Button Text="Eliminar" ID="btnEliminar" OnClick="btnEliminar_Click"
+                        <asp:Button Text="Eliminar" ID="btnEliminarArticulo" OnClick="btnEliminarArticulo_Click"
                             CssClass="btn btn-danger" runat="server" />
                         <%} %>
 
@@ -90,9 +87,9 @@
 
 
                         <%}%>
-                    </div>
-                
-                        --%>
+
+
+                       
                     </div>
                 </div>
 
@@ -105,11 +102,18 @@
 
                         <asp:TextBox ID="txtStock" CssClass="form-control " AutoPostBack="true" OnTextChanged="txtStock_TextChanged" runat="server" />
                         <div id="errorStock" class="invalid-feedback " runat="server"></div>
-                        <%--<%if (modificando)
-                            {%>
-                        <asp:Button Text="Actualizar Stock" Id="btnActualizarStock" OnClick="btnActualizarStock_Click" CssClass="btn btn-success" runat="server" />
-                        <% } %>--%>
+                       
                     </div>
+
+
+                    <div class="mb-3 mt-3">
+<%--                        <label for="txtPublicar" class="form-label">Articulo publicado</label>--%>
+<%--                        <asp:TextBox ID="txtPublicar" CssClass="form-control" runat="server"></asp:TextBox>--%>
+
+                        <label for="ddlPublicar" class="form-label">Publicar articulo</label>
+                         <asp:DropDownList ID="ddlPublicar" CssClass="form-select" runat="server"></asp:DropDownList>
+                    </div>
+
 
 
                     <div class="mb-3 mt-3">

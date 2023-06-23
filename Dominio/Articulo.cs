@@ -25,6 +25,7 @@ namespace Dominio
         //Lista de imagenes por si hay mas de 1
         public List<Imagen> Imagenes { get; set; }
 
+        public bool Estado { get; set; }
         public  Stock StockArticulo { get; set; }
         public Articulo()
         {
