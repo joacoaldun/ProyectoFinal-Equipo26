@@ -158,12 +158,6 @@ namespace E_Commerce_Vista
 
         }
 
-        protected void updatePanelCarrito_Load(object sender, EventArgs e)
-        {
-            if (!IsPostBack)
-            {
-                ScriptManager.RegisterStartupScript(this, GetType(), "AsignarEventos", "asignarEventos();", true);
-            }
-        }
+        
     }
 }

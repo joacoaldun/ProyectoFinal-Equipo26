@@ -27,7 +27,7 @@
 
         <%-- LLAMO AL UPDATE Y CREO EL REPETIDOR PARA QUE MUESTRA TODO LO QUE HAY EN CARRITO--%>
     
-        <asp:UpdatePanel ID="updatePanelCarrito" runat="server" UpdateMode="Conditional" OnLoad="updatePanelCarrito_Load" >
+        <asp:UpdatePanel ID="updatePanelCarrito" runat="server" UpdateMode="Conditional"  >
 
             <ContentTemplate>
 
@@ -169,6 +169,8 @@
             hideButton.addEventListener('click', function () {
                 parent.postMessage('cerrarMiniCartContainer', '*');
             });
+
+            parent.postMessage('actualizarUpdatePanel', '*');
         });
 
 

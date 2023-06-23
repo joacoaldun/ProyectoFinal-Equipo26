@@ -19,7 +19,7 @@ namespace E_Commerce_Vista
         {      
              
 
-            if (!IsPostBack)
+            if (!IsPostBack && Session["ListaArticulo"] == null)
             { 
                 ArticuloNegocio negocio = new ArticuloNegocio();
 
@@ -39,7 +39,12 @@ namespace E_Commerce_Vista
 
 
             }
-
+            else
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                ListaMarca = (List<Marca>)Session["ListaMarca"];
+                ListaCategoria = (List<Categoria>)Session["ListaCategoria"];
+            }
 
 
         }
