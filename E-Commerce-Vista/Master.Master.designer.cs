@@ -87,6 +87,15 @@ namespace E_Commerce_Vista
         protected global::System.Web.UI.WebControls.Label lblTotalCantCarrito;
 
         /// <summary>
+        /// Control miniCarritoFrame.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlIframe miniCarritoFrame;
+
+        /// <summary>
         /// Control ContentPlaceHolder1.
         /// </summary>
         /// <remarks>

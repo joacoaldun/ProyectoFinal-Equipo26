@@ -107,7 +107,7 @@
 
                         <%-- Mini barra carrito --%>
                         <div id="miniCartContainer" class="mini-cart-container ">
-                            <iframe id="miniCarritoFrame" frameborder="0" scrolling="no" style="width: 33%; height: 100%;"></iframe>
+                            <iframe id="miniCarritoFrame" frameborder="0" scrolling="no" style="width: 33%; height: 100%;" runat="server"></iframe>
                         </div>
 
 
@@ -360,6 +360,7 @@
         button.addEventListener("click", sumarAlCarrito);
     });
 
+ 
 
 
 
