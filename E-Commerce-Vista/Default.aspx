@@ -17,7 +17,7 @@
 
         h1 {
             margin-top: 8vh;
-            text-align:center;
+            text-align: center;
         }
         /*Marcas*/
         .cardMarca {
@@ -67,7 +67,33 @@
         </div>
     </div>
 
+    <div class="container-fluid banner-envio ">
+        <div class="row item-banner">
+            <div class="col-md-12 text-center">
+                <iconify-icon icon="raphael:dollar" style="color: white;" width="100" height="100"></iconify-icon>
+                <h2>LOS MEJORES PRECIOS</h2>
+            </div>
+        </div>
 
+
+        <div class="row item-banner">
+            <div class="col-md-12 text-center">
+                <iconify-icon icon="mdi:prize" style="color: white;" width="100" height="100"></iconify-icon>
+                <h2>CALIDAD ASEGURADA</h2>
+
+            </div>
+        </div>
+
+
+        <div class="row item-banner">
+            <div class="col-md-12 text-center">
+                <iconify-icon icon="fa:handshake-o" style="color: white;" width="100" height="100"></iconify-icon>
+                <h2>GARANTÍA EN TODOS LOS PRODUCTOS</h2>
+            </div>
+        </div>
+
+
+    </div>
 
 
 
@@ -140,8 +166,8 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin-bottom:10vh;
-            margin-top:6vh;
+            margin-bottom: 10vh;
+            margin-top: 6vh;
         }
 
         .categoria-item {
@@ -157,13 +183,35 @@
         }
 
         @media (max-width: 768px) {
-            .categoria-list-container{
-                flex-direction:column;
+            .categoria-list-container {
+                flex-direction: column;
             }
+
             .categoria-item {
-                
                 width: 100%;
             }
+        }
+
+        .banner-envio {
+            margin-top: 100px;
+            /*background-color: rebeccapurple;*/
+            background-color:darkslateblue;
+            color: white;
+            padding: 60px;
+            display: flex;
+            position: relative;
+            width: 100vw;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            justify-content:space-around;
+        }
+
+       
+
+        h2 {
+            font-size: medium;
         }
     </style>
 

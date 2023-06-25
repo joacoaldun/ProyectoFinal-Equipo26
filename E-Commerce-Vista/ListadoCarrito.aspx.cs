@@ -15,6 +15,8 @@ namespace E_Commerce_Vista
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            
+            
             //ArticuloNegocio negocio=new ArticuloNegocio();
             if (!IsPostBack)
             {
@@ -26,13 +28,17 @@ namespace E_Commerce_Vista
                     repCarrito.DataSource = carrito.ListaArticulo;
                     repCarrito.DataBind();
                     lblPrecioTotal.Text = "$" + carrito.PrecioTotal.ToString();
+
+                    
+                    
                 }
 
+                
 
 
             }
-
-
+           
+           
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
@@ -125,6 +131,7 @@ namespace E_Commerce_Vista
         protected void Page_PreRender(object sender, EventArgs e)
         {
 
+
             if (Session["Carrito"] != null)
             {
                 Carrito carrito = (Carrito)Session["Carrito"];
@@ -132,8 +139,9 @@ namespace E_Commerce_Vista
                 repCarrito.DataSource = carrito.ListaArticulo;
                 repCarrito.DataBind();
                 lblPrecioTotal.Text = carrito.PrecioTotal.ToString();
-            }
 
+            }
+           
         }
     }
 }

@@ -19,7 +19,7 @@ namespace E_Commerce_Vista
         {      
              
 
-            if (!IsPostBack && Session["ListaArticulo"] == null)
+            if (!IsPostBack && Session["ListaArticulo"] == null || Session["ListaMarca"]==null || Session["ListaCategoria"]==null )
             { 
                 ArticuloNegocio negocio = new ArticuloNegocio();
 

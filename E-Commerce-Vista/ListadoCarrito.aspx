@@ -1,4 +1,5 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Master.Master" AutoEventWireup="true" CodeBehind="ListadoCarrito.aspx.cs" Inherits="E_Commerce_Vista.ListadoCarrito" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
@@ -6,11 +7,11 @@
 
     <h1 class="h1">Carrito de compras</h1>
     <%-- Grilla --%>
-   
+
     <style>
         .h1 {
             /*color: aliceblue;*/
-            color:black;
+            color: black;
             margin-bottom: 60px;
             margin-top: 30px;
             text-align: center
@@ -25,29 +26,34 @@
     <%@ Import Namespace="Dominio" %>
 
     <%-- Titulos --%>
+
+
+
+
+
     <div class="card mb-3" style="background-color: black;">
         <div class="row g-0">
             <div class="col-md-12" style="color: white; font-weight: bold;">
                 <div class="card-body d-flex">
                     <%--<div class="col-md-2 col-sm-2"></div>--%>
                     <!-- Columna vacía sin título -->
-                    <div class="col-md-2 col-sm-2" style="width:16.66%;">
+                    <div class="col-md-2 col-sm-2" style="width: 16.66%;">
                         <p class="card-title itemsCarrito"></p>
                     </div>
 
-                    <div class="col-md-2 col-sm-2" style="width:16.66%;">
+                    <div class="col-md-2 col-sm-2" style="width: 16.66%;">
                         <p class="card-title itemsCarrito">Nombre</p>
                     </div>
-                    <div class="col-md-2 col-sm-2" style="width:16.66%;">
+                    <div class="col-md-2 col-sm-2" style="width: 16.66%;">
                         <p class="card-title itemsCarrito">Marca</p>
                     </div>
-                    <div class="col-md-2 col-sm-2" style="width:16.66%;">
+                    <div class="col-md-2 col-sm-2" style="width: 16.66%;">
                         <p class="card-title itemsCarrito">Precio</p>
                     </div>
-                    <div class="col-md-2 col-sm-2" style="width:16.66%;">
+                    <div class="col-md-2 col-sm-2" style="width: 16.66%;">
                         <p class="card-title itemsCarrito">Cantidad</p>
                     </div>
-                    <div class="col-md-2 col-sm-2" style="width:16.66%;">
+                    <div class="col-md-2 col-sm-2" style="width: 16.66%;">
                         <p class="card-title itemsCarrito">Total</p>
                     </div>
                 </div>
@@ -55,8 +61,13 @@
         </div>
     </div>
     <%--<asp:ScriptManager ID="script3" runat="server"></asp:ScriptManager>--%>
+
+
+
+
     <asp:UpdatePanel ID="updatePanelCarrito" runat="server" UpdateMode="Conditional">
         <ContentTemplate>
+
 
             <asp:Repeater ID="repCarrito" runat="server" OnItemDataBound="repCarrito_ItemDataBound">
                 <ItemTemplate>
@@ -106,7 +117,6 @@
                 <h4 style="color: black;">TOTAL: $<asp:Label ID="lblPrecioTotal" runat="server" Text=""></asp:Label></h4>
 
                 <%--<h4 style="color: white;">TOTAL COMPRA: $<%: carrito.PrecioTotal %></h4>--%>
-
             </div>
         </ContentTemplate>
     </asp:UpdatePanel>
@@ -116,9 +126,6 @@
             margin: auto;
             text-align: center;
         }
-       
-   
-       
     </style>
 
 
