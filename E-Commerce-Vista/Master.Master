@@ -34,7 +34,7 @@
         <%-- NavBar --%>
 
         <asp:ContentPlaceHolder ID="NavContent" runat="server">
-            <nav class="navbar navbar-expand-lg fixed-top navbar-dark "> <%--bg-body-tertiary--%>
+            <nav class="navbar navbar-expand-lg fixed-top navbar-dark " runat="server" > <%--bg-body-tertiary--%>
                 <div class="container-fluid">
                     <%--<a class="navbar-brand" href="#">Navbar</a>--%>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -150,15 +150,49 @@
         <br />
 
 
-        <div class="container">
+        <div class="container containerAsp" id="content">
             <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
             </asp:ContentPlaceHolder>
         </div>
     </form>
 
 
+    <div id="footer">
+       
+
+            <footer class=" text-center text-white" >
+                <!-- Grid container -->
+                <div class="container p-4 pb-0">
+                    <!-- Section: Social media -->
+                    <section class="mb-4">
+                         
+                        <h3>Desarrollado por</h3>
+                        <!-- Github -->
+                        <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/joacoaldun?tab=repositories" role="button"> Joaquín Alduncin   <i class="fab fa-github"></i></a>
+                         <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/NoeliaSouza?tab=repositories" role="button"> Noelia Afonso De Souza   <i class="fab fa-github"></i></a>
+                    </section>
+                    <!-- Section: Social media -->
+                </div>
+                <!-- Grid container -->
+
+               
+                <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+                    © 2023 Copyright: Equipo 26 - Joaquín Alduncin, Noelia Afonso de Souza.
+    
+                </div>
+                
+            </footer>
+
+        
+    </div>
+
+
+
+
+
     <%--Script--%>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+     
 </body>
 </html>
 
@@ -289,6 +323,28 @@
             margin-left: 1vh;
         }
     }
+
+     .containerAsp {
+        min-height:70vh;
+        position: relative;
+        padding-bottom: 60px; /* Altura del footer */
+    }
+
+     #footer {
+            position: relative;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+           
+            background-color: black;
+            text-align: center;
+            padding: 10px;
+     }
+
+      #footer{
+        background-color:#000000d9;
+      }
+
 </style>
 
 

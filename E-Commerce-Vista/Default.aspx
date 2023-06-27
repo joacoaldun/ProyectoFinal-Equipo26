@@ -31,7 +31,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Artículos</h1>
+                <h1>ARTÍCULOS</h1>
             </div>
         </div>
         <div class="row mt-5">
@@ -70,16 +70,18 @@
     <div class="container-fluid banner-envio ">
         <div class="row item-banner">
             <div class="col-md-12 text-center">
-                <iconify-icon icon="raphael:dollar" style="color: white;" width="100" height="100"></iconify-icon>
-                <h2>LOS MEJORES PRECIOS</h2>
+                <iconify-icon icon="ic:baseline-local-shipping" width="100" height="100"></iconify-icon>
+                <h2>ENVÍOS</h2>
+                <h3>A TODO EL PAIS</h3>
             </div>
         </div>
 
 
         <div class="row item-banner">
             <div class="col-md-12 text-center">
-                <iconify-icon icon="mdi:prize" style="color: white;" width="100" height="100"></iconify-icon>
-                <h2>CALIDAD ASEGURADA</h2>
+                <iconify-icon icon="ion:card-sharp" width="100" height="100"></iconify-icon>
+                <h2>MEDIOS DE PAGO</h2>
+                <h3>TARJETAS O TRANSFERENCIA BANCARIA</h3>
 
             </div>
         </div>
@@ -87,8 +89,9 @@
 
         <div class="row item-banner">
             <div class="col-md-12 text-center">
-                <iconify-icon icon="fa:handshake-o" style="color: white;" width="100" height="100"></iconify-icon>
-                <h2>GARANTÍA EN TODOS LOS PRODUCTOS</h2>
+                <iconify-icon icon="charm:padlock" width="100" height="100"></iconify-icon>
+                <h2>SITIO SEGURO</h2>
+                <h3>PROTEGEMOS TUS DATOS</h3>
             </div>
         </div>
 
@@ -102,7 +105,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-12">
-                <h1>Marcas</h1>
+                <h1>MARCAS</h1>
             </div>
         </div>
         <div class="row mt-5">
@@ -150,7 +153,7 @@
 
     <%-- Categorias --%>
     <div class="container">
-        <h1>Categorias</h1>
+        <h1>CATEGORIAS</h1>
         <div class="categoria-list-container">
             <% foreach (var categoria in ListaCategoria)
                 { %>
@@ -195,9 +198,9 @@
         .banner-envio {
             margin-top: 100px;
             /*background-color: rebeccapurple;*/
-            background-color:darkslateblue;
+            background-color:black;
             color: white;
-            padding: 60px;
+            padding: 40px;
             display: flex;
             position: relative;
             width: 100vw;
@@ -208,10 +211,18 @@
             justify-content:space-around;
         }
 
-       
+       .item-banner{
+           width:33.33%;
+           color:blueviolet;
+       }
 
         h2 {
-            font-size: medium;
+            font-size: large;
+            color:white;
+        }
+        h3{
+            font-size:small;
+            color:white;
         }
     </style>
 
