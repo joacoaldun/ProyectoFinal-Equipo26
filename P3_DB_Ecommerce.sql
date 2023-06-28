@@ -148,7 +148,7 @@ create table Cliente(
     Id int not null foreign key references Usuarios(Id),
     Dni varchar(20) not null,
     FechaNacimiento DATE not null,
-    IDDomicilio int not null foreign key references Domicilio (Id),
+    IDDomicilio int null foreign key references Domicilio (Id),
     PRIMARY KEY (Id)
 )
 go
@@ -236,12 +236,43 @@ insert into Stock values
 (10,0)
 
 ------BAJA FÍSICA-----
+--HACER EL ALTER PARA BORRAS IMAGENES DE ARTICULO TAMBIEN.
 go
 alter Procedure SPeliminarArticulo (
     @id int
 )
 As begin
     delete from Stock where idArticulo=@id
-    delete from Articulos where id=@id
-end
+    delete from Articulos where id = @id
+    delete from Imagenes where IdArticulo = @id
+    END
+go
+
+
+--Modificamos la tabla Cliente para que no alla problema si no hay Domicilio vinculado
+ALTER TABLE Cliente
+ALTER COLUMN IDDomicilio int NULL;
+
+ALTER TABLE Cliente
+ADD CONSTRAINT FK_Cliente_Domicilio FOREIGN KEY (IDDomicilio) REFERENCES Domicilio(Id);
+
+
+
+
+--INSERT PARA PROBAR LOS CLIENTES
+INSERT INTO Usuarios (Nombre, Apellido, Username, Pass, TipoAcceso, Email)
+VALUES ('John', 'Doe', 'johndoe', 'password123', 2, 'johndoe@example.com');
+
+INSERT INTO Cliente (Id, Dni, FechaNacimiento, IDDomicilio)
+VALUES (1, '123456789', '1990-01-01', null);
+
+
+
+--LISTAR LOS CLIENTES CON SP
+Create PROCEDURE SPListarClientes
+AS 
+BEGIN
+select U.id, Nombre, Apellido, Username, TipoAcceso, Email, Dni, FechaNacimiento, EstadoActivo from Usuarios u
+inner join Cliente c on U.Id = c.id
+END
 

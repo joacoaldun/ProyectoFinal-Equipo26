@@ -19,7 +19,7 @@ namespace Dominio
 
         public string  Apellido{ get; set; }
 
-        public string UsarName { get; set; }
+        public string UserName { get; set; }
 
         public  string Email { get; set; }
 
