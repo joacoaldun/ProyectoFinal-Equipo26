@@ -46,11 +46,12 @@
     <Content Include="Contacto.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Exito.aspx" />
+    <Content Include="FormularioAdmin.aspx" />
     <Content Include="FormularioArticulo.aspx" />
     <Content Include="FormularioCategoria.aspx" />
+    <Content Include="FormularioCliente.aspx" />
     <Content Include="FormularioMarca.aspx" />
     <Content Include="FormularioPedido.aspx" />
-    <Content Include="FormularioUsuario.aspx" />
     <Content Include="GestionArticulos.aspx" />
     <Content Include="GestionCategorias.aspx" />
     <Content Include="GestionMarcas.aspx" />
@@ -91,6 +92,13 @@
     <Compile Include="Exito.aspx.designer.cs">
       <DependentUpon>Exito.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FormularioAdmin.aspx.cs">
+      <DependentUpon>FormularioAdmin.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioAdmin.aspx.designer.cs">
+      <DependentUpon>FormularioAdmin.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FormularioArticulo.aspx.cs">
       <DependentUpon>FormularioArticulo.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -105,6 +113,13 @@
     <Compile Include="FormularioCategoria.aspx.designer.cs">
       <DependentUpon>FormularioCategoria.aspx</DependentUpon>
     </Compile>
+    <Compile Include="FormularioCliente.aspx.cs">
+      <DependentUpon>FormularioCliente.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioCliente.aspx.designer.cs">
+      <DependentUpon>FormularioCliente.aspx</DependentUpon>
+    </Compile>
     <Compile Include="FormularioMarca.aspx.cs">
       <DependentUpon>FormularioMarca.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -118,13 +133,6 @@
     </Compile>
     <Compile Include="FormularioPedido.aspx.designer.cs">
       <DependentUpon>FormularioPedido.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="FormularioUsuario.aspx.cs">
-      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="FormularioUsuario.aspx.designer.cs">
-      <DependentUpon>FormularioUsuario.aspx</DependentUpon>
     </Compile>
     <Compile Include="GestionArticulos.aspx.cs">
       <DependentUpon>GestionArticulos.aspx</DependentUpon>

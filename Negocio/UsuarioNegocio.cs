@@ -85,7 +85,78 @@ namespace Negocio
 
 
         }
+        public List<Admin> listarAdminsConSp()
+        {
 
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+
+                datos.setearProcedimiento("SPListarAdmins");
+                datos.ejecutarConsulta();
+                List<Admin> lista = new List<Admin>();
+
+
+
+                while (datos.Lector.Read())
+                {
+                    //Validaciones BD
+                    int id = (int)datos.Lector["Id"];
+                    string nombre = datos.Lector["Nombre"] == DBNull.Value ? "Sin Nombre" : (string)datos.Lector["Nombre"];
+                    string apellido = datos.Lector["Apellido"] == DBNull.Value ? "Sin Apellido" : (string)datos.Lector["Apellido"];
+                    string username = datos.Lector["Username"] == DBNull.Value ? "Sin Username" : (string)datos.Lector["Username"];
+                    int tipoAcceso = datos.Lector["TipoAcceso"] == DBNull.Value ? 1 : (int)datos.Lector["TipoAcceso"];
+
+                    string email = datos.Lector["Email"] == DBNull.Value ? "Sin Email" : (string)datos.Lector["Email"];
+                    bool estado = datos.Lector["EstadoActivo"] == DBNull.Value ? true : (bool)datos.Lector["EstadoActivo"];
+
+
+
+                    //Verificamos si el articulo existe
+
+                    // Si no existe, creamos un nuevo artículo y lo agregamos a la lista
+
+                    Admin admin = new Admin
+
+                    {
+                        Id = id,
+                        Nombre = nombre,
+                        Apellido = apellido,
+                        UserName = username,
+                        TipoAcceso = (TipoAcceso)tipoAcceso,
+                        Email = email,
+                        EstadoActivo= estado
+                        
+                    };
+
+
+                    lista.Add(admin);
+                }
+
+
+
+
+
+                return lista;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+
+            }
+
+
+
+
+        }
 
 
 

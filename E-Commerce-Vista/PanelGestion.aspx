@@ -36,10 +36,17 @@
             </div>
 
             <div class="mt-1 mb-1 ">
-                <a href="GestionUsuarios.aspx" class="btn btn-dark btnGestion"> Gestionar usuarios
+                <a href="GestionUsuarios.aspx?id=1" class="btn btn-dark btnGestion"> Gestionar Clientes
                      <img src="imagenes/usuarios.png" alt="Imagen marcas" class="img-btn"> 
                 </a>
             </div>
+             
+            <div class="mt-1 mb-1 ">
+                <a href="GestionUsuarios.aspx?id=2" class="btn btn-dark btnGestion"> Gestionar Admins
+                     <img src="imagenes/admin.png" alt="Imagen marcas" class="img-btn"> 
+                </a>
+            </div>
+
 
        </div>
     </div>
