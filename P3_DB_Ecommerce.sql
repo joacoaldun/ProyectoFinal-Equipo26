@@ -269,10 +269,13 @@ VALUES (1, '123456789', '1990-01-01', null);
 
 
 --LISTAR LOS CLIENTES CON SP
+go
 Create PROCEDURE SPListarClientes
 AS 
 BEGIN
 select U.id, Nombre, Apellido, Username, TipoAcceso, Email, Dni, FechaNacimiento, EstadoActivo from Usuarios u
 inner join Cliente c on U.Id = c.id
 END
+
+
 

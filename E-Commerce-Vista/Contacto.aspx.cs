@@ -16,11 +16,11 @@ namespace E_Commerce_Vista
 
         }
 
-        protected void btnEnviar_Click(object sender, EventArgs e)
-        {
-            
-            
+        //protected void btnEnviar_Click(object sender, EventArgs e)
+        //{
 
-        }
+        //    Response.Redirect("Exito.aspx");
+
+        //}
     }
 }

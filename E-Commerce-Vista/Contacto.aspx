@@ -29,13 +29,11 @@
                 <asp:TextBox runat="server" ID="txtMensaje" TextMode="MultiLine" CssClass="form-control" />
             </div>
 
-            <asp:UpdatePanel runat="server">
-                <ContentTemplate>
+            
                     <div class="text-end">
-                        <asp:Button Text="ENVIAR" ID="btnEnviar" runat="server" CssClass="btn btn-dark " OnClientClick="enviarCorreo(); return false;" OnClick="btnEnviar_Click" />
+                        <asp:Button Text="ENVIAR" ID="btnEnviar" runat="server" CssClass="btn btn-dark " OnClientClick="enviarCorreo(); return false;" />
                     </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+               
 
 
 
@@ -140,8 +138,8 @@
     <script>
         function enviarCorreo() {
             var nombre = document.getElementById('<%= txtNombre.ClientID %>').value;
-        var email = document.getElementById('<%= txtEmail.ClientID %>').value;
-        var mensaje = document.getElementById('<%= txtMensaje.ClientID %>').value;
+            var email = document.getElementById('<%= txtEmail.ClientID %>').value;
+            var mensaje = document.getElementById('<%= txtMensaje.ClientID %>').value;
 
             var templateParams = {
                 from_name: nombre,
@@ -154,8 +152,9 @@
                    
                     // REdireccionamos
                     window.location.href = 'Exito.aspx';
-                }
+                })
         }
+
     </script>
 
 
