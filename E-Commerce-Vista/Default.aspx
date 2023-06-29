@@ -27,6 +27,38 @@
     </style>
 
 
+
+    <%--Home--%>
+    <div class="containerHome mt-0">
+        <div id="carouselExample" class="carousel slide ">
+            <div class="carousel-inner">
+                <a href="Listado.aspx">
+
+                    <%-- Primera imagen --%>
+                    <div class="carousel-item active">
+                        <img src="imagenes/1.jpg" class="d-block w-100" alt="Imagen 1">
+                    </div>
+
+                    <%-- Segunda imagen --%>
+                    <div class="carousel-item">
+                        <img src="imagenes/2.jpg" class="d-block w-100" alt="Imagen 2">
+                    </div>
+                </a>
+            </div>
+
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+    </div>
+
+
     <%-- Articulos --%>
     <div class="container">
         <div class="row">
@@ -44,10 +76,12 @@
                         %>
                         <div class="carousel-item <%= activeClass %>">
                             <div class="card">
+                               <a href="DetalleArticulo.aspx?id=<%= ListaArticulo[i].Id %>" class="image-link">
                                 <img src="<%=ListaArticulo[i].Imagenes[0].UrlImagen %>" class="card-img-top cardArticulo" alt="<%= ListaArticulo[i].Nombre%>">
-                                <div class="card-body">
+                              </a>
+                                    <div class="card-body">
                                     <h5 class="card-title"><%= ListaArticulo[i].Nombre %></h5>
-                                  <%--  <p class="card-text"><%= ListaArticulo[i].Descripcion %></p>--%>
+                                    <%--  <p class="card-text"><%= ListaArticulo[i].Descripcion %></p>--%>
                                     <p class="card-text">Precio: $ <%= ListaArticulo[i].Precio %></p>
                                 </div>
                             </div>
@@ -66,6 +100,8 @@
             </div>
         </div>
     </div>
+
+    <%-- BANNER --%>
 
     <div class="container-fluid banner-envio ">
         <div class="row item-banner">
@@ -126,7 +162,10 @@
                                 %>
                                 <div class="col-md-4">
                                     <div class="card">
-                                        <img src="<%= ListaMarca[j].ImagenMarca %>" class="card-img-top cardMarca" alt="<%= ListaMarca[j].NombreMarca %>">
+                                        <a href="Listado.aspx?id=M_<%= ListaMarca[j].Id %>" class="image-link">
+                                            <img src="<%= ListaMarca[j].ImagenMarca %>" class="card-img-top cardMarca" alt="<%= ListaMarca[j].NombreMarca %>" data-id="<%= ListaMarca[j].Id %>">
+                                        </a>
+
                                     </div>
                                 </div>
                                 <% } %>
@@ -158,7 +197,9 @@
             <% foreach (var categoria in ListaCategoria)
                 { %>
             <div class="categoria-item" style="background-color: black; color: white;">
+                <a href="Listado.aspx?id=C_<%= categoria.Id %>" class="image-link" style="background-color: black; color: white; text-decoration:none">
                 <%= categoria.NombreCategoria %>
+                </a>
             </div>
             <% } %>
         </div>
@@ -198,7 +239,7 @@
         .banner-envio {
             margin-top: 100px;
             /*background-color: rebeccapurple;*/
-            background-color:black;
+            background-color: black;
             color: white;
             padding: 40px;
             display: flex;
@@ -208,26 +249,58 @@
             right: 50%;
             margin-left: -50vw;
             margin-right: -50vw;
-            justify-content:space-around;
+            justify-content: space-around;
         }
 
-       .item-banner{
-           width:33.33%;
-           color:blueviolet;
-       }
+        .item-banner {
+            width: 33.33%;
+            color: blueviolet;
+        }
 
         h2 {
             font-size: large;
-            color:white;
-        }
-        h3{
-            font-size:small;
-            color:white;
+            color: white;
         }
 
-       /* .container{
+        h3 {
+            font-size: small;
+            color: white;
+        }
+
+        /* .container{
             width:85%;
         }*/
+
+        .containerHome {
+            position: relative;
+            width: 100vw;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            padding-top: 0px;
+            margin-top: 0;
+        }
+
+        .containerAsp {
+            margin-top: 40px !important;
+        }
+   
     </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            var carousel = document.querySelector("#carouselExample");
+            var cambiar = new bootstrap.Carousel(carousel, {
+                interval: 2000 // Cambia la imagen cada 2 segundos
+            });
+
+            setInterval(function () {
+                cambiar.next();
+            }, 3000);
+        });
+    </script>
+
+
 
 </asp:Content>

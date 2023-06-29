@@ -5,16 +5,17 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="row store">
-        <div class="col-4 ">
-            <div class="mb-3 mt-3 ">
+        <div class="col-4 d-flex flex-column align-items-center justify-content-center">
+            <div class="mb-3 mt-3 text-center">
                 <h1 class="contacto">DATOS DE CONTACTO</h1>
                 <p>+54 11 1111-1111</p>
             </div>
-            <div class="mb-3 mt-3 ">
+            <div class="mb-3 mt-3 text-center">
                 <h1 class="contacto">REDES SOCIALES</h1>
                 <p>Instagram</p>
             </div>
         </div>
+
         <div class="col-4 contacto">
             <div class="mb-3 mt-3">
                 <label for="txtNombre" class="form-label">NOMBRE</label>
@@ -29,13 +30,11 @@
                 <asp:TextBox runat="server" ID="txtMensaje" TextMode="MultiLine" CssClass="form-control" />
             </div>
 
-            <asp:UpdatePanel runat="server">
-                <ContentTemplate>
-                    <div class="text-end">
-                        <asp:Button Text="ENVIAR" ID="btnEnviar" runat="server" CssClass="btn btn-dark " OnClientClick="enviarCorreo(); return false;" OnClick="btnEnviar_Click" />
-                    </div>
-                </ContentTemplate>
-            </asp:UpdatePanel>
+
+            <div class="text-end">
+                <asp:Button Text="ENVIAR" ID="btnEnviar" runat="server" CssClass="btn btn-dark " OnClientClick="enviarCorreo(); return false;" />
+            </div>
+
 
 
 
@@ -127,21 +126,22 @@
             /*color:white;*/
             color: black;
         }
-        h3{
-            font-size:medium;
-            margin-bottom:20px;
-        }
-        .footer{
-            color:white;
+
+        h3 {
+            font-size: medium;
+            margin-bottom: 20px;
         }
 
+        .footer {
+            color: white;
+        }
     </style>
 
     <script>
         function enviarCorreo() {
             var nombre = document.getElementById('<%= txtNombre.ClientID %>').value;
-        var email = document.getElementById('<%= txtEmail.ClientID %>').value;
-        var mensaje = document.getElementById('<%= txtMensaje.ClientID %>').value;
+            var email = document.getElementById('<%= txtEmail.ClientID %>').value;
+            var mensaje = document.getElementById('<%= txtMensaje.ClientID %>').value;
 
             var templateParams = {
                 from_name: nombre,
@@ -151,11 +151,12 @@
 
             emailjs.send('service_1udlfc4', 'template_uif8uoh', templateParams)
                 .then(function (response) {
-                   
+
                     // REdireccionamos
                     window.location.href = 'Exito.aspx';
-                }
+                })
         }
+
     </script>
 
 
