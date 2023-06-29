@@ -24,11 +24,40 @@ namespace E_Commerce_Vista
 
 
             }
-            else
-            {
-                if(!IsPostBack && Session["ListaArticulo"] != null)
+            else if  (!IsPostBack && Session["ListaArticulo"]!=null && Request.Params["id"] != null)
                 {
+
+                string id = Request.Params["id"];
+                if (id.StartsWith("M_"))
+                {
+                    int marcaId = int.Parse(id.Substring(2));
                     ArticuloNegocio negocio = new ArticuloNegocio();
+                    Marca marca = new Marca();
+                    Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Marcas.Id == marcaId).ToList());
+                    ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                    repRepetidor.DataSource = ListaArticulo;
+                    repRepetidor.DataBind();
+                }
+                else if (id.StartsWith("C_"))
+                {
+                    int categoriaId = int.Parse(id.Substring(2));
+                    ArticuloNegocio negocio = new ArticuloNegocio();
+                    Categoria categoria= new Categoria();
+                    Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Categorias.Id == categoriaId).ToList());
+                    ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                    repRepetidor.DataSource = ListaArticulo;
+                    repRepetidor.DataBind();
+                }
+                    
+            }
+
+
+
+
+            else if(!IsPostBack && Session["ListaArticulo"] != null)
+                {
+                
+                ArticuloNegocio negocio = new ArticuloNegocio();
                     Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Estado == true).ToList());
                     ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
                     repRepetidor.DataSource = ListaArticulo;
@@ -37,9 +66,9 @@ namespace E_Commerce_Vista
                     //repRepetidor.DataBind();
                 }
                
-            }
             
            
+
         }
 
 

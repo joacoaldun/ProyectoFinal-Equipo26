@@ -76,8 +76,10 @@
                         %>
                         <div class="carousel-item <%= activeClass %>">
                             <div class="card">
+                               <a href="DetalleArticulo.aspx?id=<%= ListaArticulo[i].Id %>" class="image-link">
                                 <img src="<%=ListaArticulo[i].Imagenes[0].UrlImagen %>" class="card-img-top cardArticulo" alt="<%= ListaArticulo[i].Nombre%>">
-                                <div class="card-body">
+                              </a>
+                                    <div class="card-body">
                                     <h5 class="card-title"><%= ListaArticulo[i].Nombre %></h5>
                                     <%--  <p class="card-text"><%= ListaArticulo[i].Descripcion %></p>--%>
                                     <p class="card-text">Precio: $ <%= ListaArticulo[i].Precio %></p>
@@ -160,7 +162,10 @@
                                 %>
                                 <div class="col-md-4">
                                     <div class="card">
-                                        <img src="<%= ListaMarca[j].ImagenMarca %>" class="card-img-top cardMarca" alt="<%= ListaMarca[j].NombreMarca %>">
+                                        <a href="Listado.aspx?id=M_<%= ListaMarca[j].Id %>" class="image-link">
+                                            <img src="<%= ListaMarca[j].ImagenMarca %>" class="card-img-top cardMarca" alt="<%= ListaMarca[j].NombreMarca %>" data-id="<%= ListaMarca[j].Id %>">
+                                        </a>
+
                                     </div>
                                 </div>
                                 <% } %>
@@ -192,7 +197,9 @@
             <% foreach (var categoria in ListaCategoria)
                 { %>
             <div class="categoria-item" style="background-color: black; color: white;">
+                <a href="Listado.aspx?id=C_<%= categoria.Id %>" class="image-link" style="background-color: black; color: white; text-decoration:none">
                 <%= categoria.NombreCategoria %>
+                </a>
             </div>
             <% } %>
         </div>
