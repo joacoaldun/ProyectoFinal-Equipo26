@@ -47,7 +47,7 @@
                                 <img src="<%=ListaArticulo[i].Imagenes[0].UrlImagen %>" class="card-img-top cardArticulo" alt="<%= ListaArticulo[i].Nombre%>">
                                 <div class="card-body">
                                     <h5 class="card-title"><%= ListaArticulo[i].Nombre %></h5>
-                                    <p class="card-text"><%= ListaArticulo[i].Descripcion %></p>
+                                  <%--  <p class="card-text"><%= ListaArticulo[i].Descripcion %></p>--%>
                                     <p class="card-text">Precio: $ <%= ListaArticulo[i].Precio %></p>
                                 </div>
                             </div>
@@ -224,6 +224,10 @@
             font-size:small;
             color:white;
         }
+
+       /* .container{
+            width:85%;
+        }*/
     </style>
 
 </asp:Content>

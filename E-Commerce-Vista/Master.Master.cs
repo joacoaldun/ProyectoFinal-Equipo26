@@ -59,7 +59,8 @@ namespace E_Commerce_Vista
 
 
                     else
-                    {
+                    {   
+
                         lblTotalCantCarrito.Text = " (0)";
                     }
                 }
@@ -89,6 +90,11 @@ namespace E_Commerce_Vista
                 {
                     lblTotalCantCarrito.Text = " (" + cantidadTotalArticulos.ToString() + ")";
                     panelContador.Update();
+                }
+                else
+                {
+
+                    lblTotalCantCarrito.Text = " (0)";
                 }
 
 
