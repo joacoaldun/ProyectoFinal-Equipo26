@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -75,9 +76,8 @@ namespace E_Commerce_Vista
                         txtUserName.Text = seleccionada.UserName;
                         txtEmail.Text = seleccionada.Email;
                         txtDni.Text = seleccionada.Dni;
-                       txtFechaNacimiento.Text = seleccionada.FechaNacimiento.ToString();
-
-
+                        txtMostrarFecha.Text = seleccionada.FechaNacimiento.ToString("dd/MM/yyyy");
+                        
 
                         //txtPublicar.Text= seleccionada.Estado.ToString();
                         string estado = seleccionada.EstadoActivo ? "Alta" : "Baja";
@@ -85,13 +85,13 @@ namespace E_Commerce_Vista
 
                        
 
-                        //txtImagenUrl.Text = seleccionada.Imagenes.Url
+                      
                         txtNombre.CssClass = "form-control is-valid";
                         txtApellido.CssClass = "form-control is-valid";
                         txtUserName.CssClass = "form-control is-valid";
                         txtEmail.CssClass = "form-control is-valid";
                         txtDni.CssClass = "form-control is-valid";
-
+                        txtMostrarFecha.CssClass = "form-control is-valid";
                   
 
 
@@ -117,6 +117,10 @@ namespace E_Commerce_Vista
 
         public bool validarFormulario()
         {
+
+
+
+
             if (string.IsNullOrEmpty(txtNombre.Text.Trim()))
             {
                 return false;
@@ -136,7 +140,12 @@ namespace E_Commerce_Vista
                 return false;
 
             }
+
             else if (string.IsNullOrEmpty(txtDni.Text.Trim()))
+            {
+                return false;
+            }
+            else if (string.IsNullOrEmpty(txtMostrarFecha.Text.Trim()))
             {
                 return false;
             }
@@ -147,12 +156,35 @@ namespace E_Commerce_Vista
 
         }
 
+        public bool validarPass() {
+
+            if (Request.QueryString["id"] != null)
+            {
+
+
+                return true;
+
+            }
+            else if (string.IsNullOrEmpty(txtMostrarFecha.Text.Trim()))
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+
+
+        }
+
 
         protected void txtNombre_TextChanged(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(txtNombre.Text.Trim()))
             {
                 txtNombre.CssClass = "form-control is-invalid";
+               
             }
             else
             {
@@ -189,16 +221,41 @@ namespace E_Commerce_Vista
         }
         protected void txtEmail_TextChanged(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(txtEmail.Text.Trim()))
+            string email = txtEmail.Text.Trim();
+
+            if (string.IsNullOrEmpty(email))
             {
                 txtEmail.CssClass = "form-control is-invalid";
+               
+            }
+            else if (!IsinvalidEmail(email))
+            {
+                txtEmail.CssClass = "form-control is-invalid";
+               errorEmail.InnerHtml = "Formato inválido: El correo electrónico no es válido.";
+              
             }
             else
             {
                 txtEmail.CssClass = "form-control is-valid";
+                errorEmail.InnerHtml = "";
+            }
+
+            updatePanelCliente.Update();
+        }
+
+        protected void txtMostrarFecha_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtMostrarFecha.Text.Trim()))
+            {
+                txtMostrarFecha.CssClass = "form-control is-invalid";
+            }
+            else
+            {
+                txtMostrarFecha.CssClass = "form-control is-valid";
             }
             updatePanelCliente.Update();
         }
+
 
         protected void txtDni_TextChanged(object sender, EventArgs e)
         {
@@ -222,24 +279,24 @@ namespace E_Commerce_Vista
             {
                 txtDni.CssClass = "form-control is-valid";
             }
-            int stock;
-            if (int.TryParse(txtDni.Text, out stock))
-            {
-                if (stock < 0)
-                {
-                    txtDni.CssClass = "form-control is-invalid";
-                    errorDni.InnerText = "Ingrese un valor positivo.";
-                }
-                else
-                {
-                    txtDni.CssClass = "form-control is-valid";
-                }
-            }
+            
 
 
             updatePanelCliente.Update();
         }
+        protected void txtPass_TextChanged(object sender, EventArgs e)
+        {
+            if (string.IsNullOrEmpty(txtPass.Text.Trim()))
+            {
+                txtPass.CssClass = "form-control is-invalid";
+            }
+            else
+            {
+                txtPass.CssClass = "form-control is-valid";
+            }
+            updatePanelCliente.Update();
 
+        }
         private bool soloNumeros(string cadena)
         {
             foreach (char caracter in cadena)
@@ -263,7 +320,7 @@ namespace E_Commerce_Vista
             {
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
 
-                if (validarFormulario())
+                if (validarFormulario() || validarPass())
                 {
 
 
@@ -279,8 +336,8 @@ namespace E_Commerce_Vista
                     cliente.UserName = txtUserName.Text;
                     cliente.Email = txtEmail.Text;
                     cliente.Dni = txtDni.Text;
-                    cliente.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
-
+                    cliente.FechaNacimiento = DateTime.Parse(txtMostrarFecha.Text);
+                    cliente.Pass = txtPass.Text;
                     //articulo.Estado = bool.Parse(txtPublicar.Text);
                     if (ddlBajaLogica.Text == "Alta")
                     {
@@ -299,6 +356,13 @@ namespace E_Commerce_Vista
                     //SI NO TIENE ID ES PARA CREAR UN NUEVO ARTICULO Y SUS IMAGENES
                     if (id == "")
                     {
+                        usuarioNegocio.agregarClienteConSp(cliente);
+                    }
+                    else
+                    {
+                        cliente.Id = int.Parse(id); 
+                        usuarioNegocio.ModificarClienteConSp(cliente);
+
 
                     }
 
@@ -313,7 +377,7 @@ namespace E_Commerce_Vista
                 }
 
                
-                Response.Redirect("GestionCliente.aspx?id=1", false);
+                Response.Redirect("GestionUsuarios.aspx?id=1", false);
 
             }
             catch (Exception ex)
@@ -322,6 +386,33 @@ namespace E_Commerce_Vista
                 throw ex;
             }
         }
+
+        protected void txtFechaNacimiento_TextChanged(object sender, EventArgs e)
+        {
+            DateTime prueba = Convert.ToDateTime(txtFechaNacimiento.Text);
+
+            txtMostrarFecha.Text = prueba.ToString("dd/MM/yyyy");
+
+            txtMostrarFecha.CssClass = "form-control is-valid";
+        }
+
+      
+
+        private bool IsinvalidEmail(string email)
+        {
+            // Utilizar expresión regular para validar el formato del correo electrónico
+            string pattern = @"\A(?:[a-zA-Z0-9_\.]+@(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-]*[a-zA-Z0-9])?\.)+[a-zA-Z0-9](?:[a-zA-Z0-9\-]*[a-zA-Z0-9])?)\Z";
+
+
+
+
+
+            return Regex.IsMatch(email, pattern);
+            
+
+            
+        }
+
 
     }
 }

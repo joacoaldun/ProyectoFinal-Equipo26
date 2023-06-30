@@ -25,7 +25,8 @@
         </Columns>
 
     </asp:GridView>
-
+    <a href="FormularioCliente.aspx" class="btn btn-success" >Agregar</a>
+    <a href="PanelGestion.aspx" class="btn btn-danger" >Volver</a>
     <%} %>
 
     <%else if (int.Parse(Request.QueryString["id"]) == 2)
@@ -47,6 +48,11 @@
         </Columns>
 
     </asp:GridView>
+
+    <a href="FormularioAdmin.aspx" class="btn btn-success" >Agregar</a>
+    <a href="PanelGestion.aspx" class="btn btn-danger" >Volver</a>
+
+
     <%} %>
 
 </asp:Content>

@@ -17,11 +17,14 @@
                         <asp:TextBox runat="server" ID="txtId" CssClass="form-control" />
                     </div>
                     <% }
-                    %>
+
+
+%>
 
 
 
                     <div class="mb-3 mt-3">
+
                         <label for="txtNombre" class="form-label">Nombre</label>
                         <asp:TextBox ID="txtNombre" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtNombre_TextChanged" />
                         <div id="errorNombre" class="invalid-feedback ">Campo obligatorio.</div>
@@ -45,12 +48,20 @@
 
                     <div class="mb-3 mt-3">
                         <label for="txtEmail" class="form-label">Email</label>
-                        <asp:TextBox ID="txtEmail" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtEmail_TextChanged" />
+                        <asp:TextBox ID="txtEmail" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtEmail_TextChanged" TextMode="Email" />
                         <div id="errorEmail" class="invalid-feedback " runat="server">Campo obligatorio.</div>
 
                     </div>
+                    
+                    <%if (Request.QueryString["id"] == null)
+                        { %>
+                    <div class="mb-3 mt-3">
+                        <label for="txtPass" class="form-label">Contraseña</label>
+                        <asp:TextBox ID="txtPass" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtPass_TextChanged"/>
+                        <div id="errorPass" class="invalid-feedback " runat="server">Campo obligatorio.</div>
 
-
+                    </div>
+                    <%} %>
 
 
                     <div class="mb-3">
@@ -69,23 +80,27 @@
                     <div class="mb-3 mt-3">
                         <label for="txtDni" class="form-label">Dni</label>
 
-                        <asp:TextBox ID="txtDni" CssClass="form-control " AutoPostBack="true" OnTextChanged="txtDni_TextChanged" runat="server" />
-                        <div id="errorDni" class="invalid-feedback " runat="server"></div>
+                        <asp:TextBox ID="txtDni" CssClass="form-control is-invalid" AutoPostBack="true" OnTextChanged="txtDni_TextChanged" runat="server" />
+                        <div id="errorDni" class="invalid-feedback " runat="server">Campo obligatorio</div>
 
                     </div>
 
 
-                    <div class="col-4">
+                   
 
 
 
                         <div class="mb-3 mt-3">
-                            <asp:TextBox ID="txtFechaNacimiento" runat="server" CssClass="form-control" AutoPostBack="true" />
+                            <label for ="txtMostrarFecha" class="form-label">Fecha de Nacimiento</label>
+                            <asp:TextBox ID="txtMostrarFecha" runat="server" CssClass="form-control is-invalid" AutoPostBack="true" OnTextChanged="txtMostrarFecha_TextChanged" ReadOnly="true" />
+                            <div id="errorFecha" class="invalid-feedback " runat="server">Campo obligatorio.</div>
+                            </br>
+
+                             <label for ="txtFechaNacimiento" class="form-label">Seleccione Fecha de Nacimiento</label>
+                            <asp:TextBox ID="txtFechaNacimiento" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtFechaNacimiento_TextChanged" onkeydown="return false" TextMode="Date" />
+                           <span style="font-size: 12px;">Por favor, haz clic en el calendario para seleccionar una fecha.</span>
                         </div>
-                       <%-- <asp:RegularExpressionValidator ID="revFechaNacimiento" runat="server"
-                            ControlToValidate="txtFechaNacimiento"
-                            ValidationExpression="(0[1-9]|1[0-2])/(0[1-9]|1\d|2\d|3[01])/(19|20)\d{2}"
-                            ErrorMessage="Ingrese una fecha válida en formato MM/DD/YYYY"></asp:RegularExpressionValidator>--%>
+
 
 
                         <div class="mb-3 mt-3">
@@ -101,7 +116,9 @@
 
 
 
-                    </div>
+                    
+
+                </div>
 
                 </div>
         </ContentTemplate>
@@ -118,6 +135,7 @@
     </style>
 
 
+    
 
 
 

@@ -267,7 +267,7 @@ INSERT INTO Cliente (Id, Dni, FechaNacimiento, IDDomicilio)
 VALUES (1, '123456789', '1990-01-01', null);
 
 
-
+GO
 --LISTAR LOS CLIENTES CON SP
 Create PROCEDURE SPListarClientes
 AS 
@@ -276,6 +276,7 @@ select U.id, Nombre, Apellido, Username, TipoAcceso, Email, Dni, FechaNacimiento
 inner join Cliente c on U.Id = c.id
 END
 
+GO
 --LISTAR LOS ADMINS CON SP
 Create PROCEDURE SPListarAdmins
 AS 
@@ -284,8 +285,94 @@ select U.id, Nombre, Apellido, Username, TipoAcceso, Email,EstadoActivo from Usu
 where u.TipoAcceso = 1
 
 END
-
+GO
 --INSERTO UN ADMIN
 
 INSERT INTO Usuarios (Nombre, Apellido, Username, Pass, TipoAcceso, Email)
 VALUES ('Joaquin', 'Aldun', 'AldunAdmin', 'password123', 1, 'joacoaldun@gmail.com');
+
+
+GO
+
+--SP PARA CREAR CLIENTES
+CREATE PROCEDURE SPCrearCliente
+    @Nombre VARCHAR(30),
+    @Apellido VARCHAR(30),
+    @Username VARCHAR(30),
+    @Pass VARCHAR(20),
+    @TipoAcceso INT,
+    @Email VARCHAR(30),
+    @Dni VARCHAR(20),
+    @FechaNacimiento DATE,
+    @Estado BIT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRANSACTION;
+    
+    BEGIN TRY
+        -- Insertar en la tabla Usuarios
+        INSERT INTO Usuarios (Nombre, Apellido, Username, Pass, TipoAcceso, Email,EstadoActivo)
+        VALUES (@Nombre, @Apellido, @Username, @Pass, @TipoAcceso, @Email,@Estado);
+    
+        -- Obtener el ID generado en la tabla Usuarios
+        DECLARE @usuarioID INT;
+        SET @usuarioID = SCOPE_IDENTITY();
+    
+        -- Insertar en la tabla Cliente utilizando el ID de la tabla Usuarios
+        INSERT INTO Cliente (Id, Dni, FechaNacimiento)
+        VALUES (@usuarioID, @Dni, @FechaNacimiento);
+    
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshacer la transacción
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+
+select * from Usuarios u 
+inner join cliente c on u.id=c.Id
+GO
+--SP PARA MODIFICAR CLIENTE
+CREATE PROCEDURE SPModificarCliente
+    @Id INT,
+    @Nombre VARCHAR(30),
+    @Apellido VARCHAR(30),
+    @Username VARCHAR(30),
+    @Email VARCHAR(30),
+    @Dni VARCHAR(20),
+    @FechaNacimiento DATE,
+    @Estado BIT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRANSACTION;
+    
+    BEGIN TRY
+        -- Actualizar en la tabla Usuarios
+        UPDATE Usuarios
+        SET Nombre = @Nombre,
+            Apellido = @Apellido,
+            Username = @Username,
+            Email = @Email,
+            EstadoActivo = @Estado
+        WHERE Id = @Id;
+    
+        -- Actualizar en la tabla Cliente utilizando el ID
+        UPDATE Cliente
+        SET Dni = @Dni,
+            FechaNacimiento = @FechaNacimiento
+        WHERE Id = @Id;
+    
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshacer la transacción
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
