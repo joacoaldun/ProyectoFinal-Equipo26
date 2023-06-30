@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -12,8 +13,37 @@ namespace E_Commerce_Vista
     public partial class Articulos : System.Web.UI.Page
     {
         public List<Articulo> ListaArticulo { get; set; }
+        public List<int> ListaArticuloFavoritos { get; set; } 
         protected void Page_Load(object sender, EventArgs e)
-        {
+        {   
+
+
+            //VERIFICAMOS SI LOS ID YA ESTAN SELECCIONADOS COMO FAVORITOS
+            if (Session["ListaArticuloFavoritos"] != null)
+            {
+                ListaArticuloFavoritos = (List<int>)Session["ListaArticuloFavoritos"];
+            }
+
+            
+            if (ListaArticuloFavoritos != null)
+            {
+                foreach (RepeaterItem item in repRepetidor.Items)
+                {
+                    Button btnFavorito = item.FindControl("btnFavorito") as Button;
+                    int id = Convert.ToInt32(btnFavorito.CommandArgument);
+
+                    if (ListaArticuloFavoritos.Contains(id))
+                    {
+                        btnFavorito.CssClass += " btn-favorito-activo";
+                    }
+                    else
+                    {
+                        btnFavorito.CssClass = "btn btnFav";
+                    }
+                }
+            }
+
+            //LISTAMOS ARTICULOS
             if (!IsPostBack && Session["ListaArticulo"]==null)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
@@ -98,8 +128,29 @@ namespace E_Commerce_Vista
                 {
                     btnAgregar.Enabled = false;
                     btnAgregar.CssClass = "btn btn-danger btn-pg-1";
+                    btnAgregar.Style["background-color"] = "purple";
+                    btnAgregar.Style["color"] = "white";
+                    btnAgregar.Style["border"] = "none";
                     btnAgregar.Text = "Sin stock";
                 }
+            }
+
+           
+            //CAMBIAMOS VISUAL DEL BOTON SI ESTA SELECCIONADO O NO
+
+            if (ListaArticuloFavoritos != null)
+            {
+                    Button btnFavorito = e.Item.FindControl("btnFavorito") as Button;
+                    int id = Convert.ToInt32(btnFavorito.CommandArgument);
+
+                    if (ListaArticuloFavoritos.Contains(id))
+                    {
+                        btnFavorito.CssClass += " btn-favorito-activo";
+                    }
+                    else
+                    {
+                        btnFavorito.CssClass = "btn btnFav";
+                    }
             }
 
         }
@@ -144,5 +195,58 @@ namespace E_Commerce_Vista
             }
         }
 
+        protected void btnFavorito_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(((Button)sender).CommandArgument);
+
+            List<Articulo> listaFavoritos = (List<Articulo>)Session["Favoritos"];
+
+            if (listaFavoritos == null)
+            {
+                listaFavoritos = new List<Articulo>();
+            }
+
+            Articulo articulo = new Articulo();
+            ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+            articulo = ListaArticulo.Find(a => a.Id == id);
+
+            // VEMOS SI EL ARTICULO YA EXISTE EN LA LISTA
+            if (listaFavoritos.Exists(a => a.Id == id))
+            {
+                listaFavoritos.RemoveAll(a => a.Id == id); // si esta, lo borramos
+            }
+            else
+            {
+                listaFavoritos.Add(articulo); //si no esta lo sumamos
+            }
+
+            
+            Session["Favoritos"] = listaFavoritos;
+
+            List<int> ListaArticuloFavoritos = (List<int>)Session["ListaArticuloFavoritos"];
+
+            if (ListaArticuloFavoritos == null)
+            {
+                ListaArticuloFavoritos = new List<int>();
+            }
+
+            // VEMOS SI EL ID ARTICULO YA EXISTE EN LA LISTA
+            if (ListaArticuloFavoritos.Contains(id))
+            {
+                ListaArticuloFavoritos.Remove(id); // si esta, lo borramos
+            }
+            else
+            {
+                ListaArticuloFavoritos.Add(id); //si no esta lo sumamos
+            }
+
+            
+            Session["ListaArticuloFavoritos"] = ListaArticuloFavoritos;
+
+            string script = string.Format("btnFavoritoClick('{0}');", ((Button)sender).ClientID);
+            ScriptManager.RegisterStartupScript(this, GetType(), "btnFavoritoClick", script, true);
+
+
+        }
     }
 }

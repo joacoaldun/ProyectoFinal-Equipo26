@@ -277,5 +277,12 @@ select U.id, Nombre, Apellido, Username, TipoAcceso, Email, Dni, FechaNacimiento
 inner join Cliente c on U.Id = c.id
 END
 
-
+--LISTAR LOS ADMINS CON SP
+go
+alter PROCEDURE SPListarAdmins
+AS 
+BEGIN
+select Id, Nombre, Apellido, Username, TipoAcceso, Email, EstadoActivo from Usuarios
+where TipoAcceso=1
+END
 

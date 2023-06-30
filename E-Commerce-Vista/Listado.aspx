@@ -7,7 +7,7 @@
 
 
     <%-- CARDS --%>
-    <asp:UpdatePanel ID="panel1" runat="server" OnLoad="panel1_Load">
+    <asp:UpdatePanel ID="panel1" runat="server" OnLoad="panel1_Load" >
         <ContentTemplate>
             <div class="cards-container">
                 <div class="row row-cols-1 row-cols-md-3 g-4">
@@ -25,7 +25,9 @@
                                         <asp:Button Text="Ver Detalle" ID="btnDetalle" CssClass="btn btn-dark " runat="server" OnClick="btnDetalle_Click" CommandArgument='<%#Eval("Id")%>' />
 
                                         <asp:Button Text="Agregar al carrito" ID="btnEjemplo" CssClass="btn btn-success btnAgregar btn-pg-1" runat="server" OnClick="btnAgregarCarrito_Click" CommandArgument='<%# Eval("Id") %>' OnClientClick="mostrarMensaje();" />
-                                        
+                                       
+                                         <asp:Button Text="♥" Cssclass="btn btnFav" ID="btnFavorito"  OnClick="btnFavorito_Click" CommandArgument='<%#Eval ("Id") %>' runat="server" />
+
                                     </div>
                                 </div>
                             </div>
@@ -48,7 +50,18 @@
             width: auto;
         }
 
-      
+        .btnFav{
+            color:black;
+            border:none;
+            font-size:xx-large;
+
+        }
+        
+        .btn-favorito-activo {
+        color: purple;
+       
+        }
+
     </style>
 
 
@@ -88,8 +101,11 @@
         function redirectToListado() {
             window.location.href = "ListadoCarrito.aspx";
         }
-
-
+        //actualizamos btn fav
+        function btnFavoritoClick(btnId) {
+            __doPostBack(btnId, '');
+        }
+        
 
 
     </script>

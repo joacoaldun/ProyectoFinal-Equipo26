@@ -76,17 +76,18 @@
                                     <%}
                                         else
                                         {%>
-                                      <asp:Button Text="Sin stock" ID="Button1" CssClass="btn btn-danger btn-pg-1" runat="server"  enabled="false" />
+                                      <asp:Button Text="Sin stock" ID="Button1" CssClass="btn btn-danger btn-pg-1" runat="server" style="background-color:purple; border:none;" enabled="false" />
 
                                         <%}%>
                                     <asp:Button ID="btnVolver" runat="server" CssClass="btn btn-dark green-text" Text="Volver atras" OnClick="btnVolver_Click" />
+                                    <asp:Button Text="♥" Cssclass="btn btnFav" ID="btnFavorito" OnClick="btnFavorito_Click" runat="server" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            --%>
+            
 
         </ContentTemplate>
     </asp:UpdatePanel>
@@ -125,6 +126,12 @@
     <%  } %>
 
 
+  <style>
+       .btnFav{
+            border:none;
+            font-size:xx-large;
+        }
+  </style>
 
     <script>
         function mostrarMensaje() {

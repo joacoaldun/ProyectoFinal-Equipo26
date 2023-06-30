@@ -64,5 +64,25 @@ namespace E_Commerce_Vista
             }
 
         }
+
+        protected void btnFavorito_Click(object sender, EventArgs e)
+        {
+            int id = Convert.ToInt32(((Button)sender).CommandArgument);
+
+
+            List<Articulo> listaFavoritos = (List<Articulo>)Session["Favoritos"];
+            List<Articulo> ListaArticulo = new List<Articulo>();
+
+            if (listaFavoritos == null)
+            {
+                listaFavoritos = new List<Articulo>();
+            }
+            Articulo articulo = new Articulo();
+            ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+            articulo = ListaArticulo.Find(a => a.Id == id);
+            listaFavoritos.Add(articulo);
+
+            Session["Favoritos"] = listaFavoritos;
+        }
     }
 }
