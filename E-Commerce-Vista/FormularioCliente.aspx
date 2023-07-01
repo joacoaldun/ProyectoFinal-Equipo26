@@ -16,10 +16,7 @@
                         <label for="txtId" class="form-label">Id</label>
                         <asp:TextBox runat="server" ID="txtId" CssClass="form-control" />
                     </div>
-                    <% }
-
-
-%>
+                    <% }%>
 
 
 

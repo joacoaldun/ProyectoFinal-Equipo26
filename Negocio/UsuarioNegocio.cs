@@ -235,7 +235,82 @@ namespace Negocio
 
         }
 
+        public void agregarAdminConSp(Admin admin)
+        {
 
+            AccesoDatos datos = new AccesoDatos();
+
+
+
+
+            try
+            {
+                datos.setearProcedimiento("SPCrearAdmin");
+
+                datos.setearParametros("@Nombre", admin.Nombre);
+                datos.setearParametros("@Apellido", admin.Apellido);
+                datos.setearParametros("@Username", admin.UserName);
+                datos.setearParametros("@Pass", admin.Pass);
+                datos.setearParametros("@TipoAcceso", 1);
+                datos.setearParametros("@Email", admin.Email);
+
+                
+                datos.setearParametros("@Estado", admin.EstadoActivo);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+
+        }
+
+        public void ModificarAdminConSp(Admin admin)
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+
+
+
+
+            try
+            {
+                datos.setearProcedimiento("SPModificarAdmin");
+
+                datos.setearParametros("@Id", admin.Id);
+                datos.setearParametros("@Nombre", admin.Nombre);
+                datos.setearParametros("@Apellido", admin.Apellido);
+                datos.setearParametros("@Username", admin.UserName);
+
+
+                datos.setearParametros("@Email", admin.Email);
+
+               
+                datos.setearParametros("@Estado", admin.EstadoActivo);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+
+        }
 
     }
 }
+
+

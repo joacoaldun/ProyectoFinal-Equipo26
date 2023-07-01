@@ -13,7 +13,7 @@ namespace E_Commerce_Vista
     public partial class FormularioCliente : System.Web.UI.Page
     {
 
-        public bool confirmarEliminar { get; set; }
+        
         public bool modificando { get; set; }
 
         public bool verId { get; set; }
@@ -24,7 +24,7 @@ namespace E_Commerce_Vista
             try
             {
 
-                confirmarEliminar = false;
+               
                 string id = Request.QueryString["id"] != null ? Request.QueryString["id"].ToString() : "";
 
 
@@ -165,7 +165,7 @@ namespace E_Commerce_Vista
                 return true;
 
             }
-            else if (string.IsNullOrEmpty(txtMostrarFecha.Text.Trim()))
+            else if (string.IsNullOrEmpty(txtPass.Text.Trim()))
             {
                 return false;
             }

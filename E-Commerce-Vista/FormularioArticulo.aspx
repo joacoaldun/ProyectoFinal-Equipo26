@@ -136,7 +136,8 @@
                                 <asp:Button Text="<" ID="btnAnterior" OnClick="btnAnterior_Click" CssClass="btn carousel-control-prev btnCarrusel" runat="server" UseSubmitBehavior="false" />
                                 <asp:Button Text=">" ID="btnSiguiente" OnClick="btnSiguiente_Click" CssClass="btn carousel-control-next btnCarrusel" runat="server" UseSubmitBehavior="false" />
 
-                                <%}                        %>
+                                <%}
+                        %>
                             </div>
                         </div>
                         <%if (Session["Imagenes"] != null)

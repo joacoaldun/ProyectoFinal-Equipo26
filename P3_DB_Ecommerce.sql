@@ -376,3 +376,70 @@ BEGIN
         THROW;
     END CATCH;
 END;
+
+
+go
+--SP AGREGAR ADMIN
+CREATE PROCEDURE SPCrearAdmin
+    @Nombre VARCHAR(30),
+    @Apellido VARCHAR(30),
+    @Username VARCHAR(30),
+    @Pass VARCHAR(20),
+    @TipoAcceso INT,
+    @Email VARCHAR(30),
+    @Estado BIT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRANSACTION;
+    
+    BEGIN TRY
+        -- Insertar en la tabla Usuarios
+        INSERT INTO Usuarios (Nombre, Apellido, Username, Pass, TipoAcceso, Email,EstadoActivo)
+        VALUES (@Nombre, @Apellido, @Username, @Pass, @TipoAcceso, @Email,@Estado);
+    
+        
+
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshacer la transacción
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+
+--SP MODIFICAR ADMIN
+GO
+CREATE PROCEDURE SPModificarAdmin
+    @Id INT,
+    @Nombre VARCHAR(30),
+    @Apellido VARCHAR(30),
+    @Username VARCHAR(30),
+    @Email VARCHAR(30),
+    @Estado BIT
+AS
+BEGIN
+    SET NOCOUNT ON;
+    
+    BEGIN TRANSACTION;
+    
+    BEGIN TRY
+        -- Actualizar en la tabla Usuarios
+        UPDATE Usuarios
+        SET Nombre = @Nombre,
+            Apellido = @Apellido,
+            Username = @Username,
+            Email = @Email,
+            EstadoActivo = @Estado
+        WHERE Id = @Id;
+    
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshacer la transacción
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
