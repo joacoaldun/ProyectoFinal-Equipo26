@@ -28,9 +28,9 @@ create table Articulos(
     Estado bit null default 1
 )
 ---JOACO! Para dropear la de articulos hay que dropear las de stock y fav por la FK...
-drop table stock
-drop table ListaFavoritos
-drop table Articulos
+-- drop table stock
+-- drop table ListaFavoritos
+-- drop table Articulos
 
 go
 create table Imagenes(
@@ -64,21 +64,27 @@ insert into ARTICULOS values
 ('S02', 'Playstation 5', 'Con tu consola PlayStation 5 tendrás entretenimiento asegurado todos los días.', 1, 1, 300000,1),
 ('C03', 'Resident Evil 4 Remake', 'Salvando a Ashley por 10° vez.', 1, 5, 30000,1),
 ('D04', 'Teclado Redragon Yama K550', 'Gracias al rgb podrás ser mas habilidoso en los juegos', 10, 4, 30000,1),
-('F05', 'Notebook', null, 4, 3, 300000, 1)
-
+('F05', 'Notebook', null, 4, 3, 300000, 1),
+('S05', 'Diablo IV', 'Otro juegazo', 1, 5, 300000, 1),
+('S06', 'Street Fighter 6', 'Clasico', 1, 5, 300000, 1),
+('S07', 'Joystick Ps4', 'Joystick', 1, 4, 300000, 1)
 
 insert into Imagenes values 
 (1,'https://http2.mlstatic.com/D_NQ_NP_885600-MLA51045269675_082022-O.webp'),
 (2,'https://images.fravega.com/f300/af1a88e0d12772f769e6f824a3cb236e.jpg.webp'),
 (3,'https://http2.mlstatic.com/D_NQ_NP_880036-MLA53990748326_022023-O.webp'),
 (3,'https://cdn.hobbyconsolas.com/sites/navi.axelspringer.es/public/media/image/2023/01/resident-evil-4-2942734.jpg'),
-(4,'https://http2.mlstatic.com/D_NQ_NP_935185-MLA46504064329_062021-O.webp')
+(4,'https://http2.mlstatic.com/D_NQ_NP_935185-MLA46504064329_062021-O.webp'),
+(6,'https://http2.mlstatic.com/D_NQ_NP_848738-MLA69844613350_062023-O.webp'),
+(7,'https://http2.mlstatic.com/D_NQ_NP_827935-MLA69763347798_062023-O.webp'),
+(8,'https://http2.mlstatic.com/D_NQ_NP_611053-MLA54979368420_042023-O.webp')
+
 
 
 
 --SP LISTAR CON STOCK--
 go
-alter procedure storedListar as
+create procedure storedListar as
 SELECT a.Id, Codigo, Nombre, a.Descripcion 
 as DescripcionArticulo, a.Estado as Estado, 
 Precio,m.Id as IdMarca, 
@@ -166,12 +172,12 @@ create table Stock(
     Primary key (IdArticulo)
 )
 
-drop table stock
+-- drop table stock
 
 
 ---------------SP ARTICULOS-----------------
 go
-alter PROCEDURE SpAgregarArticulo
+create PROCEDURE SpAgregarArticulo
 @Nombre varchar(50),
 @Codigo VARCHAR(50),
 @Descripcion varchar(150),
@@ -189,7 +195,7 @@ select max(id) from Articulos
 
 
 go
-alter Procedure SpModificarArticulo
+create Procedure SpModificarArticulo
 @Nombre varchar(50),
 @Codigo VARCHAR(50),
 @Descripcion varchar(150),
@@ -233,12 +239,14 @@ insert into Stock values
 (3,0),
 (4,0),
 (5,0),
-(10,0)
+(6,0),
+(7,0),
+(8,0)
 
 ------BAJA FÍSICA-----
 --HACER EL ALTER PARA BORRAS IMAGENES DE ARTICULO TAMBIEN.
 go
-alter Procedure SPeliminarArticulo (
+create Procedure SPeliminarArticulo (
     @id int
 )
 As begin
