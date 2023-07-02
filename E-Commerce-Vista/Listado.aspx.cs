@@ -108,6 +108,7 @@ namespace E_Commerce_Vista
                 repRepetidor.DataSource = (List<Articulo>)Session["ListaArticulosFiltrada"];
                 repRepetidor.DataBind();
                 Session["ListaArticulosFiltrada"] = null;
+                
             }
 
             if (!IsPostBack)
@@ -116,6 +117,10 @@ namespace E_Commerce_Vista
 
             }
 
+            if (!IsPostBack)
+            {
+               
+            }
 
         }
 
@@ -338,8 +343,10 @@ namespace E_Commerce_Vista
 
         protected void btnQuitarFiltros_Click(object sender, EventArgs e)
         {
+            
             repRepetidor.DataSource = Session["ListaArticulo"];
             repRepetidor.DataBind();
+            Session["ListaFiltrada"] = null;
         }
 
 
@@ -507,6 +514,9 @@ namespace E_Commerce_Vista
                             listaFiltrada = ListaArticulo.FindAll(x => x.Categorias.NombreCategoria == ddlCriterio.SelectedValue);
                         }
 
+                        
+                        Session["ListaFiltrada"] = listaFiltrada;
+
                         repRepetidor.DataSource = listaFiltrada;
                         repRepetidor.DataBind();
 
@@ -527,6 +537,99 @@ namespace E_Commerce_Vista
 
     }
 
-       
+        protected void ddlOrdenar_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ddlOrdenar_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
+
+        //ORDENAR
+        protected void Option1_Click(object sender, EventArgs e)
+        {
+            // Lógica para la opción "A-Z"
+            List<Articulo> listaFiltrada=new List<Articulo>();
+
+            if (Session["ListaFiltrada"] == null)
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                listaFiltrada = ListaArticulo.OrderBy(x => x.Nombre).ToList();
+            }
+            else
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaFiltrada"];
+                listaFiltrada = ListaArticulo.OrderBy(x => x.Nombre).ToList();
+            }
+
+            repRepetidor.DataSource = listaFiltrada;
+            repRepetidor.DataBind();
+
+        }
+
+        protected void Option2_Click(object sender, EventArgs e)
+        {
+            // Lógica para la opción "Z-A"
+            List<Articulo> listaFiltrada = new List<Articulo>();
+
+            if (Session["ListaFiltrada"] == null)
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                listaFiltrada = ListaArticulo.OrderByDescending(x => x.Nombre).ToList();
+            }
+            else
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaFiltrada"];
+                listaFiltrada = ListaArticulo.OrderByDescending(x => x.Nombre).ToList();
+            }
+
+            
+            repRepetidor.DataSource = listaFiltrada;
+            repRepetidor.DataBind();
+        }
+
+        protected void Option3_Click(object sender, EventArgs e)
+        {
+            // Lógica para la opción "Mayor a menor"
+            List<Articulo> listaFiltrada = new List<Articulo>();
+            if (Session["ListaFiltrada"] == null)
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                listaFiltrada = ListaArticulo.OrderByDescending(x => x.Precio).ToList();
+            }
+            else
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaFiltrada"];
+                listaFiltrada = ListaArticulo.OrderByDescending(x => x.Precio).ToList();
+            }
+
+            
+            
+            repRepetidor.DataSource = listaFiltrada;
+            repRepetidor.DataBind();
+        }
+
+        protected void Option4_Click(object sender, EventArgs e)
+        {
+            // Lógica para la opción "Menor a mayor"
+            List<Articulo> listaFiltrada = new List<Articulo>();
+            if (Session["ListaFiltrada"] == null)
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                listaFiltrada = ListaArticulo.OrderBy(x => x.Precio).ToList();
+            }
+            else
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaFiltrada"];
+                listaFiltrada = ListaArticulo.OrderBy(x => x.Precio).ToList();
+            }
+
+            
+            repRepetidor.DataSource = listaFiltrada;
+            repRepetidor.DataBind();
+        }
+
     }
 }

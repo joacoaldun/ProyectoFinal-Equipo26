@@ -80,7 +80,7 @@
 
                                         <%}%>
                                     <asp:Button ID="btnVolver" runat="server" CssClass="btn btn-dark green-text" Text="Volver atras" OnClick="btnVolver_Click" />
-                                    <asp:Button Text="♥" Cssclass="btn btnFav" ID="btnFavorito" OnClick="btnFavorito_Click" runat="server" />
+                                    <asp:Button Text="♥" Cssclass="btn btnFav" ID="btnFavorito"  OnClick="btnFavorito_Click" runat="server" CommandArgument='<%#Eval ("Id") %>' />
                                 </div>
                             </div>
                         </div>
@@ -128,9 +128,15 @@
 
   <style>
        .btnFav{
+           color: black;
             border:none;
             font-size:xx-large;
         }
+
+        .btn-favorito-activo {
+            color: purple;
+        }
+
   </style>
 
     <script>
@@ -142,6 +148,11 @@
             setTimeout(function () {
                 mensajeCarrito.style.display = "none";
             }, 4000);
+        }
+
+        //actualizamos btn fav
+        function btnFavoritoClick(btnId) {
+            __doPostBack(btnId, '');
         }
     </script>
 

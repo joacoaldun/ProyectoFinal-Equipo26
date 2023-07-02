@@ -10,7 +10,7 @@
             width: 15%;
             position: fixed;
             z-index: 2;
-            top: 0;
+            top: 20px;
             left: 0;
             height: 100%;
             background-color: black;
@@ -25,8 +25,8 @@
             color: white;
         }
 
-        .filtros .form-control{
-            width:50%;
+        .filtros .form-control {
+            width: 50%;
             margin: 0 auto;
         }
         
@@ -91,15 +91,29 @@
                         </div>
 
 
-                        <%-- Boton buscar y borrar filtros--%>
+                        <%-- Boton buscar, borrar y ordenar filtros--%>
                         <div class="row">
                             <div class="col-12 filtrosAv">
-                                <div class="mb-3">
-                                    <asp:Button Text="Buscar" runat="server" ID="btnBuscar" CssClass="btn btn-outline-light form-control" OnClick="btnBuscar_Click" />
+                                <div class="mb-3 botonFILTRO">
+                                    <asp:Button Text="Buscar" runat="server" ID="btnBuscar" CssClass="btn btn-outline-light form-control" OnClick="btnBuscar_Click" style="width:100px"/>
                                 </div>
-                                <div class="mb-3">
-                                    <asp:Button Text="Limpiar" runat="server" ID="btnQuitarFiltros" CssClass="btn btn-outline-light form-control" OnClick="btnQuitarFiltros_Click" />
+                                <div class="mb-3 botonFILTRO">
+                                    <asp:Button Text="Limpiar" runat="server" ID="btnQuitarFiltros" CssClass="btn btn-outline-light form-control" OnClick="btnQuitarFiltros_Click" style="width:100px"/>
                                 </div>
+
+
+                                <div class="dropdown mb-3 botonFILTRO">
+                                    <button class="btn btn-outline-light dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" width:"80px";>
+                                        Ordenar
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="#" runat="server" onserverclick="Option1_Click">A-Z</a></li>
+                                        <li><a class="dropdown-item" href="#" runat="server" onserverclick="Option2_Click">Z-A</a></li>
+                                        <li><a class="dropdown-item" href="#" runat="server" onserverclick="Option3_Click">Mayor a menor</a></li>
+                                        <li><a class="dropdown-item" href="#" runat="server" onserverclick="Option4_Click">Menor a mayor</a></li>
+                                    </ul>
+                                </div>
+
                             </div>
                         </div>
 
@@ -111,6 +125,14 @@
             <%-- TERMINA ESTILO FILTROS --%>
         </div>
         <%-- TERMINA FILTROS --%>
+
+
+      
+
+
+
+
+
 
 
         <%-- CARDS --%>
