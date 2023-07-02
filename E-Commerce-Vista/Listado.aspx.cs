@@ -95,9 +95,27 @@ namespace E_Commerce_Vista
                     //repRepetidor.DataSource = (List<Articulo>)Session["ListaArticulo"];
                     //repRepetidor.DataBind();
                 }
-               
-            
-           
+
+            //CARGAMOS LISTA FILTRADA 
+            if (Session["listaArticulosFiltrada"] == null)
+            {
+                //ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                //repRepetidor.DataSource = ListaArticulo;
+                //repRepetidor.DataBind();
+            }
+            else
+            {
+                repRepetidor.DataSource = (List<Articulo>)Session["ListaArticulosFiltrada"];
+                repRepetidor.DataBind();
+                Session["ListaArticulosFiltrada"] = null;
+            }
+
+            if (!IsPostBack)
+            {
+                cargarCboCriterio("Mayor a", "Menor a", "Igual a");
+
+            }
+
 
         }
 
@@ -248,5 +266,267 @@ namespace E_Commerce_Vista
 
 
         }
+
+
+        //FUNCIONES FILTROS
+        protected void txtFiltro_TextChanged(object sender, EventArgs e)
+        {
+            List<Articulo> lista = (List<Articulo>)Session["ListaArticulo"];
+            List<Articulo> listaFiltrada = lista.FindAll(x => x.Nombre.ToUpper().Contains(txtFiltro.Text.ToUpper()));
+            repRepetidor.DataSource = listaFiltrada;
+            repRepetidor.DataBind();
+        }
+
+        protected void ddlCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            ddlCriterio.Items.Clear();
+            txtFiltroAvanzado.Enabled = true;
+            string opcion = ddlCampo.SelectedItem.ToString();
+
+            if (opcion == "Precio")
+            {
+                cargarCboCriterio("Mayor a", "Menor a", "Igual a");
+            }
+            else if (opcion == "Categorías")
+            {
+                txtFiltroAvanzado.Enabled = false;
+                cargarCboCategorias();
+            }
+            else if (opcion == "Marcas")
+            {
+                txtFiltroAvanzado.Enabled = false;
+                cargarCboMarcas();
+            }
+            else
+            {
+                cargarCboCriterio("Comienza con", "Termina con", "Contiene");
+            }
+        }
+
+        private void cargarCboCriterio(string criterio1, string criterio2, string criterio3)
+        {
+            ddlCriterio.Items.Add(criterio1);
+            ddlCriterio.Items.Add(criterio2);
+            ddlCriterio.Items.Add(criterio3);
+        }
+
+        private void cargarCboMarcas()
+        {
+            MarcaNegocio negocio = new MarcaNegocio();
+            List<Marca> marcas = new List<Marca>();
+            marcas = negocio.listar();
+
+            foreach (Marca marca in marcas)
+            {
+                ddlCriterio.Items.Add(marca.NombreMarca);
+            }
+        }
+
+        private void cargarCboCategorias()
+        {
+            CategoriaNegocio negocio = new CategoriaNegocio();
+            List<Categoria> categorias = new List<Categoria>();
+            categorias = negocio.listar();
+
+            foreach (Categoria categoria in categorias)
+            {
+                ddlCriterio.Items.Add(categoria.NombreCategoria);
+            }
+
+        }
+
+
+        protected void btnQuitarFiltros_Click(object sender, EventArgs e)
+        {
+            repRepetidor.DataSource = Session["ListaArticulo"];
+            repRepetidor.DataBind();
+        }
+
+
+
+
+
+        private bool soloNumeros(string cadena)
+        {
+            foreach (char caracter in cadena)
+            {
+                if ((char.IsNumber(caracter)))
+                    return true;
+            }
+            return false;
+        }
+
+        private bool validarFiltro()
+        {
+            if (ddlCampo.SelectedIndex < 0 || ddlCampo.SelectedIndex < 0)
+            {
+                //lblMensajeError.Text = "Debe seleccionar un campo y un criterio de búsqueda.";
+                //lblMensajeError.Visible = true;
+                //updatePanelMensajeError.Update();
+                //timerMensajeError.Enabled = true;
+                //("Debe seleccionar un campo y un criterio de búsqueda.", "Error de selección", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+
+            if (ddlCampo.SelectedItem.ToString() == "Precio")
+            {
+                if (string.IsNullOrEmpty(txtFiltroAvanzado.Text))
+                {
+                    //lblMensajeError.Text = "Ingrese un filtro para la búsqueda.";
+                    //lblMensajeError.Visible = true;
+                    //updatePanelMensajeError.Update();
+                    //timerMensajeError.Enabled = true;
+                    // ("Por favor ingresa un filtro para numéricos");
+                    return false;
+                }
+                if (!soloNumeros(txtFiltroAvanzado.Text))
+                {
+                    //lblMensajeError.Text = "Por favor ingrese un filtro para numéricos";
+                    //lblMensajeError.Visible = true;
+                    //updatePanelMensajeError.Update();
+                    //timerMensajeError.Enabled = true;
+                    //("Solo se aceptan números para filtrar un campo numerico");
+                    return false;
+                }
+                int filtroAvanzado;
+                if (int.TryParse(txtFiltroAvanzado.Text, out filtroAvanzado))
+                {
+                    if (filtroAvanzado < 0)
+                    {
+                        //lblMensajeError.Text = "El filtro para números no puede ser menor que 0";
+                        //lblMensajeError.Visible = true;
+                        //updatePanelMensajeError.Update();
+                        //timerMensajeError.Enabled = true;
+                        return false;
+                    }
+                }
+                if (ddlCriterio.SelectedItem.ToString() == "Menor a")
+                {
+                    if (int.TryParse(txtFiltroAvanzado.Text, out filtroAvanzado))
+                    {
+                        if (filtroAvanzado == 0)
+                        {
+                            //lblMensajeError.Text = "El filtro para números no puede ser menor que 0";
+                            //lblMensajeError.Visible = true;
+                            //updatePanelMensajeError.Update();
+                            //timerMensajeError.Enabled = true;
+                            return false;
+                        }
+
+                    }
+                }
+
+
+            }
+
+            if (ddlCampo.SelectedItem.ToString() == "Nombre")
+            {
+                if (string.IsNullOrEmpty(txtFiltroAvanzado.Text))
+                {
+                    //lblMensajeError.Text = "Ingrese un filtro para la búsqueda.";
+                    //lblMensajeError.Visible = true;
+                    //updatePanelMensajeError.Update();
+                    //timerMensajeError.Enabled = true;
+                    return false;
+                }
+
+            }
+
+
+            return true;
+        }
+
+
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                if (validarFiltro())
+                {
+
+                    string campo = ddlCampo.SelectedItem.ToString();
+                    string criterio = ddlCriterio.SelectedItem.ToString();
+                    string filtro = txtFiltroAvanzado.Text;
+
+
+                    if (ddlCampo.SelectedItem.ToString() == "Marcas" || ddlCampo.SelectedItem.ToString() == "Categorías")
+                    {
+                        filtro = criterio;
+                    }
+
+                    if (string.IsNullOrWhiteSpace(filtro))
+                    {
+                        repRepetidor.DataSource = Session["ListaArticulo"];
+                        repRepetidor.DataBind();
+                    }
+                    else
+                    {
+                       
+                        ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+                        List<Articulo> listaFiltrada = new List<Articulo>();
+
+                        if (campo == "Precio")
+                        {
+                            switch (criterio)
+                            {
+                                case "Mayor a":
+                                    listaFiltrada = ListaArticulo.FindAll(x => x.Precio > decimal.Parse(filtro));
+                                    break;
+                                case "Menor a":
+                                    listaFiltrada = ListaArticulo.FindAll(x => x.Precio < decimal.Parse(filtro));
+                                    break;
+                                case "Igual a":
+                                    listaFiltrada = ListaArticulo.FindAll(x => x.Precio == decimal.Parse(filtro));
+                                    break;
+                            }
+                        }
+                        else if (campo == "Nombre")
+                        {
+                            switch (criterio)
+                            {
+                                case "Comienza con":
+                                    listaFiltrada = ListaArticulo.FindAll(x => x.Nombre.ToUpper().StartsWith(filtro.ToUpper()));
+                                    break;
+                                case "Termina con":
+                                    listaFiltrada = ListaArticulo.FindAll(x => x.Nombre.ToUpper().EndsWith(filtro.ToUpper()));
+                                    break;
+                                case "Contiene":
+                                    listaFiltrada = ListaArticulo.FindAll(x => x.Nombre.ToUpper().Contains(filtro.ToUpper()));
+                                    break;
+                            }
+                        }
+                        else if (campo == "Marcas")
+                        {
+                            listaFiltrada = ListaArticulo.FindAll(x => x.Marcas.NombreMarca == ddlCriterio.SelectedValue);
+                        }
+                        else if (campo == "Categorías")
+                        {
+                            listaFiltrada = ListaArticulo.FindAll(x => x.Categorias.NombreCategoria == ddlCriterio.SelectedValue);
+                        }
+
+                        repRepetidor.DataSource = listaFiltrada;
+                        repRepetidor.DataBind();
+
+
+                    }
+
+                }
+
+                txtFiltroAvanzado.Text = string.Empty;
+
+            }
+            catch (Exception ex)
+            {
+                Session.Add("Error.aspx", ex);
+                Response.Redirect("Error.aspx");
+                throw ex;
+            }
+
+    }
+
+       
     }
 }

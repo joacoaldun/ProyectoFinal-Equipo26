@@ -76,12 +76,9 @@
                                 <a class="nav-link active" aria-current="page" href="PanelGestion.aspx">Administrar</a>
                             </li>
 
-                            <%-- CARRITO --%>
-                            <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="ListadoCarrito.aspx">ListadoCarrito</a>
-                            </li>
+                           
 
-                             <%-- CARRITO --%>
+                             <%-- CONTACTO --%>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="Contacto.aspx">Contacto</a>
                             </li>
