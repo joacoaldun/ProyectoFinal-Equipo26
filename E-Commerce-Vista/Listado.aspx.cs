@@ -367,10 +367,10 @@ namespace E_Commerce_Vista
         {
             if (ddlCampo.SelectedIndex < 0 || ddlCampo.SelectedIndex < 0)
             {
-                //lblMensajeError.Text = "Debe seleccionar un campo y un criterio de búsqueda.";
-                //lblMensajeError.Visible = true;
-                //updatePanelMensajeError.Update();
-                //timerMensajeError.Enabled = true;
+                lblMensajeError.Text = "Debe seleccionar un campo y un criterio de búsqueda.";
+                lblMensajeError.Visible = true;
+                updatePanelMensajeError.Update();
+                timerMensajeError.Enabled = true;
                 //("Debe seleccionar un campo y un criterio de búsqueda.", "Error de selección", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
@@ -379,20 +379,20 @@ namespace E_Commerce_Vista
             {
                 if (string.IsNullOrEmpty(txtFiltroAvanzado.Text))
                 {
-                    //lblMensajeError.Text = "Ingrese un filtro para la búsqueda.";
-                    //lblMensajeError.Visible = true;
-                    //updatePanelMensajeError.Update();
-                    //timerMensajeError.Enabled = true;
-                    // ("Por favor ingresa un filtro para numéricos");
+                    lblMensajeError.Text = "Ingrese un filtro para la búsqueda.";
+                    lblMensajeError.Visible = true;
+                    updatePanelMensajeError.Update();
+                    timerMensajeError.Enabled = true;
+                     //("Por favor ingresa un filtro para numéricos");
                     return false;
                 }
                 if (!soloNumeros(txtFiltroAvanzado.Text))
                 {
-                    //lblMensajeError.Text = "Por favor ingrese un filtro para numéricos";
-                    //lblMensajeError.Visible = true;
-                    //updatePanelMensajeError.Update();
-                    //timerMensajeError.Enabled = true;
-                    //("Solo se aceptan números para filtrar un campo numerico");
+                    lblMensajeError.Text = "Por favor ingrese un filtro para numéricos";
+                    lblMensajeError.Visible = true;
+                    updatePanelMensajeError.Update();
+                    timerMensajeError.Enabled = true;
+                   // ("Solo se aceptan números para filtrar un campo numerico");
                     return false;
                 }
                 int filtroAvanzado;
@@ -400,10 +400,10 @@ namespace E_Commerce_Vista
                 {
                     if (filtroAvanzado < 0)
                     {
-                        //lblMensajeError.Text = "El filtro para números no puede ser menor que 0";
-                        //lblMensajeError.Visible = true;
-                        //updatePanelMensajeError.Update();
-                        //timerMensajeError.Enabled = true;
+                        lblMensajeError.Text = "El filtro para números no puede ser menor que 0";
+                        lblMensajeError.Visible = true;
+                        updatePanelMensajeError.Update();
+                        timerMensajeError.Enabled = true;
                         return false;
                     }
                 }
@@ -413,10 +413,10 @@ namespace E_Commerce_Vista
                     {
                         if (filtroAvanzado == 0)
                         {
-                            //lblMensajeError.Text = "El filtro para números no puede ser menor que 0";
-                            //lblMensajeError.Visible = true;
-                            //updatePanelMensajeError.Update();
-                            //timerMensajeError.Enabled = true;
+                            lblMensajeError.Text = "El filtro para números no puede ser menor que 0";
+                            lblMensajeError.Visible = true;
+                            updatePanelMensajeError.Update();
+                            timerMensajeError.Enabled = true;
                             return false;
                         }
 
@@ -430,10 +430,10 @@ namespace E_Commerce_Vista
             {
                 if (string.IsNullOrEmpty(txtFiltroAvanzado.Text))
                 {
-                    //lblMensajeError.Text = "Ingrese un filtro para la búsqueda.";
-                    //lblMensajeError.Visible = true;
-                    //updatePanelMensajeError.Update();
-                    //timerMensajeError.Enabled = true;
+                    lblMensajeError.Text = "Ingrese un filtro para la búsqueda.";
+                    lblMensajeError.Visible = true;
+                    updatePanelMensajeError.Update();
+                    timerMensajeError.Enabled = true;
                     return false;
                 }
 
@@ -442,7 +442,13 @@ namespace E_Commerce_Vista
 
             return true;
         }
-
+        //mensaje de error
+        protected void timerMensajeError_Tick(object sender, EventArgs e)
+        {
+            lblMensajeError.Visible = false;
+            timerMensajeError.Enabled = false;
+            updatePanelMensajeError.Update();
+        }
 
 
         protected void btnBuscar_Click(object sender, EventArgs e)

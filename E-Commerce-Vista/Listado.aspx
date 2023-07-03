@@ -37,7 +37,7 @@
     <div class="containerTotal">
         <%-- FILTROS --%>
 
-        <div class="filtros" id="filtros" runat="server">
+        <div class="filtros" id="filtros" runat="server" style="display:none;">
             <div class="estiloFiltros text-center">
 
 
@@ -116,6 +116,24 @@
 
                             </div>
                         </div>
+
+
+                         <asp:UpdatePanel ID="updatePanelMensajeError" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+
+
+                            <div class="alert" style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 2vh;">
+                                <% if (lblMensajeError.Visible){ %>
+                                <i class="fa-solid fa-circle-exclamation fa-xl" style="color: #ff8040; margin-top: 2vh;" ></i>
+                                <% } %>
+                                
+
+                                <asp:Label ID="lblMensajeError" runat="server" Visible="false" CssClass="alert d-flex align-items-center" Style="margin-top: 1vh; color: orange;"></asp:Label>
+                                <asp:Timer ID="timerMensajeError" runat="server" Interval="5000" OnTick="timerMensajeError_Tick" Enabled="false"></asp:Timer>
+                            </div>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
 
 
                     </ContentTemplate>
