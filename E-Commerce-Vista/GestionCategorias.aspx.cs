@@ -51,34 +51,37 @@ namespace E_Commerce_Vista
         protected void Option1_Click(object sender, EventArgs e)
         {
             // Lógica para la opción "A-Z"
-            ListaFiltradaAdmin = new List<Categoria>();
-            CategoriaNegocio negocio = new CategoriaNegocio();
-
-            ListaCategoria = negocio.listar();
+            if (Session["ListaFiltradaCategoriaAdmin"] != null)
+            {
+                ListaCategoria = (List<Categoria>)Session["ListaFiltradaCategoriaAdmin"];
+            }
+            else
+            {
+                ListaCategoria = (List<Categoria>)Session["ListaCategoriaAdmin"];
+            }
             ListaFiltradaAdmin = ListaCategoria.OrderBy(x => x.NombreCategoria).ToList();
-
             dgvCategorias.DataSource = ListaFiltradaAdmin;
             dgvCategorias.DataBind();
-
+            Session.Add("ListaFiltradaCategoriaAdmin", ListaFiltradaAdmin);
 
         }
 
         protected void Option2_Click(object sender, EventArgs e)
         {
             // Lógica para la opción "Z-A"
-            ListaFiltradaAdmin = new List<Categoria>();
-            CategoriaNegocio negocio = new CategoriaNegocio();
-
-            ListaCategoria = negocio.listar();
+            if (Session["ListaFiltradaCategoriaAdmin"] != null)
+            {
+                ListaCategoria = (List<Categoria>)Session["ListaFiltradaCategoriaAdmin"];
+            }
+            else
+            {
+                ListaCategoria = (List<Categoria>)Session["ListaCategoriaAdmin"];
+            }
             ListaFiltradaAdmin = ListaCategoria.OrderByDescending(x => x.NombreCategoria).ToList();
-
             dgvCategorias.DataSource = ListaFiltradaAdmin;
             dgvCategorias.DataBind();
-
-
+            Session.Add("ListaFiltradaCategoriaAdmin", ListaFiltradaAdmin);
         }
-
-        
 
     }
 }

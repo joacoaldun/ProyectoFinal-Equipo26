@@ -5,12 +5,15 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="row store">
-        <div class="col-4 d-flex flex-column align-items-center justify-content-center">
+        <div class="col-4 d-flex flex-column align-items-center justify-content-center" style="background-color:black;">
             <div class="mb-3 mt-3 text-center">
+                <img src="imagenes/logo.png" alt="Logo" width="100" height="100" class="logo">
+            </div>
+            <div class="mb-3 mt-3 text-center contacto2">
                 <h1 class="contacto">DATOS DE CONTACTO</h1>
                 <p>+54 11 1111-1111</p>
             </div>
-            <div class="mb-3 mt-3 text-center">
+            <div class="mb-3 mt-3 text-center contacto2">
                 <h1 class="contacto">REDES SOCIALES</h1>
                 <p>Instagram</p>
             </div>
@@ -34,10 +37,6 @@
             <div class="text-end">
                 <asp:Button Text="ENVIAR" ID="btnEnviar" runat="server" CssClass="btn btn-dark " OnClientClick="enviarCorreo(); return false;" />
             </div>
-
-
-
-
 
         </div>
     </div>
@@ -78,8 +77,11 @@
         .store {
             /*display:flex;  */
             justify-content: space-around;
+            background-color:black;
         }
-
+        .btn-dark{
+            background-color:purple;
+        }
         h1 {
             font-size: medium;
         }
@@ -97,6 +99,7 @@
         .contacto, h2 {
             font-size: medium;
             font-weight: bold;
+             color:white;
         }
 
         .banner-envio {
@@ -134,6 +137,13 @@
 
         .footer {
             color: white;
+        }
+        .contacto2{
+            color:white;
+        }
+        .logo{
+            width:200px;
+            height:150px;
         }
     </style>
 

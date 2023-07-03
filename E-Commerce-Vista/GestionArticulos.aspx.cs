@@ -44,12 +44,8 @@ namespace E_Commerce_Vista
                     ddlMarcas.Items.Add(marca.NombreMarca);
                 }
 
-                
-
             }
             
-
-
         }
 
         protected void dgvArticulos_SelectedIndexChanged(object sender, EventArgs e)
@@ -70,57 +66,81 @@ namespace E_Commerce_Vista
         protected void Option1_Click(object sender, EventArgs e)
         {
             // Lógica para la opción "A-Z"
-            ListaFiltradaAdmin = new List<Articulo>();
-            ArticuloNegocio negocio= new ArticuloNegocio();
-           
-                ListaArticulo = negocio.listarConSP();
-                ListaFiltradaAdmin = ListaArticulo.OrderBy(x => x.Nombre).ToList();
-           
+
+            if (Session["ListaFiltradaAdmin"] != null)
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaFiltradaAdmin"];
+            }
+            else
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaArticulosAdmin"];
+            }
+            ListaFiltradaAdmin = ListaArticulo.OrderBy(x => x.Nombre).ToList();
             dgvArticulos.DataSource = ListaFiltradaAdmin;
             dgvArticulos.DataBind();
+            Session.Add("ListaFiltradaAdmin", ListaFiltradaAdmin);
 
         }
 
         protected void Option2_Click(object sender, EventArgs e)
         {
             // Lógica para la opción "Z-A"
-            ListaFiltradaAdmin = new List<Articulo>();
-            ArticuloNegocio negocio = new ArticuloNegocio();
-            
-                ListaArticulo = negocio.listarConSP();
-                ListaFiltradaAdmin = ListaArticulo.OrderByDescending(x => x.Nombre).ToList();
-
+          
+            if (Session["ListaFiltradaAdmin"] != null)
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaFiltradaAdmin"];
+            }
+            else
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaArticulosAdmin"];
+            }
+            ListaFiltradaAdmin = ListaArticulo.OrderByDescending(x => x.Nombre).ToList();
             dgvArticulos.DataSource = ListaFiltradaAdmin;
             dgvArticulos.DataBind();
-
+            Session.Add("ListaFiltradaAdmin", ListaFiltradaAdmin);
 
         }
 
         protected void Option3_Click(object sender, EventArgs e)
         {
             // Lógica para la opción "Mayor a menor"
-            ListaFiltradaAdmin = new List<Articulo>();
-            ArticuloNegocio negocio = new ArticuloNegocio();
+         
+            if (Session["ListaFiltradaAdmin"] != null)
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaFiltradaAdmin"];
+            }
+            else
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaArticulosAdmin"];
+            }
            
-            ListaArticulo = negocio.listarConSP();
+                       
             ListaFiltradaAdmin = ListaArticulo.OrderByDescending(x => x.Precio).ToList();
-
             dgvArticulos.DataSource = ListaFiltradaAdmin;
             dgvArticulos.DataBind();
+            Session.Add("ListaFiltradaAdmin", ListaFiltradaAdmin);
+
         }
 
         protected void Option4_Click(object sender, EventArgs e)
         {
             // Lógica para la opción "Menor a mayor"
-            ListaFiltradaAdmin = new List<Articulo>();
-            ArticuloNegocio negocio = new ArticuloNegocio();
+           
 
-            ListaArticulo = negocio.listarConSP();
+            if (Session["ListaFiltradaAdmin"] != null)
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaFiltradaAdmin"];
+            }
+            else
+            {
+                ListaArticulo = (List<Articulo>)Session["ListaArticulosAdmin"];
+            }
+
             ListaFiltradaAdmin = ListaArticulo.OrderBy(x => x.Precio).ToList();
-
-
             dgvArticulos.DataSource = ListaFiltradaAdmin;
             dgvArticulos.DataBind();
+            Session.Add("ListaFiltradaAdmin", ListaFiltradaAdmin);
+
         }
 
         protected void txtNombre_TextChanged(object sender, EventArgs e)
@@ -128,10 +148,8 @@ namespace E_Commerce_Vista
 
             ListaArticulo = (List<Articulo>)Session["ListaArticulosAdmin"];
             ListaFiltradaAdmin = ListaArticulo.FindAll(x => x.Nombre.ToUpper().Contains(txtNombre.Text.ToUpper()));
-
             dgvArticulos.DataSource = ListaFiltradaAdmin;
             dgvArticulos.DataBind();
-
             Session.Add("ListaFiltradaAdmin", ListaFiltradaAdmin);
 
         }
@@ -140,10 +158,8 @@ namespace E_Commerce_Vista
         {
             ListaArticulo = (List<Articulo>)Session["ListaArticulosAdmin"];
             ListaFiltradaAdmin = ListaArticulo.FindAll(x => x.CodigoArticulo.ToUpper().Contains(txtCodigo.Text.ToUpper()));
-
             dgvArticulos.DataSource = ListaFiltradaAdmin;
             dgvArticulos.DataBind();
-
             Session.Add("ListaFiltradaAdmin", ListaFiltradaAdmin);
         }
 
@@ -178,7 +194,7 @@ namespace E_Commerce_Vista
                 ListaFiltradaAdmin = ListaArticulo.FindAll(x => x.Marcas.NombreMarca == ddlMarcas.SelectedValue);
             }
 
-            Session["ListaFiltradaAdmin"] = ListaFiltradaAdmin;
+            //Session["ListaFiltradaAdmin"] = ListaFiltradaAdmin;
             dgvArticulos.DataSource = ListaFiltradaAdmin;
             dgvArticulos.DataBind();
         }
