@@ -1,4 +1,5 @@
-﻿using Negocio;
+﻿using Dominio;
+using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +11,12 @@ namespace E_Commerce_Vista
 {
     public partial class GestiónMarcas : System.Web.UI.Page
     {
+        public List<Marca> ListaMarca{ get; set; }
+        public List<Marca> ListaFiltradaAdmin { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
             MarcaNegocio negocio= new MarcaNegocio();
+            Session["ListaMarcaAdmin"] = negocio.listar();
             dgvMarcas.DataSource = negocio.listar();
             dgvMarcas.DataBind();
         }
@@ -28,5 +32,55 @@ namespace E_Commerce_Vista
             dgvMarcas.PageIndex = e.NewPageIndex;
             dgvMarcas.DataBind();
         }
+
+        protected void btnQuitarFiltros_Click(object sender, EventArgs e)
+        {
+            dgvMarcas.DataSource = Session["ListaMarcaAdmin"];
+            dgvMarcas.DataBind();
+            Session["ListaFiltradaMarcaAdmin"] = null;
+            txtNombre.Text = string.Empty;
+        }
+
+        protected void txtNombre_TextChanged(object sender, EventArgs e)
+        {
+            ListaMarca = (List<Marca>)Session["ListaMarcaAdmin"];
+            ListaFiltradaAdmin = ListaMarca.FindAll(x => x.NombreMarca.ToUpper().Contains(txtNombre.Text.ToUpper()));
+
+            Session["ListaFiltradaMarcaAdmin"] = ListaFiltradaAdmin;
+            dgvMarcas.DataSource = ListaFiltradaAdmin;
+            dgvMarcas.DataBind();
+        }
+
+
+        protected void Option1_Click(object sender, EventArgs e)
+        {
+            // Lógica para la opción "A-Z"
+            ListaFiltradaAdmin = new List<Marca>();
+            MarcaNegocio negocio = new MarcaNegocio();
+
+            ListaMarca = negocio.listar();
+            ListaFiltradaAdmin = ListaMarca.OrderBy(x => x.NombreMarca).ToList();
+
+            dgvMarcas.DataSource = ListaFiltradaAdmin;
+            dgvMarcas.DataBind();
+
+
+        }
+
+        protected void Option2_Click(object sender, EventArgs e)
+        {
+            // Lógica para la opción "Z-A"
+            ListaFiltradaAdmin = new List<Marca>();
+            MarcaNegocio negocio = new MarcaNegocio();
+
+            ListaMarca = negocio.listar();
+            ListaFiltradaAdmin = ListaMarca.OrderByDescending(x => x.NombreMarca).ToList();
+
+            dgvMarcas.DataSource = ListaFiltradaAdmin;
+            dgvMarcas.DataBind();
+
+
+        }
+
     }
 }
