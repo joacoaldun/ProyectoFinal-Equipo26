@@ -86,6 +86,75 @@ namespace Negocio
 
 
         }
+
+        public List<Admin> listarMailYUsernameConSp()
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+
+                datos.setearProcedimiento("SPListarMailYUsername");
+                datos.ejecutarConsulta();
+                List<Admin> lista = new List<Admin>();
+
+
+
+                while (datos.Lector.Read())
+                {
+                    //Validaciones BD
+                    
+                    string username = datos.Lector["Username"] == DBNull.Value ? "Sin Username" : (string)datos.Lector["Username"];
+                    
+
+                    string email = datos.Lector["Email"] == DBNull.Value ? "Sin Email" : (string)datos.Lector["Email"];
+                   
+
+
+
+                    //Verificamos si el articulo existe
+
+                    // Si no existe, creamos un nuevo artículo y lo agregamos a la lista
+
+                    Admin admin = new Admin
+
+                    {
+                        
+                        UserName = username,
+                      
+                        Email = email
+                        
+
+                    };
+
+
+                    lista.Add(admin);
+                }
+
+
+
+
+
+                return lista;
+
+            }
+
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+
+            }
+
+
+
+
+        }
         public List<Admin> listarAdminsConSp()
         {
 

@@ -22,7 +22,7 @@
         })();
     </script>
 
-   
+
 
 
 
@@ -43,7 +43,7 @@
     <% if (Request.Url.AbsolutePath.EndsWith("Listado.aspx"))
         { %>
     <%
-       MostrarFiltros= true;
+        MostrarFiltros = true;
     %>
     <% }
         else
@@ -52,7 +52,6 @@
         MostrarFiltros = false;
     %>
     <% } %>
-
 </head>
 <body>
     <form id="form1" runat="server">
@@ -80,7 +79,7 @@
                             <%if (MostrarFiltros)
                                 {%>
                             <li class="nav-item">
-                                <a class="nav-link active" aria-current="page" href="Listado.aspx" onclick="return toggleFiltros();"  >Filtros</a>
+                                <a class="nav-link active" aria-current="page" href="Listado.aspx" onclick="return toggleFiltros();">Filtros</a>
                             </li>
                             <% } %>
 
@@ -125,6 +124,11 @@
                         </ul>
 
 
+
+
+
+
+
                         <%-- BUSCADOR --%>
                         <div class="buscar">
                             <div class="d-flex">
@@ -136,6 +140,15 @@
                                 </asp:LinkButton>
                             </div>
                         </div>
+
+                        <%--REGISTRARSEYLOGIN--%>
+                        <div class="BotonesRegistroYLogin">
+
+                            <a href="Registro.aspx" class="btn btn-primary">Registrarse</a>
+                            <a href="Login.aspx" class="btn btn-success">Ingresar</a>
+
+                        </div>
+
 
 
                         <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
@@ -226,6 +239,13 @@
 
 
 <style>
+    .BotonesRegistroYLogin {
+        display: flex;
+        justify-content: center;
+        gap: 10px; /* Ajusta el espacio entre los botones según tus necesidades */
+        width: 20%;
+    }
+
     .navbar {
         background-color: black;
         color: white;
@@ -471,13 +491,13 @@
     });
 
     function toggleFiltros() {
-   
+
     <% if (MostrarFiltros)
     { %>
-        
-         var filtros = document.getElementById('<%= ContentPlaceHolder1.FindControl("filtros").ClientID %>');
 
-       
+        var filtros = document.getElementById('<%= ContentPlaceHolder1.FindControl("filtros").ClientID %>');
+
+
         if (filtros) {
             // Aparece y se oculta el filtro
             if (filtros.style.display === 'none') {
@@ -487,8 +507,8 @@
             }
         }
     <% } %>
-         return false;
-     }
+        return false;
+    }
 
 
 </script>

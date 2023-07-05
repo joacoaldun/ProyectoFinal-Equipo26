@@ -451,3 +451,19 @@ BEGIN
         THROW;
     END CATCH;
 END;
+GO
+
+--SP PARA LISTAR MAIL Y USERNAME NADA MAS
+CREATE PROCEDURE SPListarMailYUsername
+AS 
+BEGIN
+select Username, Email from Usuarios u
+
+
+END
+GO
+
+EXEC SPListarMailYUsername
+
+
+select * from Usuarios;
