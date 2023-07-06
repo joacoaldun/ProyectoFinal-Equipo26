@@ -277,22 +277,24 @@ VALUES (1, '123456789', '1990-01-01', null);
 
 GO
 --LISTAR LOS CLIENTES CON SP
-Create PROCEDURE SPListarClientes
+alter PROCEDURE SPListarClientes
 AS 
 BEGIN
-select U.id, Nombre, Apellido, Username, TipoAcceso, Email, Dni, FechaNacimiento, EstadoActivo from Usuarios u
+select U.id, Nombre, Apellido, Username, TipoAcceso, Email, Dni, FechaNacimiento, EstadoActivo, Pass from Usuarios u
 inner join Cliente c on U.Id = c.id
 END
 
 GO
 --LISTAR LOS ADMINS CON SP
-Create PROCEDURE SPListarAdmins
+alter PROCEDURE SPListarAdmins
 AS 
 BEGIN
-select U.id, Nombre, Apellido, Username, TipoAcceso, Email,EstadoActivo from Usuarios u
+select U.id, Nombre, Apellido, Username, TipoAcceso, Email,EstadoActivo, Pass from Usuarios u
 where u.TipoAcceso = 1
-
 END
+
+exec SPListarAdmins
+
 GO
 --INSERTO UN ADMIN
 

@@ -35,6 +35,7 @@ namespace Negocio
 
                     string email = datos.Lector["Email"] == DBNull.Value ? "Sin Email" : (string)datos.Lector["Email"];
                     string dni = datos.Lector["Dni"] == DBNull.Value ? "Sin Dni" : (string)datos.Lector["Dni"];
+                    string pass = datos.Lector["Pass"] == DBNull.Value ? "Sin pass" : (string)datos.Lector["Pass"];
 
                     DateTime fechaNacimiento = datos.Lector["FechaNacimiento"] == DBNull.Value ? DateTime.Today : (DateTime)datos.Lector["FechaNacimiento"];
                     bool estado = datos.Lector["EstadoActivo"] == DBNull.Value ? true : (bool)datos.Lector["EstadoActivo"];
@@ -56,7 +57,8 @@ namespace Negocio
                         Email = email,
                         Dni = dni,
                         FechaNacimiento = fechaNacimiento,
-                        EstadoActivo = estado
+                        EstadoActivo = estado,
+                        Pass=pass
                     };
 
 
@@ -180,7 +182,7 @@ namespace Negocio
 
                     string email = datos.Lector["Email"] == DBNull.Value ? "Sin Email" : (string)datos.Lector["Email"];
                     bool estado = datos.Lector["EstadoActivo"] == DBNull.Value ? true : (bool)datos.Lector["EstadoActivo"];
-
+                    string pass = datos.Lector["Pass"] == DBNull.Value ? "Sin pass" : (string)datos.Lector["Pass"];
 
 
                     //Verificamos si el articulo existe
@@ -196,7 +198,8 @@ namespace Negocio
                         UserName = username,
                         TipoAcceso = (TipoAcceso)tipoAcceso,
                         Email = email,
-                        EstadoActivo = estado
+                        EstadoActivo = estado,
+                        Pass=pass
 
                     };
 
@@ -378,6 +381,8 @@ namespace Negocio
 
 
         }
+
+
 
     }
 }

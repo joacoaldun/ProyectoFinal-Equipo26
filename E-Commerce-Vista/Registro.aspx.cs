@@ -356,6 +356,7 @@ namespace E_Commerce_Vista
 
                     emailService.enviarCorreo();
 
+                    Session["Cliente"] = cliente;
                     Response.Redirect("Login.aspx", false);
                 }
                 else {
