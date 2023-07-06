@@ -467,3 +467,6 @@ EXEC SPListarMailYUsername
 
 
 select * from Usuarios;
+select * from cliente
+
+delete from usuarios where id>3

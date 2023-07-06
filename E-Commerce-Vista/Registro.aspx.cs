@@ -349,8 +349,12 @@ namespace E_Commerce_Vista
 
                     negocio.agregarClienteConSp(cliente);
 
+                    //Enviamos mail de bienvenida
+                    EmailService emailService = new EmailService();
+                    emailService.armarCorreo(cliente.Email, "Bienvenido/a a maxiGamingShop",
+                        "Hola " + cliente.Nombre + " ,te damos la bienvenida a maxiGamingShop!!! Gracias por registrarte.");
 
-
+                    emailService.enviarCorreo();
 
                     Response.Redirect("Login.aspx", false);
                 }
@@ -362,7 +366,8 @@ namespace E_Commerce_Vista
             catch (Exception ex)
             {
 
-                throw ex;
+                Session.Add("error", ex.ToString());
+                Response.Redirect("error.aspx");
             }
 
         }
