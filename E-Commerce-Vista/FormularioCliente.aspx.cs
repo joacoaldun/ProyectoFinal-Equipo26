@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.UI;
@@ -338,6 +339,9 @@ namespace E_Commerce_Vista
                     cliente.Dni = txtDni.Text;
                     cliente.FechaNacimiento = DateTime.Parse(txtMostrarFecha.Text);
                     cliente.Pass = txtPass.Text;
+
+                    
+
                     //articulo.Estado = bool.Parse(txtPublicar.Text);
                     if (ddlBajaLogica.Text == "Alta")
                     {
@@ -356,6 +360,8 @@ namespace E_Commerce_Vista
                     //SI NO TIENE ID ES PARA CREAR UN NUEVO ARTICULO Y SUS IMAGENES
                     if (id == "")
                     {
+                        string codigoValidacion = generarCodigo();
+                        cliente.CodigoValidacion = codigoValidacion;
                         usuarioNegocio.agregarClienteConSp(cliente);
                     }
                     else
@@ -385,6 +391,25 @@ namespace E_Commerce_Vista
                 Session.Add("error", ex);
                 throw ex;
             }
+        }
+
+
+        public string generarCodigo()
+        {
+
+            string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            int longitudCodigo = 8;
+
+            Random random = new Random();
+            StringBuilder codigo = new StringBuilder();
+
+            for (int i = 0; i < longitudCodigo; i++)
+            {
+                int indice = random.Next(caracteres.Length);
+                codigo.Append(caracteres[indice]);
+            }
+
+            return codigo.ToString();
         }
 
         protected void txtFechaNacimiento_TextChanged(object sender, EventArgs e)

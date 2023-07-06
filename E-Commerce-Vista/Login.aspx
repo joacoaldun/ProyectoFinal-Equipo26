@@ -11,6 +11,9 @@
             <div class="row justify-content-center">
                 <div class="col-4">
                     <div class="mb-3">
+                        <h1>Iniciar sesión</h1>
+                    </div>
+                    <div class="mb-3">
                         <label class="form-label">Usuario</label>
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtUser" />
                     </div>
@@ -20,8 +23,18 @@
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" TextMode="Password" />
                     </div>
 
+                    <div clas="mb-3">
+                        <p>¿No tiene una cuenta?
+                            <a href="Registro.aspx">Cree una.</a>
+                        </p> 
+                    </div>
+
+                    <div class="mb-3">
+                        <a href="RecuperarCuenta.aspx">¿Olvidó su contraseña?</a>
+                    </div>
+
                     <asp:Button Text="Login" runat="server" CssClass="btn btn-success" ID="btnIngresar" OnClick="btnIngresar_Click" />
-                    <a href="#">Cancelar</a>
+                    <a href="Default.aspx" Class="btn btn-danger">Cancelar</a>
 
 
 

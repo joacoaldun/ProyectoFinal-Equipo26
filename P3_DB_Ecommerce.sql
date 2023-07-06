@@ -280,7 +280,8 @@ GO
 alter PROCEDURE SPListarClientes
 AS 
 BEGIN
-select U.id, Nombre, Apellido, Username, TipoAcceso, Email, Dni, FechaNacimiento, EstadoActivo, Pass from Usuarios u
+select U.id, Nombre, Apellido, Username, TipoAcceso, Email, Dni, FechaNacimiento, EstadoActivo, Pass, c.Validado,
+c.CodigoValidacion, c.CodigoRecuperacion from Usuarios u
 inner join Cliente c on U.Id = c.id
 END
 
@@ -305,7 +306,7 @@ VALUES ('Joaquin', 'Aldun', 'AldunAdmin', 'password123', 1, 'joacoaldun@gmail.co
 GO
 
 --SP PARA CREAR CLIENTES
-CREATE PROCEDURE SPCrearCliente
+alter PROCEDURE SPCrearCliente
     @Nombre VARCHAR(30),
     @Apellido VARCHAR(30),
     @Username VARCHAR(30),
@@ -314,7 +315,8 @@ CREATE PROCEDURE SPCrearCliente
     @Email VARCHAR(30),
     @Dni VARCHAR(20),
     @FechaNacimiento DATE,
-    @Estado BIT
+    @Estado BIT,
+    @CodigoValidacion varchar(8)
 AS
 BEGIN
     SET NOCOUNT ON;
@@ -331,8 +333,8 @@ BEGIN
         SET @usuarioID = SCOPE_IDENTITY();
     
         -- Insertar en la tabla Cliente utilizando el ID de la tabla Usuarios
-        INSERT INTO Cliente (Id, Dni, FechaNacimiento)
-        VALUES (@usuarioID, @Dni, @FechaNacimiento);
+        INSERT INTO Cliente (Id, Dni, FechaNacimiento, CodigoValidacion)
+        VALUES (@usuarioID, @Dni, @FechaNacimiento, @CodigoValidacion);
     
         COMMIT TRANSACTION;
     END TRY
@@ -347,7 +349,7 @@ select * from Usuarios u
 inner join cliente c on u.id=c.Id
 GO
 --SP PARA MODIFICAR CLIENTE
-CREATE PROCEDURE SPModificarCliente
+create PROCEDURE SPModificarCliente
     @Id INT,
     @Nombre VARCHAR(30),
     @Apellido VARCHAR(30),
@@ -471,4 +473,42 @@ EXEC SPListarMailYUsername
 select * from Usuarios;
 select * from cliente
 
-delete from usuarios where id>3
+delete from Usuarios where id>3
+
+
+--Agregamos estado de validacion y codigoValidacion a cliente
+ALTER TABLE Cliente
+add Validado bit default 0,
+CodigoValidacion varchar(8), 
+CodigoRecuperacion varchar(8)
+
+go
+create procedure SP_ValidarCliente(
+    @Id int
+)
+as
+BEGIN
+    update Cliente set Validado=1 where id=@Id
+END
+
+select * from Cliente
+
+go 
+create procedure SP_GenerarCodigoRecuperacion(
+    @Id int,
+    @Codigo varchar(8)
+)
+AS
+BEGIN
+    update Cliente set CodigoRecuperacion=@Codigo where id=@Id
+END
+
+go
+create procedure SP_CambiarPass(
+    @Id int,
+    @Pass VARCHAR(20)
+)
+as
+Begin
+    update Usuarios set pass=@Pass where id=@Id
+end

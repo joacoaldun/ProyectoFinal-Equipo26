@@ -67,7 +67,9 @@
     <Content Include="Login.aspx" />
     <Content Include="MiniCarrito.aspx" />
     <Content Include="MisPedidos.aspx" />
+    <Content Include="RecuperarCuenta.aspx" />
     <Content Include="Registro.aspx" />
+    <Content Include="ValidarCuenta.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -247,12 +249,26 @@
       <DependentUpon>MisPedidos.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RecuperarCuenta.aspx.cs">
+      <DependentUpon>RecuperarCuenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="RecuperarCuenta.aspx.designer.cs">
+      <DependentUpon>RecuperarCuenta.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Registro.aspx.cs">
       <DependentUpon>Registro.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Registro.aspx.designer.cs">
       <DependentUpon>Registro.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ValidarCuenta.aspx.cs">
+      <DependentUpon>ValidarCuenta.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ValidarCuenta.aspx.designer.cs">
+      <DependentUpon>ValidarCuenta.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

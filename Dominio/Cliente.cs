@@ -19,6 +19,12 @@ namespace Dominio
 
         public Domicilio  DomicilioCliente { get; set; }
 
+        public bool Validado { get; set; }
+
+        public string CodigoValidacion { get; set; }
+
+        public string CodigoRecuperacion { get; set; }
+
 
     }
 }

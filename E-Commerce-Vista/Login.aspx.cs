@@ -38,7 +38,16 @@ namespace E_Commerce_Vista
                     }
                     else if (esCliente())
                     {
-                        Response.Redirect("Default.aspx",false);
+                        Cliente clienteLogueado = (Cliente)Session["Cliente"];
+                        if (clienteLogueado.Validado == false)
+                        {
+                            Response.Redirect("ValidarCuenta.Aspx", false);
+                        }
+                        else
+                        {
+
+                            Response.Redirect("Default.aspx",false);
+                        }
                     }
                     else
                     {
@@ -100,6 +109,7 @@ namespace E_Commerce_Vista
 
                 if (cliente.UserName.ToLower() == txtUser.Text.ToLower() && cliente.Pass == txtPassword.Text)
                 {
+                    Session["Cliente"] = cliente;
                     return true;
                 }
 

@@ -8,6 +8,7 @@ using System.Web.UI.WebControls;
 using Negocio;
 using Dominio;
 using System.Diagnostics.Eventing.Reader;
+using System.Text;
 
 namespace E_Commerce_Vista
 {
@@ -346,18 +347,26 @@ namespace E_Commerce_Vista
 
                     cliente.EstadoActivo = true;
 
+                    string codigoValidacion = generarCodigo();
 
+                    cliente.CodigoValidacion = codigoValidacion;
+                    
                     negocio.agregarClienteConSp(cliente);
 
                     //Enviamos mail de bienvenida
                     EmailService emailService = new EmailService();
                     emailService.armarCorreo(cliente.Email, "Bienvenido/a a maxiGamingShop",
-                        "Hola " + cliente.Nombre + " ,te damos la bienvenida a maxiGamingShop!!! Gracias por registrarte.");
+                        "Hola " + cliente.Nombre + " ,te damos la bienvenida a maxiGamingShop!!! Gracias por registrarte." +
+                        "Por favor ingresá el siguiente código en la web para validar la cuenta: " + codigoValidacion);
 
                     emailService.enviarCorreo();
 
-                    Session["Cliente"] = cliente;
-                    Response.Redirect("Login.aspx", false);
+                    List<Cliente> lista = negocio.listarClientesConSp();
+                    Cliente nuevoCliente = lista.Find(x => x.Email == cliente.Email);
+                    Session["Cliente"] = nuevoCliente;
+                    Session["ClienteSinValidar"] = nuevoCliente;
+                    //Response.Redirect("Login.aspx", false); 
+                    Response.Redirect("ValidarCuenta.aspx", false);
                 }
                 else {
                     return;
@@ -372,5 +381,24 @@ namespace E_Commerce_Vista
             }
 
         }
+
+        public string generarCodigo()
+        {
+
+            string caracteres = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            int longitudCodigo = 8;
+
+            Random random = new Random();
+            StringBuilder codigo = new StringBuilder();
+
+            for (int i = 0; i < longitudCodigo; i++)
+            {
+                int indice = random.Next(caracteres.Length);
+                codigo.Append(caracteres[indice]);
+            }
+
+            return codigo.ToString();
+        }
+
     }
 }

@@ -39,6 +39,9 @@ namespace Negocio
 
                     DateTime fechaNacimiento = datos.Lector["FechaNacimiento"] == DBNull.Value ? DateTime.Today : (DateTime)datos.Lector["FechaNacimiento"];
                     bool estado = datos.Lector["EstadoActivo"] == DBNull.Value ? true : (bool)datos.Lector["EstadoActivo"];
+                    bool validado = datos.Lector["Validado"] == DBNull.Value ? false : (bool)datos.Lector["Validado"];
+                    string codigoValidacion= datos.Lector["CodigoValidacion"] == DBNull.Value ? "" : (string)datos.Lector["CodigoValidacion"];
+                    string codigoRecuperacion = datos.Lector["CodigoRecuperacion"] == DBNull.Value ? "" : (string)datos.Lector["CodigoRecuperacion"];
 
 
 
@@ -58,7 +61,10 @@ namespace Negocio
                         Dni = dni,
                         FechaNacimiento = fechaNacimiento,
                         EstadoActivo = estado,
-                        Pass=pass
+                        Pass=pass,
+                        Validado=validado,
+                        CodigoValidacion=codigoValidacion,
+                        CodigoRecuperacion =codigoRecuperacion
                     };
 
 
@@ -253,6 +259,7 @@ namespace Negocio
                 datos.setearParametros("@Dni", cliente.Dni);
                 datos.setearParametros("@FechaNacimiento", cliente.FechaNacimiento);
                 datos.setearParametros("@Estado", cliente.EstadoActivo);
+                datos.setearParametros("@CodigoValidacion", cliente.CodigoValidacion);
 
                 datos.ejecutarAccion();
             }
@@ -382,6 +389,29 @@ namespace Negocio
 
         }
 
+
+        public void validarCliente(Cliente cliente)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SP_ValidarCliente");
+
+                datos.setearParametros("@Id", cliente.Id);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
 
 
     }
