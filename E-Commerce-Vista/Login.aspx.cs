@@ -18,7 +18,7 @@ namespace E_Commerce_Vista
             {
                 Cliente cliente = new Cliente();
                 cliente = (Cliente)Session["Cliente"];
-                txtUser.Text = cliente.Email;
+                txtUser.Text = cliente.UserName;
                 txtPassword.Text = cliente.Pass;
                 
             }
@@ -38,9 +38,21 @@ namespace E_Commerce_Vista
                     }
                     else if (esCliente())
                     {
-                        Cliente clienteLogueado = (Cliente)Session["Cliente"];
+                        Cliente clienteLogueado = new Cliente();
+                        UsuarioNegocio negocio=new UsuarioNegocio();
+                        List<Cliente> lista = negocio.listarClientesConSp();
+                        if (Session["Cliente"] != null)
+                        {
+                            clienteLogueado = (Cliente)Session["Cliente"];
+                        }
+                        else
+                        {
+                            clienteLogueado = lista.Find(x => x.UserName == txtUser.Text);
+                        }
+                        
                         if (clienteLogueado.Validado == false)
                         {
+                            Session["ClienteSinValidar"] = clienteLogueado;
                             Response.Redirect("ValidarCuenta.Aspx", false);
                         }
                         else

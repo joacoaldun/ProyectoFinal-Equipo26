@@ -362,6 +362,15 @@ namespace E_Commerce_Vista
                     {
                         string codigoValidacion = generarCodigo();
                         cliente.CodigoValidacion = codigoValidacion;
+
+
+                        EmailService emailService = new EmailService();
+                        emailService.armarCorreo(cliente.Email, "Bienvenido/a a maxiGamingShop",
+                            "Hola " + cliente.Nombre + " ,te damos la bienvenida a maxiGamingShop!!! Gracias por registrarte." +
+                            "Por favor ingresá el siguiente código en la web para validar la cuenta: " + codigoValidacion);
+
+                        emailService.enviarCorreo();
+
                         usuarioNegocio.agregarClienteConSp(cliente);
                     }
                     else

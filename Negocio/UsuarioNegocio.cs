@@ -413,6 +413,54 @@ namespace Negocio
 
         }
 
+        public void agregarCodigoRecuperacion(Cliente cliente)
+        {
+
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SP_GenerarCodigoRecuperacion");
+
+                datos.setearParametros("@Id", cliente.Id);
+                datos.setearParametros("@Codigo", cliente.CodigoRecuperacion);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+        public void cambiarPass(Cliente cliente)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SP_CambiarPass");
+
+                datos.setearParametros("@Id", cliente.Id);
+                datos.setearParametros("@Pass", cliente.Pass);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
+
 
     }
 }
