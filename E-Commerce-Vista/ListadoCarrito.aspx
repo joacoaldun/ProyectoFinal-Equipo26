@@ -118,8 +118,29 @@
 
                 <%--<h4 style="color: white;">TOTAL COMPRA: $<%: carrito.PrecioTotal %></h4>--%>
             </div>
+
+            <div>
+
+             <%--   <%if (Session["Carrito"] != null)
+                    {%>--%>
+
+                <asp:Button Text="Realizar pedido" ID="btnPedido" CssClass="btn btn-success" OnClick="btnPedido_Click" runat="server" />
+                
+               <%-- <% }
+
+                   else
+                    {%>
+                <asp:Label Text="Carrito vacio" runat="server" />
+                <a href="Listado.aspx" class="btn btn-success">Ver productos</a>
+                <%} %>--%>
+
+            </div>
+
         </ContentTemplate>
     </asp:UpdatePanel>
+
+
+
 
     <style>
         .itemsCarrito {

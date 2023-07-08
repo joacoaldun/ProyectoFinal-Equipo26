@@ -43,6 +43,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="CompletarDatos.aspx" />
     <Content Include="Contacto.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Exito.aspx" />
@@ -61,7 +62,7 @@
     <Content Include="MisFavoritos.aspx" />
     <Content Include="PanelGestion.aspx" />
     <Content Include="DetalleArticulo.aspx" />
-    <Content Include="FinalizarCompra.aspx" />
+    <Content Include="PedidoRealizado.aspx" />
     <Content Include="Listado.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Login.aspx" />
@@ -73,6 +74,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompletarDatos.aspx.cs">
+      <DependentUpon>CompletarDatos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CompletarDatos.aspx.designer.cs">
+      <DependentUpon>CompletarDatos.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Contacto.aspx.cs">
       <DependentUpon>Contacto.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -199,12 +207,12 @@
     <Compile Include="DetalleArticulo.aspx.designer.cs">
       <DependentUpon>DetalleArticulo.aspx</DependentUpon>
     </Compile>
-    <Compile Include="FinalizarCompra.aspx.cs">
-      <DependentUpon>FinalizarCompra.aspx</DependentUpon>
+    <Compile Include="PedidoRealizado.aspx.cs">
+      <DependentUpon>PedidoRealizado.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="FinalizarCompra.aspx.designer.cs">
-      <DependentUpon>FinalizarCompra.aspx</DependentUpon>
+    <Compile Include="PedidoRealizado.aspx.designer.cs">
+      <DependentUpon>PedidoRealizado.aspx</DependentUpon>
     </Compile>
     <Compile Include="Listado.aspx.cs">
       <DependentUpon>Listado.aspx</DependentUpon>

@@ -512,3 +512,54 @@ as
 Begin
     update Usuarios set pass=@Pass where id=@Id
 end
+
+
+
+
+
+
+--INSERT DE PROVINCIAS
+
+INSERT INTO Provincias VALUES
+('Provincia de Buenos Aires'),
+('CABA'),
+('Catamarca'),
+('Chaco'),
+('Chubut'),
+('Córdoba'),
+('Corrientes'),
+('Entre Ríos'),
+('Formosa'),
+('Jujuy'),
+('La Pampa'),
+('La Rioja'),
+('Mendoza'),
+('Misiones'),
+('Neuquén'),
+('Río Negro'),
+('Salta'),
+('San Juan'),
+('San Luis'),
+('Santa Cruz'),
+('Santa Fe'),
+('Santiago del Estero'),
+('Tierra del Fuego'),
+('Tucumán')
+
+--INSERT DE LOCALIDADES
+-- Provincia de Buenos Aires
+
+INSERT INTO Localidades (NombreLocalidad, IDProvincia) VALUES ('25 de Mayo', 1);
+INSERT INTO Localidades (NombreLocalidad, IDProvincia) VALUES ('9 de Julio', 1);
+
+-- Obtén el ID de la provincia de CABA
+
+INSERT INTO Localidades (NombreLocalidad, IDProvincia) VALUES ('Agronomía', 2);
+INSERT INTO Localidades (NombreLocalidad, IDProvincia) VALUES ('Almagro', 2);
+
+select * from provincias
+select P.idProvincia, P.nombreProvincia from provincias P
+
+select * from localidades
+
+select idLocalidad, nombreLocalidad, idProvincia from localidades

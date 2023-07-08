@@ -29,9 +29,8 @@ namespace E_Commerce_Vista
                     repCarrito.DataBind();
                     lblPrecioTotal.Text = "$" + carrito.PrecioTotal.ToString();
 
-                    
-                    
                 }
+               
 
                 
 
@@ -142,6 +141,12 @@ namespace E_Commerce_Vista
 
             }
            
+        }
+
+        protected void btnPedido_Click(object sender, EventArgs e)
+        {
+           Response.Redirect("CompletarDatos.aspx");
+                      
         }
     }
 }
