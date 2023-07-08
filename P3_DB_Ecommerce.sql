@@ -514,8 +514,14 @@ Begin
 end
 
 
+--TABLA MEDIOS DE PAGO..
+create table MediosPago(
+    Id int not null primary key identity(1,1),
+    Nombre varchar(50) not null
+)
 
-
+INSERT INTO MediosPago (Nombre) VALUES ('Mercadopago');
+INSERT INTO MediosPago (Nombre) VALUES ('Transferencia bancaria');
 
 
 --INSERT DE PROVINCIAS
@@ -552,7 +558,7 @@ INSERT INTO Provincias VALUES
 INSERT INTO Localidades (NombreLocalidad, IDProvincia) VALUES ('25 de Mayo', 1);
 INSERT INTO Localidades (NombreLocalidad, IDProvincia) VALUES ('9 de Julio', 1);
 
--- Obtén el ID de la provincia de CABA
+-- Provincia de CABA
 
 INSERT INTO Localidades (NombreLocalidad, IDProvincia) VALUES ('Agronomía', 2);
 INSERT INTO Localidades (NombreLocalidad, IDProvincia) VALUES ('Almagro', 2);

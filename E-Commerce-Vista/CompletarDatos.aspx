@@ -11,6 +11,14 @@
 
             <div class="row">
                 <div class="col-4">
+
+                    <div class="mb-3 mt-3">
+                        <asp:Label Text="Medio de pago" runat="server" />
+                        <asp:DropDownList runat="server" ID="ddlMedioPago" OnSelectedIndexChanged="ddlMedioPago_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control is-valid">
+                        </asp:DropDownList>
+                    </div>
+
+
                     <div class="mb-3 mt-3">
                         <asp:Label Text="Provincia" runat="server" />
                         <asp:DropDownList runat="server" ID="ddlProvincia" OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged"  AutoPostBack="true" CssClass="form-control is-valid">

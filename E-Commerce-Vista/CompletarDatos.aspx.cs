@@ -17,9 +17,23 @@ namespace E_Commerce_Vista
         {
             if (!IsPostBack)
             {
+                cargarMediosPago();
                 cargarProvincias();
                
             }
+        }
+
+        public void cargarMediosPago()
+        {
+            MedioPagoNegocio negocio = new MedioPagoNegocio();
+            List<MedioPago> mediosPago = new List<MedioPago>();
+            mediosPago = negocio.listarMediosPago();
+
+            foreach (MedioPago medioPago in mediosPago)
+            {
+                ddlMedioPago.Items.Add(medioPago.NombrePago);
+            }
+
         }
 
         public void cargarProvincias()
@@ -148,7 +162,9 @@ namespace E_Commerce_Vista
          
         }
 
-       
+        protected void ddlMedioPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
 
+        }
     }
 }
