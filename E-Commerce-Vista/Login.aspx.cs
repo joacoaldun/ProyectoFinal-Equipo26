@@ -57,6 +57,7 @@ namespace E_Commerce_Vista
                         }
                         else
                         {
+                            Session["ClienteLogueado"] = clienteLogueado;
 
                             Response.Redirect("Default.aspx",false);
                         }

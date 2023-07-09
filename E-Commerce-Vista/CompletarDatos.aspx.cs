@@ -17,24 +17,26 @@ namespace E_Commerce_Vista
         {
             if (!IsPostBack)
             {
-                cargarMediosPago();
+
+                MedioPagoNegocio medioPagoNegocio = new MedioPagoNegocio();
+                List<MedioPago> medioPagos = medioPagoNegocio.listarMediosPago();
+
+                
+
+
+                ddlMedioPago.DataSource = medioPagos;
+                ddlMedioPago.DataValueField = "Id";
+                ddlMedioPago.DataTextField = "NombrePago";
+                ddlMedioPago.DataBind();
+
+
+
                 cargarProvincias();
                
             }
         }
 
-        public void cargarMediosPago()
-        {
-            MedioPagoNegocio negocio = new MedioPagoNegocio();
-            List<MedioPago> mediosPago = new List<MedioPago>();
-            mediosPago = negocio.listarMediosPago();
-
-            foreach (MedioPago medioPago in mediosPago)
-            {
-                ddlMedioPago.Items.Add(medioPago.NombrePago);
-            }
-
-        }
+        
 
         public void cargarProvincias()
         {
@@ -146,6 +148,26 @@ namespace E_Commerce_Vista
             {
                 if (validarFormulario())
                 {
+                    Pedido pedido = new Pedido();
+                   Cliente cliente = new Cliente();
+                    PedidoNegocio negocio = new PedidoNegocio();
+                    pedido.MedioDePago = new MedioPago();
+                    pedido.CarritoPedidos = new Carrito();
+
+
+                    cliente = (Cliente)Session["ClienteLogueado"];
+                    pedido.Cliente = cliente;
+                    pedido.MedioDePago.Id = int.Parse(ddlMedioPago.SelectedValue);
+                    pedido.FechaPedido = DateTime.Now;
+                    pedido.EstadoEnvio = EstadoEnvio.RECIBIDO;
+                    pedido.CarritoPedidos = (Carrito)Session["Carrito"];
+                    pedido.ImporteTotal = pedido.CarritoPedidos.PrecioTotal;
+
+
+                    //HACER INSERT DEL PEDIDO CON TODOS SUS METODOS EN PEDIDONEGOCIO
+                    negocio.GenerarPedidoConSp(pedido);
+                    negocio.GenerarArticulosPedidoConSp(pedido);
+
                     Response.Redirect("PedidoRealizado.aspx",false);
                 }
                 else

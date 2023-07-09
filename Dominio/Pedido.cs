@@ -37,5 +37,8 @@ namespace Dominio
 
         public bool EstadoPago { get; set; }
 
+        public decimal ImporteTotal { get; set; }
+
+
     }
 }

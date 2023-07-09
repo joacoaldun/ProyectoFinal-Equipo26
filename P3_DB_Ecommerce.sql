@@ -171,6 +171,7 @@ create table Stock(
     Cantidad int default 0,
     Primary key (IdArticulo)
 )
+GO
 
 -- drop table stock
 
@@ -569,3 +570,130 @@ select P.idProvincia, P.nombreProvincia from provincias P
 select * from localidades
 
 select idLocalidad, nombreLocalidad, idProvincia from localidades
+GO
+-- CREAMOS TABLAS NUEVAS
+Create table Pedido(
+Id int not null PRIMARY KEY IDENTITY(1,1),
+IdEstadoPedido INT NOT NULL foreign key references EstadoPedido(IdEstadoPedido),
+IdCliente INT NOT NULL foreign key references cliente(Id),
+IdMedioPago INT NOT NULL foreign key references MediosPago(Id),
+FechaPedido DATE NOT NULL,
+EstadoPago bit not null DEFAULT 0,
+ImporteTotal money not null check(ImporteTotal > = 0),
+)
+
+GO
+Create table EstadoPedido(
+IdEstadoPedido int not null PRIMARY key IDENTITY(1,1),
+EstadoEnvio varchar(20) not null
+)
+
+GO
+
+CREATE table ArticulosPedido(
+
+    IdPedido INT not null,
+    IdArticulo INT not null,
+    Cantidad int not null
+    PRIMARY KEY (IdPedido, IdArticulo),
+    FOREIGN KEY (IdPedido) REFERENCES Pedido(Id),
+    FOREIGN KEY (IdArticulo) REFERENCES Articulos(Id)
+)
+
+
+go
+
+
+-- SP PARA GENERAR PEDIDOS
+
+CREATE PROCEDURE SPGenerarPedido(
+
+@IdEstadoPedido int,
+@IdCliente int,
+@IdMedioPago int,
+@FechaPedido date,
+@ImporteTotal Money
+)
+AS
+BEGIN
+ 
+    
+    BEGIN TRANSACTION;
+    
+    BEGIN TRY
+        -- Actualizar en la tabla Usuarios
+        INSERT INTO Pedido(IdEstadoPedido,IdCliente,IdMedioPago,FechaPedido,ImporteTotal)
+        VALUES(@IdEstadoPedido,@IdCliente,@IdMedioPago,@FechaPedido,@ImporteTotal)
+       
+    
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshacer la transacción
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+GO
+
+-- SP PARA GENERAR ARTICULOSPEDIDO(TABLAINTERMEDIA)
+
+
+CREATE PROCEDURE SPGenerarArticulosPedido(
+
+@IdPedido int,
+@idArticulo int,
+@Cantidad int
+)
+AS
+BEGIN
+ 
+    
+    BEGIN TRANSACTION;
+    
+    BEGIN TRY
+        -- Actualizar en la tabla Usuarios
+        INSERT INTO ArticulosPedido values(@IdPedido,@idArticulo,@Cantidad)
+        
+       
+    
+        COMMIT TRANSACTION;
+    END TRY
+    BEGIN CATCH
+        -- En caso de error, deshacer la transacción
+        ROLLBACK TRANSACTION;
+        THROW;
+    END CATCH;
+END;
+GO
+
+select * from usuarios u inner join Cliente  c on  u.id = c.id
+
+select * from usuarios
+
+-- Insertar el estado RECIBIDO
+INSERT INTO EstadoPedido (EstadoEnvio)
+VALUES ('RECIBIDO');
+
+-- Insertar el estado PREPARACION
+INSERT INTO EstadoPedido (EstadoEnvio)
+VALUES ('PREPARACION');
+
+-- Insertar el estado ENCAMINO
+INSERT INTO EstadoPedido (EstadoEnvio)
+VALUES ('ENCAMINO');
+
+-- Insertar el estado ENTREGADO
+INSERT INTO EstadoPedido (EstadoEnvio)
+VALUES ('ENTREGADO');
+
+-- Insertar el estado CANCELADO
+INSERT INTO EstadoPedido (EstadoEnvio)
+VALUES ('CANCELADO');
+
+select * from EstadoPedido
+
+
+select * from Pedido
+
+select * from ArticulosPedido
