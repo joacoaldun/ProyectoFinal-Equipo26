@@ -34,6 +34,22 @@ namespace E_Commerce_Vista
                 cargarProvincias();
                
             }
+
+
+
+            if (Session["Carrito"] != null)
+            {
+
+
+                Carrito carrito = (Carrito)Session["Carrito"];
+
+
+                repCarrito.DataSource = carrito.ListaArticulo;
+                repCarrito.DataBind();
+                lblPrecioTotal.Text = carrito.PrecioTotal.ToString();
+
+            }
+
         }
 
         
@@ -70,6 +86,42 @@ namespace E_Commerce_Vista
             {   
                 ddlLocalidad.Items.Add(domicilio.Localidad);
             }
+
+        }
+
+        protected void repCarrito_ItemDataBound(object sender, RepeaterItemEventArgs e)
+        {
+
+            if (e.Item.ItemType == ListItemType.Item || e.Item.ItemType == ListItemType.AlternatingItem)
+            {
+                Dominio.Articulo art = (Dominio.Articulo)e.Item.DataItem;
+                System.Web.UI.WebControls.Image imgImagen = (System.Web.UI.WebControls.Image)e.Item.FindControl("ImagenCarrito");
+
+
+
+                /* Place holder si la imagen original falla */
+                string urlImagenOriginal = art.Imagenes[0].UrlImagen;
+                string urlImagenReemplazo = "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png";
+
+                imgImagen.ImageUrl = urlImagenOriginal;
+                imgImagen.Attributes["onerror"] = "this.onerror=null;this.src='" + urlImagenReemplazo + "';";
+
+                //ESTO SE ENCARGA DE AJUSTAR LA CANTIDAD DE ARTICULOS
+                Label lblCantidad = (Label)e.Item.FindControl("lblCantidad");
+                if (art != null && lblCantidad != null && Session["Carrito"] is Carrito carrito)
+                {
+                    // Obtener la cantidad correspondiente del diccionario utilizando el nuevo método ObtenerCantidadArticulo
+                    int cantidad = carrito.ObtenerCantidadArticulo(art.Id);
+                    lblCantidad.Text = cantidad.ToString();
+                }
+                //updatePanelCarrito.Update();
+
+
+
+
+            }
+
+          
 
         }
 

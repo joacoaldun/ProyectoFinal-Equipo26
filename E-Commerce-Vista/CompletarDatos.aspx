@@ -9,7 +9,7 @@
         <ContentTemplate>
 
 
-            <div class="row">
+            <div class="row completarDatos">
                 <div class="col-4">
 
                     <div class="mb-3 mt-3">
@@ -64,14 +64,69 @@
                         <div id="errorDepartamento"  runat="server" class="invalid-feedback">Campo obligatorio.</div>
                     </div>
                     <%} %>
+
+
+                    <asp:Button Text="Realizar pedido" CssClass="btn btn-success" runat="server" Id="btnRealizarPedido" OnClick="btnRealizarPedido_Click"/>
                 </div>
 
-            </div>
+                <div class="col-1">
 
-                <asp:Button Text="Realizar pedido" CssClass="btn btn-success" runat="server" Id="btnRealizarPedido" OnClick="btnRealizarPedido_Click"/>
+                </div>
+
+                <div class="col-6 ">
+                    <div class="containerArticulos">
+
+                    <asp:Repeater ID="repCarrito" runat="server" OnItemDataBound="repCarrito_ItemDataBound">
+                        <ItemTemplate>
+
+                            <div class="card mb-3 mt-3 text-bg-dark p-3" ">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <asp:Image ID="ImagenCarrito" CssClass="img-fluid rounded-start img-left" runat="server" />
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h4 class="card-title"><%# Eval("Nombre") %></h4>
+                                            <h6 class="card-title">$<%# Eval("Precio") %></h6>
+
+
+                                            <div class="botonesYcantidad">
+                                             Cantidad:
+                                            <asp:Label ID="lblCantidad" runat="server"></asp:Label>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ItemTemplate>
+
+                    </asp:Repeater>
+                </div>
+
+                            <div class="card mb-3 text-bg-dark p-3">
+
+                                  <h4>Total: $<asp:Label ID="lblPrecioTotal" runat="server" Text=""></asp:Label></h4>
+
+                              </div>
+
+                </div>
+               
+                </div>
+                      
+                
 
         </ContentTemplate>
     </asp:UpdatePanel>
 
+
+    <style>
+        .containerArticulos {
+            height: calc(550px - 50px);
+            overflow-y: auto;
+        }
+        
+    </style>
 
 </asp:Content>
