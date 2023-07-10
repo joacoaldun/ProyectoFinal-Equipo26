@@ -126,6 +126,104 @@ namespace Negocio
 
         }
 
+        public void agregarDomicilio(Domicilio domicilio)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("SPAgregarDomicilio");
+                datos.setearParametros("@IdLocalidad", domicilio.IdLocalidad);
+                datos.setearParametros("@CodigoPostal", domicilio.CodigoPostal);
+                datos.setearParametros("@Direccion", domicilio.Direccion);
+
+                if (domicilio.NumeroDepartamento != null)
+                {
+                    datos.setearParametros("@NumeroDepartamento", domicilio.NumeroDepartamento);
+                }
+                else
+                {
+                    datos.setearParametros("@NumeroDepartamento", DBNull.Value);
+                }
+
+                datos.ejecutarAccion();
+
+                
+
+            }
+            catch (Exception)
+            {
+
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+        public void agregarDomicilioCliente(Cliente cliente)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                int idDomicilio = ultimoIdDomicilio();
+
+                datos.setearProcedimiento("SPAgregarDomicilioCliente");
+                datos.setearParametros("@IdCliente", cliente.Id);
+                datos.setearParametros("@IDDomicilio", idDomicilio);
+                datos.ejecutarAccion();
+               
+
+            }
+            catch (Exception)
+            {
+
+
+                throw;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+        }
+
+
+        public int ultimoIdDomicilio()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("select MAX(id) as maxId from Domicilio");
+                datos.ejecutarConsulta();
+
+                if (datos.Lector.Read())
+                {
+                    int id = (int)datos.Lector["maxId"];
+                    return id;
+                }
+                else
+                {
+                    return 0;
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+
+                datos.cerrarConexion();
+
+            }
+        }
+
+
 
     }
 }

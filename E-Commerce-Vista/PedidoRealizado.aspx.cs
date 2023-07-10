@@ -11,6 +11,16 @@ namespace E_Commerce_Vista
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack && Session["NroPedido"]!=null)
+            {
+                int nroPedido = (int)Session["NroPedido"];
+                string nroPedidoString = Convert.ToString(nroPedido);
+                lblNroPedido.Text = "NRO. PEDIDO:" + nroPedidoString;
+            }
+            else
+            {
+                Response.Redirect("Listado.aspx");
+            }
 
         }
     }

@@ -21,15 +21,10 @@ namespace E_Commerce_Vista
                 MedioPagoNegocio medioPagoNegocio = new MedioPagoNegocio();
                 List<MedioPago> medioPagos = medioPagoNegocio.listarMediosPago();
 
-                
-
-
                 ddlMedioPago.DataSource = medioPagos;
                 ddlMedioPago.DataValueField = "Id";
                 ddlMedioPago.DataTextField = "NombrePago";
                 ddlMedioPago.DataBind();
-
-
 
                 cargarProvincias();
                
@@ -60,14 +55,25 @@ namespace E_Commerce_Vista
             List<Domicilio> provincias = new List<Domicilio>();
             provincias=negocio.listarProvincias();
 
-            foreach(Domicilio domicilio in provincias)
-            {
-                ddlProvincia.Items.Add(domicilio.Provincia);
-            }
+
+            ddlProvincia.DataSource = provincias;
+            ddlProvincia.DataValueField = "IdProvincia";
+            ddlProvincia.DataTextField = "Provincia";
+            ddlProvincia.DataBind();
+
+
+            //foreach (Domicilio domicilio in provincias)
+            //{
+            //    ddlProvincia.Items.Add(domicilio.Provincia);
+            //}
 
             List<Domicilio> localidades = new List<Domicilio>();
             localidades = negocio.listarLocalidades();
-            ddlLocalidad.Items.Add(localidades[0].Localidad);
+
+            ddlLocalidad.DataSource = localidades;
+            ddlLocalidad.DataValueField = "IdLocalidad";
+            ddlLocalidad.DataTextField = "Localidad";
+            ddlLocalidad.DataBind();
 
 
         }
@@ -78,14 +84,21 @@ namespace E_Commerce_Vista
             DomicilioNegocio negocio = new DomicilioNegocio();
             List<Domicilio> provincias = provincias = negocio.listarProvincias();
 
-            Domicilio provinciaSeleccionada = provincias.Find(x => x.Provincia==ddlProvincia.SelectedValue);
+            Domicilio provinciaSeleccionada = provincias.Find(x => x.IdProvincia==int.Parse(ddlProvincia.SelectedValue));
             int idProvincia = provinciaSeleccionada.IdProvincia;
             
             List<Domicilio> localidades = negocio.listarLocalidadesPorProvincia(idProvincia);
-            foreach (Domicilio domicilio in localidades)
-            {   
-                ddlLocalidad.Items.Add(domicilio.Localidad);
-            }
+
+
+            ddlLocalidad.DataSource = localidades;
+            ddlLocalidad.DataValueField = "IdLocalidad";
+            ddlLocalidad.DataTextField = "Localidad";
+            ddlLocalidad.DataBind();
+
+            //foreach (Domicilio domicilio in localidades)
+            //{   
+            //    ddlLocalidad.Items.Add(domicilio.Localidad);
+            //}
 
         }
 
@@ -220,6 +233,31 @@ namespace E_Commerce_Vista
                     negocio.GenerarPedidoConSp(pedido);
                     negocio.GenerarArticulosPedidoConSp(pedido);
 
+                    //Guardamos pedido para poder mostrar el nro.pedido desde la pagina de confirmación
+                    Session["NroPedido"] = negocio.TraerIdUltimoPedido();
+
+                    //Guardamos los datos del domicilio del cliente logueado
+                    DomicilioNegocio domicilioNegocio= new DomicilioNegocio();
+                    Domicilio domicilio = new Domicilio();
+                    domicilio.IdLocalidad = int.Parse(ddlLocalidad.SelectedValue);
+                    domicilio.IdProvincia = int.Parse(ddlProvincia.SelectedValue);
+                    domicilio.CodigoPostal = int.Parse(txtCodigoPostal.Text);
+                    domicilio.Direccion = txtDireccion.Text;
+                   
+
+                    if (ddlVivienda.SelectedValue == "Departamento")
+                    {
+                        domicilio.NumeroDepartamento = txtDepartamento.Text;
+                    }
+                    else
+                    {
+                        domicilio.NumeroDepartamento = null;
+                    }
+
+                    domicilioNegocio.agregarDomicilio(domicilio);
+                    domicilioNegocio.agregarDomicilioCliente(cliente);
+                    //vaciamos carrito ya que ya se hizo el pedido con esos productos y redireccionamos
+                    Session.Remove("Carrito");
                     Response.Redirect("PedidoRealizado.aspx",false);
                 }
                 else
@@ -237,6 +275,11 @@ namespace E_Commerce_Vista
         }
 
         protected void ddlMedioPago_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void txtNumero_TextChanged(object sender, EventArgs e)
         {
 
         }

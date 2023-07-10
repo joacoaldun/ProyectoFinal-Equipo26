@@ -171,7 +171,6 @@ create table Stock(
     Cantidad int default 0,
     Primary key (IdArticulo)
 )
-GO
 
 -- drop table stock
 
@@ -570,6 +569,7 @@ select P.idProvincia, P.nombreProvincia from provincias P
 select * from localidades
 
 select idLocalidad, nombreLocalidad, idProvincia from localidades
+
 GO
 -- CREAMOS TABLAS NUEVAS
 Create table Pedido(
@@ -691,9 +691,54 @@ VALUES ('ENTREGADO');
 INSERT INTO EstadoPedido (EstadoEnvio)
 VALUES ('CANCELADO');
 
-select * from EstadoPedido
+
+GO
+create procedure SPAgregarDomicilio(
+    @IdLocalidad int,
+    @CodigoPostal int,
+    @Direccion varchar(30),
+    @NumeroDepartamento varchar(10)
+
+)
+AS
+BEGIN
+begin TRY
+    insert into Domicilio (IdLocalidad,CodigoPostal,Direccion,NumeroDepartamento,Vivienda)
+    VALUES (@IdLocalidad,@CodigoPostal,@Direccion,@NumeroDepartamento,'a')
+end TRY
+
+begin CATCH
+    THROW
+end CATCH
+END
 
 
-select * from Pedido
+GO
+create procedure SPAgregarDomicilioCliente(
+    @IdCliente int,
+    @IDDomicilio int
 
-select * from ArticulosPedido
+)
+AS
+BEGIN
+begin TRY
+    update Cliente set IDDomicilio=@IDDomicilio where Id=@IdCliente
+end TRY
+
+begin CATCH
+    THROW
+end CATCH
+END
+
+
+--pruebas
+--select * from usuarios
+--select * from pedido
+--select * from Localidades
+--
+--select MAX(id) as maxId from Domicilio
+--
+--select max(id) from pedido
+--
+--select * from Domicilio 
+--select * from cliente
