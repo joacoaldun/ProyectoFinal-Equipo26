@@ -742,3 +742,6 @@ END
 --
 --select * from Domicilio 
 --select * from cliente
+
+
+select * from Articulos a inner join Stock s on a.Id = s.IdArticulo 

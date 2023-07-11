@@ -3,6 +3,7 @@ using Negocio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -145,8 +146,83 @@ namespace E_Commerce_Vista
 
         protected void btnPedido_Click(object sender, EventArgs e)
         {
-           Response.Redirect("CompletarDatos.aspx");
+                 ArticuloNegocio negocio = new ArticuloNegocio();
+                  List<Articulo> articulosInsuficientes = new List<Articulo>();  
+                 List<Articulo> lista = negocio.listarConSP();
+
+            Carrito carrito = (Carrito)Session["Carrito"];
+
+            for(int i = 0; i < carrito.ListaArticulo.Count; i++) {
+            
+            for(int x = 0; x<lista.Count; x++)
+                {
+
+                    if (carrito.ListaArticulo[i].Id == lista[x].Id) {
+
+
+                        if (carrito.ArticulosCantidad[carrito.ListaArticulo[i].Id] > lista[x].StockArticulo.Cantidad) {
+
+                            articulosInsuficientes.Add(lista[x]);
+
+                        }
+                    
+                    
+                    
+                    }
+
+
+                }
+
+
+            }
+
+            if (!filtroStock(articulosInsuficientes))
+            {
+
+                Response.Redirect("CompletarDatos.aspx");
+            }
+            else {
+                StringBuilder stringBuilder = new StringBuilder();
+
+                foreach (var item in articulosInsuficientes)
+                {
+                    stringBuilder.Append("Articulo: " +item.Nombre.ToString() + " ,Stock disponible: " + item.StockArticulo.Cantidad + " || ") ;
+
+                }
+
+                lblMensajeError.Text = "No hay stock suficiente para los siguientes articulos: || " + stringBuilder;
+                lblMensajeError.Visible = true;
+                updatePanelMensajeError.Update();
+                
+
+
+            }
+
+            
                       
         }
+
+
+        protected bool filtroStock(List<Articulo> lista)
+        {
+
+            if (lista.Count > 0) {
+
+                return true;
+            }
+
+
+
+
+            return false;
+        }
+
+        protected void timerMensajeError_Tick(object sender, EventArgs e)
+        {
+            lblMensajeError.Visible = false;
+            
+            updatePanelMensajeError.Update();
+        }
+
     }
 }
