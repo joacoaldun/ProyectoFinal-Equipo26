@@ -743,5 +743,34 @@ END
 --select * from Domicilio 
 --select * from cliente
 
+go
+alter PROCEDURE listarPedidosSP 
+as 
+    select P.Id as IdPedido, E.IdEstadoPedido as IdEstadoPedido, E.EstadoEnvio as EstadoPedido,
+    P.EstadoPago as EstadoPago, P.FechaPedido as Fecha, U.Apellido as Apellido, U.Nombre as Nombre,
+    U.Id as IdCliente, U.Email as Email, C.Dni as Dni, MP.Id as IdPago, MP.Nombre as MedioPago, 
+    P.ImporteTotal as ImporteTotal, D.CodigoPostal as CodigoPostal, D.Direccion as Direccion,
+    D.NumeroDepartamento as NumeroDepartamento, L.NombreLocalidad as Localidad, Prov.NombreProvincia as 
+    Provincia from Pedido P
+    left join EstadoPedido E on E.IdEstadoPedido=P.IdEstadoPedido
+    left join Cliente C on C.Id=P.IdCliente
+    left join Usuarios U on U.Id=C.Id
+    left join MediosPago MP on MP.Id=P.IdMedioPago
+    left join Domicilio D on D.Id=C.IDDomicilio
+    left join Localidades L on L.IDLocalidad=D.IdLocalidad
+    left join Provincias Prov on Prov.IDProvincia =L.IDProvincia
+    
 
+
+go
+
+alter procedure listarArticulosPedidoSP(
+    @IdPedido int
+)
+AS  
+    select A.IdArticulo as Id, Art.Nombre as Nombre,
+    A.Cantidad as Cantidad, I.ImagenUrl as ImagenUrl from ArticulosPedido A 
+    left join Imagenes I on I.IdArticulo=A.IdArticulo
+    inner join Articulos Art on Art.Id=A.IdArticulo
+    where A.IdPedido=@IdPedido
 select * from Articulos a inner join Stock s on a.Id = s.IdArticulo 
