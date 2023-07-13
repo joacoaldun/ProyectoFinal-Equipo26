@@ -5,7 +5,7 @@
 
      <asp:Label Text="" ID="lblNroPedido" CssClass="nroPedido" runat="server" />
 
-    <asp:UpdatePanel runat="server" ID="updatePedido" UpdateMode="Conditional">
+    <asp:UpdatePanel runat="server" ID="updatePedido" >
         <ContentTemplate>
 
 
@@ -115,20 +115,52 @@
                         <h2>ESTADO DEL PEDIDO</h2>
                         <table>
                             <tr>
-                                <td><strong>Pagado:</strong></td>
+                                <td><strong>Estado del pago:</strong></td>
                                 <td>
-                                    <asp:Label Text="" ID="lblPagado" runat="server" /></td>
+
+                                <asp:DropDownList runat="server" Id="ddlPagado" CssClass="form-select" AutoPostBack="true" OnTextChanged="ddlPagado_TextChanged">
+                                    <asp:ListItem Text="Abonado" />
+                                    <asp:ListItem Text="No abonado" />
+                                </asp:DropDownList>
+
                             </tr>
                             <tr>
                                 <td><strong>Estado del Pedido:</strong></td>
                                 <td>
-                                    <asp:Label Text="" ID="lblEstadoPedido" runat="server" /></td>
+                                    <asp:DropDownList runat="server" Id="ddlEstadoPedido" AutoPostBack="true"  CssClass="form-select" OnTextChanged="ddlEstadoPedido_TextChanged" >
+                                    </asp:DropDownList>
                             </tr>
                         </table>
                     </div>
-                </div>
+                    <div class="botones">
+                      <asp:button text="Guardar cambios" CssClass="btn btn-dark btnGuardar"  AutoPostBack="true" runat="server" Id="btnGuardarCambios" Onclick="btnGuardarCambios_Click" />
+                      <a href="GestionPedidos.aspx" class="btn btn-success btnVolver">Volver</a>
+                    </div>
 
+
+                    <asp:UpdatePanel ID="updatePanelMensajeError" runat="server" UpdateMode="Conditional">
+                        <ContentTemplate>
+
+
+                            <div class="alert" style="display: flex; flex-direction: column; align-items: center; text-align: center; margin-top: 2vh;">
+                                <% if (lblMensajeError.Visible){ %>
+                                <i class="fa-solid fa-circle-exclamation fa-xl" style="color: #ff8040; margin-top: 2vh;" ></i>
+                                <% } %>
+
+
+                                <asp:Label ID="lblMensajeError" runat="server" Visible="false" CssClass="alert d-flex align-items-center" Style="margin-top: 1vh; color: orange;"></asp:Label>
+                                <asp:Timer ID="timerMensajeError" runat="server"  OnTick="timerMensajeError_Tick" Enabled="false"></asp:Timer>
+                            </div>
+
+                        </ContentTemplate>
+                    </asp:UpdatePanel>
+
+
+
+
+                </div>
             </div>
+
 
         </ContentTemplate>
     </asp:UpdatePanel>
@@ -159,8 +191,21 @@
              margin-bottom:30px;
          }
 
-         
+         .btn{
+           
+             width:160px;
+         }
 
+         .botones{
+            text-align:right;
+         }
+         
+         .btnVolver{
+             background-color:purple;
+             border:none;
+         }
+
+        
     </style>
 
 

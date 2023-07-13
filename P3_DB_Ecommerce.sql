@@ -764,7 +764,7 @@ as
 
 go
 
-alter procedure listarArticulosPedidoSP(
+create procedure listarArticulosPedidoSP(
     @IdPedido int
 )
 AS  
@@ -773,4 +773,19 @@ AS
     left join Imagenes I on I.IdArticulo=A.IdArticulo
     inner join Articulos Art on Art.Id=A.IdArticulo
     where A.IdPedido=@IdPedido
-select * from Articulos a inner join Stock s on a.Id = s.IdArticulo 
+
+
+--select * from Articulos a inner join Stock s on a.Id = s.IdArticulo 
+
+-----------------------------MODIFICAR PEDIDO--------------------------------
+go
+create procedure modificarPedidoSP(
+    @IdPedido int,
+    @IdEstadoPedido int,
+    @EstadoPago bit
+)
+AS  
+   update pedido set IdEstadoPedido=@IdEstadoPedido, EstadoPago=@EstadoPago
+    where Id=@IdPedido
+
+    select * from pedido

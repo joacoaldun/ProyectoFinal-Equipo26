@@ -271,7 +271,30 @@ namespace Negocio
         }
 
 
+        public void modificarPedido(Pedido pedido)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("modificarPedidoSP");
+                datos.setearParametros("@IdPedido", pedido.Id);
+                datos.setearParametros("@IdEstadoPedido", pedido.EstadoEnvio);
+                datos.setearParametros("@EstadoPago", pedido.EstadoPago);
 
+                datos.ejecutarAccion();
+
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
 
 

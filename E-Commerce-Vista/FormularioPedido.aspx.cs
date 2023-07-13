@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -28,6 +29,8 @@ namespace E_Commerce_Vista
 
                     Pedido pedido = new Pedido();
                     pedido = lista.Find(x => x.Id == int.Parse(nropedido));
+                    Session["PedidoActual"] = pedido;
+
 
                     Carrito carrito = negocio.listarArticulosPedidosConSP(int.Parse(nropedido));
                     Session["CarritoPedidoABM"] = carrito;
@@ -58,9 +61,18 @@ namespace E_Commerce_Vista
                         lblNumeroDepartamento.Text = "-";
                     }
 
-                    //ESTADO DEL PEDIDO PAGADO / ENVIADO
-                    lblPagado.Text = pedido.EstadoPago.ToString();
-                    lblEstadoPedido.Text = pedido.EstadoEnvio.ToString();
+                   
+
+                    //DDL ESTADO PEDIDO + ENVIADO
+                    string pagado = pedido.EstadoPago ? "Abonado" : "No abonado";
+                    ddlPagado.SelectedValue = pagado;
+                    ddlPagado.DataBind();
+
+                    ddlEstadoPedido.DataSource = Enum.GetValues(typeof(EstadoEnvio));
+                    ddlEstadoPedido.DataBind();
+                    ddlEstadoPedido.SelectedValue = pedido.EstadoEnvio.ToString();
+                    
+
                 }
                 else
                 {
@@ -103,6 +115,93 @@ namespace E_Commerce_Vista
 
             }
 
+        }
+
+        protected void ddlEstadoPedido_TextChanged(object sender, EventArgs e)
+        {
+            if(ddlPagado.SelectedValue=="No abonado" && ddlEstadoPedido.SelectedValue != "CANCELADO")
+            {
+                lblMensajeError.Text = "Para poder cambiar el estado del pedido primero debe ser abonado";
+                lblMensajeError.Visible = true;
+                updatePanelMensajeError.Update();
+
+            }
+            else
+            {
+                lblMensajeError.Visible = false;
+                updatePanelMensajeError.Update();
+            }
+
+
+        }
+
+        protected void btnGuardarCambios_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (validarCambios())
+                {
+                    Pedido pedido = new Pedido();
+                    pedido = (Pedido)Session["PedidoActual"];
+
+                    if (ddlPagado.Text == "Abonado")
+                    {
+                        pedido.EstadoPago = true;
+
+                    }
+                    else
+                    {
+                        pedido.EstadoPago = false;
+                    }
+
+                    pedido.EstadoEnvio = (EstadoEnvio)Enum.Parse(typeof(EstadoEnvio), ddlEstadoPedido.SelectedItem.ToString());
+                    
+                    //Hacemos el update con los cambios
+
+                    PedidoNegocio negocio= new PedidoNegocio();
+                    negocio.modificarPedido(pedido);
+
+                  
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+                Session.Add("error", ex);
+                Response.Redirect("error.aspx", false);
+            }
+           
+
+        }
+
+        public bool validarCambios()
+        {           
+          if (ddlPagado.SelectedValue == "No abonado" && ddlEstadoPedido.SelectedValue != "CANCELADO" )
+          {
+              return false;
+          }
+          else
+          {
+              return true;
+          }
+        }
+
+        protected void timerMensajeError_Tick(object sender, EventArgs e)
+        {
+            lblMensajeError.Visible = false;
+
+            updatePanelMensajeError.Update();
+        }
+
+        protected void ddlPagado_TextChanged(object sender, EventArgs e)
+        {
+            if (ddlPagado.SelectedValue == "Abonado")
+            {
+                lblMensajeError.Visible = false;
+                updatePanelMensajeError.Update();
+            }
         }
     }
 }
