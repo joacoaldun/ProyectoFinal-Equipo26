@@ -229,21 +229,17 @@ namespace E_Commerce_Vista
                     pedido.ImporteTotal = pedido.CarritoPedidos.PrecioTotal;
 
 
-                    //HACER INSERT DEL PEDIDO CON TODOS SUS METODOS EN PEDIDONEGOCIO
-                    negocio.GenerarPedidoConSp(pedido);
-                    negocio.GenerarArticulosPedidoConSp(pedido);
-
-                    //Guardamos pedido para poder mostrar el nro.pedido desde la pagina de confirmación
-                    Session["NroPedido"] = negocio.TraerIdUltimoPedido();
-
                     //Guardamos los datos del domicilio del cliente logueado
-                    DomicilioNegocio domicilioNegocio= new DomicilioNegocio();
+                    DomicilioNegocio domicilioNegocio = new DomicilioNegocio();
                     Domicilio domicilio = new Domicilio();
                     domicilio.IdLocalidad = int.Parse(ddlLocalidad.SelectedValue);
                     domicilio.IdProvincia = int.Parse(ddlProvincia.SelectedValue);
                     domicilio.CodigoPostal = int.Parse(txtCodigoPostal.Text);
                     domicilio.Direccion = txtDireccion.Text;
-                   
+
+
+                    
+
 
                     if (ddlVivienda.SelectedValue == "Departamento")
                     {
@@ -256,6 +252,25 @@ namespace E_Commerce_Vista
 
                     domicilioNegocio.agregarDomicilio(domicilio);
                     domicilioNegocio.agregarDomicilioCliente(cliente);
+
+
+                    //HACER INSERT DEL PEDIDO CON TODOS SUS METODOS EN PEDIDONEGOCIO
+                    //Agregamos domicilio del pedido
+                    
+
+                    pedido.DomicilioPedido = domicilio;
+                    pedido.DomicilioPedido.Id= domicilioNegocio.ultimoIdDomicilio();
+                    negocio.GenerarPedidoConSp(pedido);
+                    negocio.GenerarArticulosPedidoConSp(pedido);
+                   
+
+
+                    //Guardamos pedido para poder mostrar el nro.pedido desde la pagina de confirmación
+                    Session["NroPedido"] = negocio.TraerIdUltimoPedido();
+
+                    
+
+                   
                     //vaciamos carrito ya que ya se hizo el pedido con esos productos y redireccionamos
                     Session.Remove("Carrito");
                     Response.Redirect("PedidoRealizado.aspx",false);

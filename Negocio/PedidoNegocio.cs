@@ -16,7 +16,7 @@ namespace Negocio
         {
 
             AccesoDatos datos = new AccesoDatos();
-
+           
             try
             {
                 datos.setearProcedimiento("SPGenerarPedido");
@@ -27,6 +27,7 @@ namespace Negocio
                 datos.setearParametros("@IdMedioPago", pedido.MedioDePago.Id);
                 datos.setearParametros("@FechaPedido", pedido.FechaPedido);
                 datos.setearParametros("@ImporteTotal", pedido.ImporteTotal);
+                datos.setearParametros("@IdDomicilio", pedido.DomicilioPedido.Id);
 
                 datos.ejecutarAccion();
             }
@@ -64,6 +65,10 @@ namespace Negocio
                     datos.setearParametros("@IdPedido", id);
                     datos.setearParametros("@IdArticulo", item.Key);
                     datos.setearParametros("@Cantidad", item.Value);
+                    
+                    int idArticulo = item.Key;
+                    decimal precio=devolverPrecioPorArticulo(idArticulo, pedido);
+                    datos.setearParametros("@PrecioCompra",precio);
 
                     datos.ejecutarAccion();
 
@@ -91,6 +96,21 @@ namespace Negocio
 
 
         }
+
+        public decimal devolverPrecioPorArticulo(int id, Pedido pedido)
+        {
+           
+            foreach (var item in pedido.CarritoPedidos.ListaArticulo)
+            {
+                if (id == item.Id)
+                {
+                    return item.Precio;
+                }
+            }
+
+            return 0;
+        }
+
 
         public int TraerIdUltimoPedido()
         {
@@ -158,15 +178,20 @@ namespace Negocio
                         Nombre = (string)datos.Lector["Nombre"],
                         Email = (string)datos.Lector["Email"],
                         Dni = (string)datos.Lector["Dni"],
-                        DomicilioCliente = new Domicilio
-                        {
-                            CodigoPostal = (int)datos.Lector["CodigoPostal"],
-                            Direccion = (string)datos.Lector["Direccion"],
-                            NumeroDepartamento = datos.Lector["NumeroDepartamento"] == DBNull.Value ? "" : (string)datos.Lector["NumeroDepartamento"],
-                            Localidad = (string)datos.Lector["Localidad"],
-                            Provincia = (string)datos.Lector["Provincia"]
-                        }
+                        
                     };
+
+                    Domicilio domicilio = new Domicilio
+                    {
+
+                        CodigoPostal = (int)datos.Lector["CodigoPostal"],
+                        Direccion = (string)datos.Lector["Direccion"],
+                        NumeroDepartamento = datos.Lector["NumeroDepartamento"] == DBNull.Value ? "" : (string)datos.Lector["NumeroDepartamento"],
+                        Localidad = (string)datos.Lector["Localidad"],
+                        Provincia = (string)datos.Lector["Provincia"]
+
+                    };
+                    pedido.DomicilioPedido = domicilio;
                     pedido.Cliente = cliente;
 
                     MedioPago medioPago = new MedioPago
@@ -296,6 +321,38 @@ namespace Negocio
             }
         }
 
+
+        public int ultimoIdDomicilio()
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearConsulta("select MAX(id) as maxId from Domicilio");
+                datos.ejecutarConsulta();
+
+                if (datos.Lector.Read())
+                {
+                    int id = (int)datos.Lector["maxId"];
+                    return id;
+                }
+                else
+                {
+                    return 0;
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            finally
+            {
+
+                datos.cerrarConexion();
+
+            }
+        }
 
 
     }

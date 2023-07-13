@@ -47,19 +47,33 @@ namespace E_Commerce_Vista
 
 
                     //DOMICILIO
-
-                    lblProvincia.Text = pedido.Cliente.DomicilioCliente.Provincia;
-                    lblLocalidad.Text = pedido.Cliente.DomicilioCliente.Localidad;
-                    lblCodigoPostal.Text = pedido.Cliente.DomicilioCliente.CodigoPostal.ToString();
-                    lblDireccion.Text = pedido.Cliente.DomicilioCliente.Direccion;
-                    if (!string.IsNullOrEmpty(pedido.Cliente.DomicilioCliente.NumeroDepartamento))
+                    //pedido.DomicilioPedido = new Domicilio();
+                    lblProvincia.Text = pedido.DomicilioPedido.Provincia;
+                    lblLocalidad.Text = pedido.DomicilioPedido.Localidad;
+                    lblCodigoPostal.Text = pedido.DomicilioPedido.CodigoPostal.ToString();
+                    lblDireccion.Text = pedido.DomicilioPedido.Direccion;
+                    if (!string.IsNullOrEmpty(pedido.DomicilioPedido.NumeroDepartamento))
                     {
-                        lblNumeroDepartamento.Text = pedido.Cliente.DomicilioCliente.NumeroDepartamento;
+                        lblNumeroDepartamento.Text = pedido.DomicilioPedido.NumeroDepartamento;
                     }
                     else
                     {
                         lblNumeroDepartamento.Text = "-";
                     }
+
+
+                    //lblProvincia.Text = pedido.Cliente.DomicilioCliente.Provincia;
+                    //lblLocalidad.Text = pedido.Cliente.DomicilioCliente.Localidad;
+                    //lblCodigoPostal.Text = pedido.Cliente.DomicilioCliente.CodigoPostal.ToString();
+                    //lblDireccion.Text = pedido.Cliente.DomicilioCliente.Direccion;
+                    //if (!string.IsNullOrEmpty(pedido.Cliente.DomicilioCliente.NumeroDepartamento))
+                    //{
+                    //    lblNumeroDepartamento.Text = pedido.Cliente.DomicilioCliente.NumeroDepartamento;
+                    //}
+                    //else
+                    //{
+                    //    lblNumeroDepartamento.Text = "-";
+                    //}
 
                    
 

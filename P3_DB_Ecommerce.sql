@@ -601,18 +601,24 @@ CREATE table ArticulosPedido(
 )
 
 
-go
+
+
+
+
+
+
 
 
 -- SP PARA GENERAR PEDIDOS
-
-CREATE PROCEDURE SPGenerarPedido(
+go
+alter PROCEDURE SPGenerarPedido(
 
 @IdEstadoPedido int,
 @IdCliente int,
 @IdMedioPago int,
 @FechaPedido date,
-@ImporteTotal Money
+@ImporteTotal Money,
+@IdDomicilio int
 )
 AS
 BEGIN
@@ -622,8 +628,8 @@ BEGIN
     
     BEGIN TRY
         -- Actualizar en la tabla Usuarios
-        INSERT INTO Pedido(IdEstadoPedido,IdCliente,IdMedioPago,FechaPedido,ImporteTotal)
-        VALUES(@IdEstadoPedido,@IdCliente,@IdMedioPago,@FechaPedido,@ImporteTotal)
+        INSERT INTO Pedido(IdEstadoPedido,IdCliente,IdMedioPago,FechaPedido,ImporteTotal,IdDomicilio)
+        VALUES(@IdEstadoPedido,@IdCliente,@IdMedioPago,@FechaPedido,@ImporteTotal, @IdDomicilio)
        
     
         COMMIT TRANSACTION;
@@ -637,13 +643,16 @@ END;
 GO
 
 -- SP PARA GENERAR ARTICULOSPEDIDO(TABLAINTERMEDIA)
+select * from usuarios
+select * from Domicilio
+select * from pedido
 
-
-CREATE PROCEDURE SPGenerarArticulosPedido(
+alter PROCEDURE SPGenerarArticulosPedido(
 
 @IdPedido int,
 @idArticulo int,
-@Cantidad int
+@Cantidad int,
+@PrecioCompra money
 )
 AS
 BEGIN
@@ -653,7 +662,7 @@ BEGIN
     
     BEGIN TRY
         -- Actualizar en la tabla Usuarios
-        INSERT INTO ArticulosPedido values(@IdPedido,@idArticulo,@Cantidad)
+        INSERT INTO ArticulosPedido values(@IdPedido,@idArticulo,@Cantidad,@PrecioCompra)
         
        
     
@@ -744,8 +753,9 @@ END
 --select * from cliente
 
 
+
 go
-create PROCEDURE listarPedidosSP 
+alter PROCEDURE listarPedidosSP 
 as 
     select P.Id as IdPedido, E.IdEstadoPedido as IdEstadoPedido, E.EstadoEnvio as EstadoPedido,
     P.EstadoPago as EstadoPago, P.FechaPedido as Fecha, U.Apellido as Apellido, U.Nombre as Nombre,
@@ -757,10 +767,24 @@ as
     left join Cliente C on C.Id=P.IdCliente
     left join Usuarios U on U.Id=C.Id
     left join MediosPago MP on MP.Id=P.IdMedioPago
-    left join Domicilio D on D.Id=C.IDDomicilio
+    left join Domicilio D on D.Id=P.IDDomicilio
     left join Localidades L on L.IDLocalidad=D.IdLocalidad
     left join Provincias Prov on Prov.IDProvincia =L.IDProvincia
     
+  -- select P.Id as IdPedido, E.IdEstadoPedido as IdEstadoPedido, E.EstadoEnvio as EstadoPedido,
+  --  P.EstadoPago as EstadoPago, P.FechaPedido as Fecha, U.Apellido as Apellido, U.Nombre as Nombre,
+  --  U.Id as IdCliente, U.Email as Email, C.Dni as Dni, MP.Id as IdPago, MP.Nombre as MedioPago, 
+  --  P.ImporteTotal as ImporteTotal, D.CodigoPostal as CodigoPostal, D.Direccion as Direccion,
+  --  D.NumeroDepartamento as NumeroDepartamento, L.NombreLocalidad as Localidad, Prov.NombreProvincia as 
+  --  Provincia from Pedido P
+  --  left join EstadoPedido E on E.IdEstadoPedido=P.IdEstadoPedido
+  --  left join Cliente C on C.Id=P.IdCliente
+  --  left join Usuarios U on U.Id=C.Id
+  --  left join MediosPago MP on MP.Id=P.IdMedioPago
+  --  left join Domicilio D on D.Id=C.IDDomicilio
+  --  left join Localidades L on L.IDLocalidad=D.IdLocalidad
+  --  left join Provincias Prov on Prov.IDProvincia =L.IDProvincia
+
 
 
 go
@@ -801,7 +825,17 @@ AS
     where Id=@IdPedido
 
 
+--AGREGAR PRECIO DE COMPRA Y DOMICILIO PROPIO A PEDIDO--
+--delete from ArticulosPedido
+--delete from Pedido
 
+ALTER TABLE ArticulosPedido
+add PrecioCompra money not null
+
+ALTER TABLE Pedido
+add IdDomicilio INT NOT NULL foreign key references Domicilio(Id)
+
+--EXEC sp_rename 'Pedido.IdPedido', 'IdDomicilio', 'COLUMN';
 
 
    

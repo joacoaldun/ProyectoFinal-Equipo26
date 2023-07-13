@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace Dominio
 {
     public class Domicilio
-    {
+    {   
+        public int Id { get; set; }
         public int CodigoPostal { get; set; }
         public string Direccion { get; set; }
 

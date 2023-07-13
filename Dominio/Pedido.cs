@@ -39,6 +39,7 @@ namespace Dominio
 
         public decimal ImporteTotal { get; set; }
 
+        public Domicilio DomicilioPedido { get; set; }
 
     }
 }
