@@ -12,7 +12,7 @@
             <asp:BoundField  HeaderText="Apellido" DataField="Cliente.Apellido"  /> 
             <asp:BoundField  HeaderText="Nombre" DataField="Cliente.Nombre"  /> 
             <asp:BoundField  HeaderText="Email" DataField="Cliente.Email"  /> 
-             <asp:BoundField  HeaderText="Fecha" DataField="FechaPedido"  /> 
+             <asp:BoundField  HeaderText="Fecha"   DataFormatString="{0:dd/MM/yyyy}"  DataField="FechaPedido"  /> 
              <asp:BoundField  HeaderText="Estado de envio" DataField="EstadoEnvio"/> 
              <asp:BoundField  HeaderText="Medio de pago" DataField="MedioDePago.NombrePago"  /> 
              <asp:BoundField  HeaderText="Pagado" DataField="EstadoPago"  /> 

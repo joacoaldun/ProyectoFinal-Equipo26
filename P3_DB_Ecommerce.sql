@@ -743,8 +743,9 @@ END
 --select * from Domicilio 
 --select * from cliente
 
+
 go
-alter PROCEDURE listarPedidosSP 
+create PROCEDURE listarPedidosSP 
 as 
     select P.Id as IdPedido, E.IdEstadoPedido as IdEstadoPedido, E.EstadoEnvio as EstadoPedido,
     P.EstadoPago as EstadoPago, P.FechaPedido as Fecha, U.Apellido as Apellido, U.Nombre as Nombre,
@@ -764,17 +765,28 @@ as
 
 go
 
-create procedure listarArticulosPedidoSP(
+alter procedure listarArticulosPedidoSP(
     @IdPedido int
 )
 AS  
-    select A.IdArticulo as Id, Art.Nombre as Nombre,
-    A.Cantidad as Cantidad, I.ImagenUrl as ImagenUrl from ArticulosPedido A 
-    left join Imagenes I on I.IdArticulo=A.IdArticulo
-    inner join Articulos Art on Art.Id=A.IdArticulo
-    where A.IdPedido=@IdPedido
+    SELECT A.IdArticulo AS Id, Art.Nombre AS Nombre, A.Cantidad AS Cantidad, I.ImagenUrl AS ImagenUrl
+    FROM ArticulosPedido A
+    LEFT JOIN (
+        SELECT IdArticulo, ImagenUrl
+        FROM Imagenes
+        WHERE Id IN (
+            SELECT MIN(Id)
+            FROM Imagenes
+            GROUP BY IdArticulo
+        )
+    ) I ON I.IdArticulo = A.IdArticulo
+    INNER JOIN Articulos Art ON Art.Id = A.IdArticulo
+    WHERE A.IdPedido = @IdPedido
 
 
+    
+
+ 
 --select * from Articulos a inner join Stock s on a.Id = s.IdArticulo 
 
 -----------------------------MODIFICAR PEDIDO--------------------------------
@@ -788,4 +800,8 @@ AS
    update pedido set IdEstadoPedido=@IdEstadoPedido, EstadoPago=@EstadoPago
     where Id=@IdPedido
 
-    select * from pedido
+
+
+
+
+   
