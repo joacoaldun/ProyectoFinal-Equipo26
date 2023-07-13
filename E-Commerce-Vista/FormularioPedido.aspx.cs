@@ -120,11 +120,14 @@ namespace E_Commerce_Vista
 
                 //ESTO SE ENCARGA DE AJUSTAR LA CANTIDAD DE ARTICULOS
                 Label lblCantidad = (Label)e.Item.FindControl("lblCantidad");
+                Label lblPrecio = (Label)e.Item.FindControl("lblPrecio");
                 if (art != null && lblCantidad != null && Session["CarritoPedidoABM"] is Carrito carrito)
                 {
                     // Obtener la cantidad correspondiente del diccionario utilizando el nuevo método ObtenerCantidadArticulo
                     int cantidad = carrito.ObtenerCantidadArticulo(art.Id);
                     lblCantidad.Text = cantidad.ToString();
+
+                    lblPrecio.Text = art.Precio.ToString();
                 }
 
             }

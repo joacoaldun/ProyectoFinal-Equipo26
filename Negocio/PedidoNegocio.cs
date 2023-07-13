@@ -245,7 +245,8 @@ namespace Negocio
                     int id = (int)datos.Lector["Id"];
                     string nombre = datos.Lector["Nombre"] == DBNull.Value ? "Sin nombre" : (string)datos.Lector["Nombre"];
                     string urlImagen = datos.Lector["ImagenUrl"] == DBNull.Value ? "https://t3.ftcdn.net/jpg/02/48/42/64/240_F_248426448_NVKLywWqArG2ADUxDq6QprtIzsF82dMF.jpg" : (string)datos.Lector["ImagenUrl"];
-
+                    decimal precio = datos.Lector["PrecioCompra"] == DBNull.Value ? 0 : (decimal)datos.Lector["PrecioCompra"];
+                    precio=Math.Round(precio,2);
 
 
                     Articulo articulo = lista.FirstOrDefault(a => a.Id == id);
@@ -257,7 +258,8 @@ namespace Negocio
                         {
                             Id = (int)datos.Lector["Id"],
                             Nombre = (string)datos.Lector["Nombre"],
-                            Imagenes = new List<Imagen>()
+                            Imagenes = new List<Imagen>(),
+                            Precio=precio
 
 
                         };

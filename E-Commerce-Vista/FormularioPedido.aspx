@@ -31,8 +31,14 @@
                                                 <div class="botonesYcantidad">
                                                     Cantidad:
                                                      <asp:Label ID="lblCantidad" runat="server"></asp:Label>
-                                                </div>
+                                                   
 
+                                                </div>
+                                                
+                                                <div class="botonesYcantidad">
+                                                     Precio U.:
+                                                     <asp:Label ID="lblPrecio" runat="server"></asp:Label>
+                                                </div>
 
                                             </div>
                                         </div>
