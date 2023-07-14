@@ -45,6 +45,7 @@
   <ItemGroup>
     <Content Include="CompletarDatos.aspx" />
     <Content Include="Contacto.aspx" />
+    <Content Include="DetallePedido.aspx" />
     <Content Include="Error.aspx" />
     <Content Include="Exito.aspx" />
     <Content Include="FormularioAdmin.aspx" />
@@ -87,6 +88,13 @@
     </Compile>
     <Compile Include="Contacto.aspx.designer.cs">
       <DependentUpon>Contacto.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="DetallePedido.aspx.cs">
+      <DependentUpon>DetallePedido.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="DetallePedido.aspx.designer.cs">
+      <DependentUpon>DetallePedido.aspx</DependentUpon>
     </Compile>
     <Compile Include="Error.aspx.cs">
       <DependentUpon>Error.aspx</DependentUpon>
