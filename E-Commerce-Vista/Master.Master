@@ -81,11 +81,18 @@
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="Listado.aspx" onclick="return toggleFiltros();">Filtros</a>
                             </li>
-                            <% } %>
+                            <% }
+
+
+%>
 
 
 
                             <%-- CLIENTE --%>
+                           
+                            <%if (Session["ClienteLogueado"] != null)
+                                {
+                                    %>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="MisPedidos.aspx">Mis pedidos</a>
                             </li>
@@ -94,11 +101,16 @@
                                 <a class="nav-link active" aria-current="page" href="MisFavoritos.aspx">Mis favoritos</a>
                             </li>
 
+                            <%} %>
+
                             <%-- ADMIN --%>
+                            <%if (Session["Admin"] != null)
+                                {
+                            %>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="PanelGestion.aspx">Administrar</a>
                             </li>
-
+                            <%}%>
 
 
                             <%-- CONTACTO --%>
@@ -142,11 +154,18 @@
                         </div>
 
                         <%--REGISTRARSEYLOGIN--%>
-                        <div class="BotonesRegistroYLogin">
 
+                        <div class="BotonesRegistroYLogin">
+                            <%if (Session["ClienteLogueado"] == null && Session["Admin"] == null)
+                                {
+                            %>
                             <a href="Registro.aspx" class="btn btn-primary">Registrarse</a>
                             <a href="Login.aspx" class="btn btn-success">Ingresar</a>
-
+                            <% }
+                            else
+                            { %><asp:Label ID="UserNameLabel" runat="server" Text='' CssClass="h4"/>
+                            <asp:Button ID="LogoutButton" runat="server" Text="Logout" CssClass="btn btn-danger" OnClick="LogoutButton_Click" />
+                            <% } %>
                         </div>
 
 
@@ -391,6 +410,7 @@
     #footer {
         background-color: #000000d9;
     }
+    
 </style>
 
 

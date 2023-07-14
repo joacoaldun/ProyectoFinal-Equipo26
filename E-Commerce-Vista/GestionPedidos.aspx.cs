@@ -13,6 +13,14 @@ namespace E_Commerce_Vista
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Admin"] == null)
+            {
+                Response.Redirect("Default.aspx", false);
+
+            }
+
+
+
             PedidoNegocio negocio = new PedidoNegocio();
             dgvPedidos.DataSource = negocio.listarPedidosConSP();
             dgvPedidos.DataBind();

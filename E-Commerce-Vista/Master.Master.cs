@@ -30,9 +30,9 @@ namespace E_Commerce_Vista
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            
-            
-           
+
+
+
             panelContador.Update();
             try
             {
@@ -43,7 +43,7 @@ namespace E_Commerce_Vista
                     Session["Carrito"] = carrito;
                 }
 
-               else if (Session["Carrito"] != null)
+                else if (Session["Carrito"] != null)
                 {
                     Carrito carrito2 = (Carrito)Session["Carrito"];
                     int cantidadTotalArticulos = carrito2.ObtenerCantidadTotalArticulos();
@@ -59,12 +59,23 @@ namespace E_Commerce_Vista
 
 
                     else
-                    {   
+                    {
 
                         lblTotalCantCarrito.Text = " (0)";
                     }
                 }
 
+                if (Session["ClienteLogueado"] != null)
+                {
+                    var cliente = (Cliente)Session["ClienteLogueado"];
+                    UserNameLabel.Text = "Bienvenido/a " + cliente.Nombre;
+
+                }
+                else if (Session["Admin"] != null)
+                {
+                    var admin = (Admin)Session["Admin"];
+                    UserNameLabel.Text ="Bienvenido/a " + admin.Nombre;
+                }
 
 
             }
@@ -100,6 +111,18 @@ namespace E_Commerce_Vista
 
                 //lblMensaje.Text = Session["Carrito"].ToString();
             }
+        }
+
+        protected void LogoutButton_Click(object sender, EventArgs e)
+        {
+            
+            Session.Remove("Admin");
+
+            
+            Session.Remove("ClienteLogueado");
+            Session.Remove("Cliente");
+            // También puedes redirigir a una página de logout si es necesario
+            Response.Redirect("Default.aspx");
         }
 
 

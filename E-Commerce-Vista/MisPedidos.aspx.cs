@@ -11,6 +11,11 @@ namespace E_Commerce_Vista
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["ClienteLogueado"] == null)
+            {
+                Response.Redirect("Default.aspx", false);
+
+            }
 
         }
     }

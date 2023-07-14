@@ -15,6 +15,11 @@ namespace E_Commerce_Vista
         public List<Categoria> ListaFiltradaAdmin { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Admin"] == null)
+            {
+                Response.Redirect("Default.aspx", false);
+
+            }
             CategoriaNegocio negocio = new CategoriaNegocio();
             Session["ListaCategoriaAdmin"] = negocio.listar();
             dgvCategorias.DataSource = negocio.listar();

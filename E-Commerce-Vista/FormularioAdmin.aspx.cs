@@ -20,6 +20,11 @@ namespace E_Commerce_Vista
         public bool verId { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Admin"] == null)
+            {
+                Response.Redirect("Default.aspx",false);
+
+            }
 
             txtId.Enabled = false;
             try

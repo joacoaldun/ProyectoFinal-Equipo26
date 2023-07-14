@@ -104,6 +104,7 @@ namespace E_Commerce_Vista
 
                 if (admin.UserName.ToLower() == username.ToLower() && admin.Pass == pass)
                 {
+                    Session["Admin"] = admin;
                     return true;
                 }
 

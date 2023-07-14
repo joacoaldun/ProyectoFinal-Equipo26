@@ -15,6 +15,12 @@ namespace E_Commerce_Vista
         public List<Marca> ListaFiltradaAdmin { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Admin"] == null)
+            {
+                Response.Redirect("Default.aspx", false);
+
+            }
+
             MarcaNegocio negocio= new MarcaNegocio();
             Session["ListaMarcaAdmin"] = negocio.listar();
             dgvMarcas.DataSource = negocio.listar();

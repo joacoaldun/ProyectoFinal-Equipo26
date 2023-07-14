@@ -15,6 +15,12 @@ namespace E_Commerce_Vista
         public List<Articulo> ListaFiltradaAdmin { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["Admin"] == null)
+            {
+                Response.Redirect("Default.aspx", false);
+
+            }
+
             if (!IsPostBack)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();

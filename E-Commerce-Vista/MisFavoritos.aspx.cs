@@ -15,6 +15,13 @@ namespace E_Commerce_Vista
         public List<int> ListaArticuloFavoritos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["ClienteLogueado"] == null)
+            {
+                Response.Redirect("Default.aspx", false);
+
+            }
+
+
             if (!IsPostBack && Session["Favoritos"]!=null)
             {
                 
