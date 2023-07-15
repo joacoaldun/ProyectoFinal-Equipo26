@@ -73,8 +73,9 @@ namespace Negocio
             cuerpo += "</table>";
 
             cuerpo += "<div style=\"text-align:center;\">";
-            cuerpo += $"<div style=\"display:inline-block; width:67%; text-align:right;\"></div>"; 
-            cuerpo += $"<div style=\"display:inline-block; width:33%; text-align:center;\"><p style=\"color:white;\">Total: ${pedido.CarritoPedidos.PrecioTotal}</p></div>";
+            cuerpo += $"<div style=\"display:inline-block; width:33%; text-align:center; color:white;\">TOTAL:</div>"; 
+            cuerpo += $"<div style=\"display:inline-block; width:33%; text-align:center;\"></div>"; 
+            cuerpo += $"<div style=\"display:inline-block; width:33%; text-align:center;\"><p style=\"color:white;\">${pedido.CarritoPedidos.PrecioTotal}</p></div>";
             cuerpo += "</div>";
 
             //dire de entrega

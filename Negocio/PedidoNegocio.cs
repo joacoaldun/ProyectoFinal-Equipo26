@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using Dominio;
@@ -69,6 +71,11 @@ namespace Negocio
                     int idArticulo = item.Key;
                     decimal precio=devolverPrecioPorArticulo(idArticulo, pedido);
                     datos.setearParametros("@PrecioCompra",precio);
+                    //descontamos stock
+                    int nuevoStock = devolverNuevoStock(idArticulo,item.Value);
+                    datos.setearParametros("@NuevoStock", nuevoStock);
+
+
 
                     datos.ejecutarAccion();
 
@@ -111,6 +118,20 @@ namespace Negocio
             return 0;
         }
 
+
+        public int devolverNuevoStock(int id, int cantidadPedida)
+        { ArticuloNegocio negocio = new ArticuloNegocio();
+            List<Articulo> lista = negocio.listarConSP();
+            foreach (var item in lista)
+            {
+                if (id == item.Id)
+                {  
+                    return item.StockArticulo.Cantidad - cantidadPedida;
+                }
+            }
+
+            return 0;
+        }
 
         public int TraerIdUltimoPedido()
         {

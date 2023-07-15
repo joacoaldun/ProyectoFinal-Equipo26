@@ -647,12 +647,13 @@ select * from usuarios
 select * from Domicilio
 select * from pedido
 
+go
 alter PROCEDURE SPGenerarArticulosPedido(
-
 @IdPedido int,
 @idArticulo int,
 @Cantidad int,
-@PrecioCompra money
+@PrecioCompra money,
+@NuevoStock int
 )
 AS
 BEGIN
@@ -663,7 +664,7 @@ BEGIN
     BEGIN TRY
         -- Actualizar en la tabla Usuarios
         INSERT INTO ArticulosPedido values(@IdPedido,@idArticulo,@Cantidad,@PrecioCompra)
-        
+        update Stock set Cantidad=@NuevoStock where IdArticulo=@idArticulo 
        
     
         COMMIT TRANSACTION;
@@ -674,6 +675,7 @@ BEGIN
         THROW;
     END CATCH;
 END;
+
 GO
 
 select * from usuarios u inner join Cliente  c on  u.id = c.id
@@ -793,7 +795,7 @@ alter procedure listarArticulosPedidoSP(
     @IdPedido int
 )
 AS  
-    SELECT A.IdArticulo AS Id, Art.Nombre AS Nombre, A.Cantidad AS Cantidad, I.ImagenUrl AS ImagenUrl
+    SELECT A.IdArticulo AS Id, Art.Nombre AS Nombre, A.Cantidad AS Cantidad, A.PrecioCompra as PrecioCompra, I.ImagenUrl AS ImagenUrl
     FROM ArticulosPedido A
     LEFT JOIN (
         SELECT IdArticulo, ImagenUrl
@@ -838,4 +840,9 @@ add IdDomicilio INT NOT NULL foreign key references Domicilio(Id)
 --EXEC sp_rename 'Pedido.IdPedido', 'IdDomicilio', 'COLUMN';
 
 
-   
+--    select * from usuarios
+--    select * from cliente
+
+--    delete from usuarios where id>3
+--    select * from cliente
+--    select * from 

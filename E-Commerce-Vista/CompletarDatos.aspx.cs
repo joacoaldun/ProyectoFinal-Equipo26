@@ -268,7 +268,7 @@ namespace E_Commerce_Vista
                     negocio.GenerarPedidoConSp(pedido);
                     negocio.GenerarArticulosPedidoConSp(pedido);
                    
-
+                    
 
                     //Guardamos pedido para poder mostrar el nro.pedido desde la pagina de confirmación
                     Session["NroPedido"] = negocio.TraerIdUltimoPedido();
