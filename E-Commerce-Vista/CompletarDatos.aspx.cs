@@ -234,6 +234,11 @@ namespace E_Commerce_Vista
                     Domicilio domicilio = new Domicilio();
                     domicilio.IdLocalidad = int.Parse(ddlLocalidad.SelectedValue);
                     domicilio.IdProvincia = int.Parse(ddlProvincia.SelectedValue);
+
+                    domicilio.Provincia = ddlProvincia.SelectedItem.ToString();
+                    domicilio.Localidad = ddlLocalidad.SelectedItem.ToString();
+
+
                     domicilio.CodigoPostal = int.Parse(txtCodigoPostal.Text);
                     domicilio.Direccion = txtDireccion.Text;
 
@@ -267,9 +272,13 @@ namespace E_Commerce_Vista
 
                     //Guardamos pedido para poder mostrar el nro.pedido desde la pagina de confirmación
                     Session["NroPedido"] = negocio.TraerIdUltimoPedido();
+                    pedido.Id = (int)Session["NroPedido"];
 
-                    
 
+                    //Enviamos correo con detalle
+                    EmailService emailService = new EmailService();
+                    emailService.armarCorreoConPedido(cliente.Email, "Pedido realizado", pedido);
+                    emailService.enviarCorreo();
                    
                     //vaciamos carrito ya que ya se hizo el pedido con esos productos y redireccionamos
                     Session.Remove("Carrito");
