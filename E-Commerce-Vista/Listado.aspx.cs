@@ -14,7 +14,7 @@ namespace E_Commerce_Vista
     public partial class Articulos : System.Web.UI.Page
     {   
         public List<Articulo> ListaArticulo { get; set; }
-        public List<int> ListaArticuloFavoritos { get; set; } 
+        public List<int> ListaArticuloFavoritos { get; set; }
         protected void Page_Load(object sender, EventArgs e)
         {
 
@@ -28,7 +28,7 @@ namespace E_Commerce_Vista
                 ListaArticuloFavoritos = (List<int>)Session["ListaArticuloFavoritos"];
             }
 
-            
+
             if (ListaArticuloFavoritos != null)
             {
                 foreach (RepeaterItem item in repRepetidor.Items)
@@ -48,7 +48,7 @@ namespace E_Commerce_Vista
             }
 
             //LISTAMOS ARTICULOS
-            if (!IsPostBack && Session["ListaArticulo"]==null)
+            if (!IsPostBack && Session["ListaArticulo"] == null)
             {
                 ArticuloNegocio negocio = new ArticuloNegocio();
                 Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Estado == true).ToList());
@@ -58,8 +58,8 @@ namespace E_Commerce_Vista
 
 
             }
-            else if  (!IsPostBack && Session["ListaArticulo"]!=null && Request.Params["id"] != null)
-                {
+            else if (!IsPostBack && Session["ListaArticulo"] != null && Request.Params["id"] != null)
+            {
 
                 string id = Request.Params["id"];
                 if (id.StartsWith("M_"))
@@ -76,21 +76,23 @@ namespace E_Commerce_Vista
                 {
                     int categoriaId = int.Parse(id.Substring(2));
                     ArticuloNegocio negocio = new ArticuloNegocio();
-                    Categoria categoria= new Categoria();
+                    Categoria categoria = new Categoria();
                     Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Categorias.Id == categoriaId).ToList());
                     ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
                     repRepetidor.DataSource = ListaArticulo;
                     repRepetidor.DataBind();
                 }
-                    
+
             }
             //BUSCADOR DE LA MASTER..
-            else if (!IsPostBack && Request.QueryString["inputValue"]!=null)
+
+            else if (!IsPostBack && !string.IsNullOrEmpty(Request.QueryString["inputValue"]))
             {
                 string inputValue = Request.QueryString["inputValue"];
                 ArticuloNegocio negocio = new ArticuloNegocio();
                 List<Articulo> lista = negocio.listarConSP();
-                repRepetidor.DataSource = lista.FindAll(x => x.Nombre.ToUpper().Contains(inputValue.ToUpper()));
+                lista= lista.FindAll(x => x.Nombre.ToUpper().Contains(inputValue.ToUpper()));
+                repRepetidor.DataSource = lista.FindAll(x => x.Estado==true);
                 repRepetidor.DataBind();
             }
 
