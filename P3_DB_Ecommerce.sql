@@ -795,7 +795,8 @@ alter procedure listarArticulosPedidoSP(
     @IdPedido int
 )
 AS  
-    SELECT A.IdArticulo AS Id, Art.Nombre AS Nombre, A.Cantidad AS Cantidad, A.PrecioCompra as PrecioCompra, I.ImagenUrl AS ImagenUrl
+    SELECT A.IdArticulo AS Id, Art.Nombre AS Nombre, A.Cantidad AS Cantidad, A.PrecioCompra as PrecioCompra, 
+    I.ImagenUrl AS  ImagenUrl
     FROM ArticulosPedido A
     LEFT JOIN (
         SELECT IdArticulo, ImagenUrl
@@ -846,3 +847,5 @@ add IdDomicilio INT NOT NULL foreign key references Domicilio(Id)
 --    delete from usuarios where id>3
 --    select * from cliente
 --    select * from 
+
+select * from usuarios

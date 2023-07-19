@@ -26,6 +26,7 @@
 
 
 
+
     <% if (Request.Url.AbsolutePath.EndsWith("ListadoCarrito.aspx"))
         { %>
     <%
@@ -84,15 +85,15 @@
                             <% }
 
 
-%>
+                            %>
 
 
 
                             <%-- CLIENTE --%>
-                           
+
                             <%if (Session["ClienteLogueado"] != null)
                                 {
-                                    %>
+                            %>
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="MisPedidos.aspx">Mis pedidos</a>
                             </li>
@@ -140,9 +141,8 @@
 
 
 
-
                         <%-- BUSCADOR --%>
-                        <div class="buscar">
+                        <%--<div class="buscar">
                             <div class="d-flex">
                                 <asp:TextBox runat="server" ID="txtBuscador" class="form-control me-2" type="search" placeholder="Buscar" aria-label="Buscar">
                                 </asp:TextBox>
@@ -151,7 +151,24 @@
                                     <i class="fas fa-search"></i>
                                 </asp:LinkButton>
                             </div>
+                        </div>--%>
+
+                        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
+
+                        <label for="exampleDataList" class="form-label"></label>
+                        <div class="input-container">
+                            <input class="form-control custom-input" list="datalistOptions" id="exampleDataList" placeholder="Buscar..." data-articulos="<%= JsonArticulos %>">
+                            <button id="btnBuscar" type="button" class="btn">
+                                <i class="fas fa-search"></i>
+                            </button>
                         </div>
+                        <datalist id="datalistOptions"></datalist>
+
+
+
+
+
 
                         <%--REGISTRARSEYLOGIN--%>
 
@@ -162,17 +179,17 @@
                             <a href="Registro.aspx" class="btn btn-primary">Registrarse</a>
                             <a href="Login.aspx" class="btn btn-success">Ingresar</a>
                             <% }
-                            else
-                            { %><asp:Label ID="UserNameLabel" runat="server" Text='' CssClass="h4"/>
+                                else
+                                { %><asp:Label ID="UserNameLabel" runat="server" Text='' CssClass="h4" />
                             <asp:Button ID="LogoutButton" runat="server" Text="Logout" CssClass="btn btn-danger" OnClick="LogoutButton_Click" />
                             <% } %>
                         </div>
 
 
 
-                        <asp:ScriptManager ID="ScriptManager1" runat="server"></asp:ScriptManager>
+
                         <asp:UpdatePanel ID="panelContador" runat="server" UpdateMode="Conditional">
-                            <ContentTemplate>
+                            <contenttemplate>
                                 <%-- ICONO CARRITO --%>
                                 <div class="cart-wrapper">
                                     <a class="nav-link active" aria-current="page" href="#" onclick="desplazarCarrito(event)">
@@ -181,7 +198,7 @@
                                         <asp:Label ID="lblTotalCantCarrito" runat="server"></asp:Label>
                                     </a>
                                 </div>
-                            </ContentTemplate>
+                            </contenttemplate>
                         </asp:UpdatePanel>
 
 
@@ -410,7 +427,40 @@
     #footer {
         background-color: #000000d9;
     }
+
+    /*BUSCADOR*/
+    .custom-input {
+        width: 300px;
+        background-color: black;
+        color: white;
+    }
+
+    .custom-input:focus {
+        background-color: black;
+        color: white;
+        border-color: purple;
+    }
+
+    .custom-input::placeholder {
+        color: white;
+    }
+
+    .input-container {
+        display: grid;
+        grid-template-columns: auto min-content;
+        gap: 10px;
+        margin: 0 auto;
+        /*max-width: 300px; */
+    }
+
+    #btnBuscar{
+       color:white;
+    }
     
+    #btnBuscar:hover{
+       color:purple;
+    }
+
 </style>
 
 
@@ -457,11 +507,6 @@
 
         }
     });
-
-
-
-
-
 
 
 
@@ -531,4 +576,101 @@
     }
 
 
+    //BUSCADOR DINAMICO
+
+    var datosArticulos = JSON.parse('<%= JsonArticulos %>');
+
+    var selectedOption = null;
+    var listaArts = datosArticulos.Nombres;
+    var listaIds = datosArticulos.Ids;
+
+    var inputArticulo = document.getElementById("exampleDataList");
+    var datalist = document.getElementById("datalistOptions");
+    var btnBuscar = document.getElementById("btnBuscar");
+
+    function obtenerIndicePorNombre(nombre) {
+        for (var i = 0; i < listaArts.length; i++) {
+            if (listaArts[i] === nombre) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    inputArticulo.addEventListener("input", function () {
+        var inputValue = inputArticulo.value.toLowerCase();
+        var selectedOption = null;
+
+        // filtramos
+        var filteredOptions = listaArts.filter(function (articulo) {
+            return articulo.toLowerCase().includes(inputValue);
+        });
+
+        //limpiamos
+        datalist.innerHTML = "";
+
+        //filtramos
+        filteredOptions.forEach(function (articulo) {
+            var option = document.createElement("option");
+            option.value = articulo;
+            option.setAttribute("data-nombre", articulo);
+            datalist.appendChild(option);
+
+        });
+
+
+        // vemos si lo escrito coincide con algun articulo
+        var inputMatchesOption = Array.from(datalist.options).find(function (option) {
+            return option.value.toLowerCase() === inputValue;
+        });
+
+        // si hay la seleccionamos
+        if (inputMatchesOption) {
+            inputMatchesOption.selected = true;
+            selectedOption = inputMatchesOption;
+        }
+
+    });
+
+    //cambio de seleccion
+    inputArticulo.addEventListener("change", function () {
+        var selectedOption = datalist.querySelector("option:checked");
+        if (selectedOption) {
+            var nombreSeleccionado = selectedOption.getAttribute("data-nombre");
+            var indiceSeleccionado = obtenerIndicePorNombre(nombreSeleccionado);
+            if (indiceSeleccionado !== -1) {
+                var selectedId = listaIds[indiceSeleccionado];
+                window.location.href = "DetalleArticulo.aspx?id=" + selectedId;
+            }
+        }
+    });
+
+
+
+    //BUSCADOR LUPITA
+    var inputValue = "";
+
+    inputArticulo.addEventListener("input", function () {
+        inputValue = inputArticulo.value.toLowerCase();
+    });
+
+    
+    btnBuscar.addEventListener("click", function () {
+        inputValue = inputArticulo.value.toLowerCase(); 
+        buscarArticulos();
+    });
+
+    
+    inputArticulo.addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); 
+            buscarArticulos();
+        }
+    });
+
+    function buscarArticulos() {
+        window.location.href = "Listado.aspx?inputValue=" + inputValue;
+    }
+
 </script>
+

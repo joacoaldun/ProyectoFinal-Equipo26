@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 using System.Web.UI.WebControls;
 using Dominio;
+using Negocio;
+using System.Web.Script.Serialization;
 
 namespace E_Commerce_Vista
 {
@@ -13,7 +16,7 @@ namespace E_Commerce_Vista
         public bool MostrarFiltros { get; set; }
 
         public bool MostrarCarrito { get; set; }
-
+        public string JsonArticulos { get; set; }
 
         public bool NavContentVisible
         {
@@ -31,6 +34,29 @@ namespace E_Commerce_Vista
         protected void Page_Load(object sender, EventArgs e)
         {
 
+           if (!IsPostBack)
+            {
+                //PROBANDO PARA AUTOCOMPLETAR DE BUSCADOR
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                List<Articulo> listaArticulos = negocio.listarConSP();
+                List<String> listaArts = new List<String>();
+                List<int> listaIds = new List<int>();
+
+                foreach (Articulo articulo in listaArticulos)
+                {
+                    if (articulo.Estado == true)
+                    {
+                    listaArts.Add(articulo.Nombre);
+                    listaIds.Add(articulo.Id);
+
+                    }
+                }
+
+                JavaScriptSerializer serializer = new JavaScriptSerializer();
+                //JsonArticulos = serializer.Serialize(listaArts);
+                JsonArticulos = serializer.Serialize(new { Nombres = listaArts, Ids = listaIds });
+                //
+            }
 
 
             panelContador.Update();
@@ -74,7 +100,7 @@ namespace E_Commerce_Vista
                 else if (Session["Admin"] != null)
                 {
                     var admin = (Admin)Session["Admin"];
-                    UserNameLabel.Text ="Bienvenido/a " + admin.Nombre;
+                    UserNameLabel.Text = "Bienvenido/a " + admin.Nombre;
                 }
 
 
@@ -115,10 +141,10 @@ namespace E_Commerce_Vista
 
         protected void LogoutButton_Click(object sender, EventArgs e)
         {
-            
+
             Session.Remove("Admin");
 
-            
+
             Session.Remove("ClienteLogueado");
             Session.Remove("Cliente");
             // También puedes redirigir a una página de logout si es necesario
@@ -126,8 +152,32 @@ namespace E_Commerce_Vista
         }
 
 
+        //protected void txtArticulo_TextChanged(object sender, EventArgs e)
+        //{
+        //    string articulo = txtArticulo.Text;
 
+            
+        //    ArticuloNegocio negocio = new ArticuloNegocio();
+        //    List<Articulo> articulos = negocio.listarConSP();
+        //    List<Articulo> articulosFiltrados = articulos
+        //        .Where(a => a.Nombre.ToLower().Contains(txtArticulo.Text.ToLower()))
+        //        .ToList();
 
+            
+        //    dlOpciones.DataSource = articulosFiltrados;
+        //    dlOpciones.DataBind();
+        //    updateBuscador.Update();
+        //}
 
+        //protected void dlOpciones_ItemCommand(object source, DataListCommandEventArgs e)
+        //{
+        //    if (e.CommandName == "VerArticulo")
+        //    {
+        //        string idArticulo = e.CommandArgument.ToString();
+        //        Response.Redirect("DetalleArticulo.aspx?id=" + idArticulo);
+        //    }
+        //}
+
+        
     }
 }

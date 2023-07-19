@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Web;
+using System.Web.Script.Serialization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Dominio;
@@ -11,11 +12,14 @@ using Negocio;
 namespace E_Commerce_Vista
 {
     public partial class Articulos : System.Web.UI.Page
-    {
+    {   
         public List<Articulo> ListaArticulo { get; set; }
         public List<int> ListaArticuloFavoritos { get; set; } 
         protected void Page_Load(object sender, EventArgs e)
-        {   
+        {
+
+
+
 
 
             //VERIFICAMOS SI LOS ID YA ESTAN SELECCIONADOS COMO FAVORITOS
@@ -80,7 +84,15 @@ namespace E_Commerce_Vista
                 }
                     
             }
-
+            //BUSCADOR DE LA MASTER..
+            else if (!IsPostBack && Request.QueryString["inputValue"]!=null)
+            {
+                string inputValue = Request.QueryString["inputValue"];
+                ArticuloNegocio negocio = new ArticuloNegocio();
+                List<Articulo> lista = negocio.listarConSP();
+                repRepetidor.DataSource = lista.FindAll(x => x.Nombre.ToUpper().Contains(inputValue.ToUpper()));
+                repRepetidor.DataBind();
+            }
 
 
 
