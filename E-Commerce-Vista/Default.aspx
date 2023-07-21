@@ -4,6 +4,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+
+
+    <%-- 2 --%>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
     <style>
         /*Articulos*/
         .container {
@@ -56,6 +63,12 @@
             </button>
         </div>
 
+    </div>
+
+      <%-- BANNER --%>
+
+    <div class="container-fluid banner-vacio ">
+        
     </div>
 
 
@@ -286,8 +299,28 @@
             margin-top: 40px !important;
         }
         
+        /*ESTILO VISUAL*/
+        .banner-vacio {
+            /*margin-top: 100px;*/
+            /*background-color: rebeccapurple;*/
+            background-color: black;
+            color: black;
+            padding: 40px;
+            display: flex;
+            position: relative;
+            width: 100vw;
+            height:220px;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+            justify-content: space-around;
+        }
+        h1{
+            color:white;
 
-
+            font-family: 'Bebas Neue', sans-serif;
+        }
 
     </style>
 

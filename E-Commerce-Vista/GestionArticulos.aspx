@@ -2,15 +2,15 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Lista de articulos a gestionar...</h1>
+    <h1 class="login">Lista de articulos a gestionar...</h1>
     
     <asp:UpdatePanel runat="server" Id="panelFiltros" >
         <ContentTemplate>   
 
-            <div class="row">
+            <div class="row login">
                      
 
-                <div class="col-2">
+                <div class="col-2 ">
                     <div class="mb-3 mt-3">
                         <asp:Label Text="Buscar por nombre" runat="server" />
                         <asp:TextBox runat="server" ID="txtNombre" AutoPostBack="true"  CssClass="form-control" OnTextChanged="txtNombre_TextChanged" />
@@ -18,7 +18,7 @@
                 </div>
 
 
-                 <div class="col-2">
+                 <div class="col-2 ">
                     <div class="mb-3 mt-3">
                         <asp:Label Text="Buscar por código" runat="server" />
                         <asp:TextBox runat="server" ID="txtCodigo"  AutoPostBack="true" CssClass="form-control" OnTextChanged="txtCodigo_TextChanged" />
@@ -99,4 +99,10 @@
 
     <a href="FormularioArticulo.aspx" class="btn btn-success" >Agregar</a>
     <a href="PanelGestion.aspx" class="btn btn-danger" >Volver</a>
+
+    <style>
+        .login{
+            color:white;
+        }
+    </style>
 </asp:Content>

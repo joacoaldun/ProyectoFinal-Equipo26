@@ -6,7 +6,7 @@
 
     <asp:UpdatePanel runat="server" ID="updatePanelCategoria" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="row">
+            <div class="row login">
                 <div class="col-6">
                     <%if (verId)
                         {%>
@@ -47,5 +47,10 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
+    <style>
+    .login{
+        color:white;
+    }
+    </style>
 
 </asp:Content>

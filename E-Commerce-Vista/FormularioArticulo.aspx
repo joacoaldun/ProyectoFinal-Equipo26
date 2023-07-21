@@ -8,7 +8,7 @@
 
     <asp:UpdatePanel runat="server" ID="updatePanelArticulo" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="row">
+            <div class="row login">
 
                 <div class="col-4">
 
@@ -221,6 +221,9 @@
 
         .btnSiguiente {
             right: 0;
+        }
+        .login{
+            color:white;
         }
     </style>
 

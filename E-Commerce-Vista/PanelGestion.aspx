@@ -69,6 +69,7 @@
         }
         h1{
             margin-bottom:30px;
+            color:white;
         }
     </style>
 

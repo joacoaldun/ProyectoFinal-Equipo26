@@ -12,28 +12,28 @@
             <div class="row completarDatos">
                 <div class="col-4">
 
-                    <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3 login">
                         <asp:Label Text="Medio de pago" runat="server" />
                         <asp:DropDownList runat="server" ID="ddlMedioPago" OnSelectedIndexChanged="ddlMedioPago_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control is-valid">
                         </asp:DropDownList>
                     </div>
 
 
-                    <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3 login">
                         <asp:Label Text="Provincia" runat="server" />
                         <asp:DropDownList runat="server" ID="ddlProvincia" OnSelectedIndexChanged="ddlProvincia_SelectedIndexChanged"  AutoPostBack="true" CssClass="form-control is-valid">
                         </asp:DropDownList>
                     
                     </div>
 
-                    <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3 login">
                         <asp:Label Text="Localidad" runat="server" />
                         <asp:DropDownList runat="server" ID="ddlLocalidad" OnSelectedIndexChanged="ddlLocalidad_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control is-valid">
                         </asp:DropDownList>
                        
                     </div>
 
-                    <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3 login">
                         <asp:Label Text="Tipo de vivienda" runat="server" />
                         <asp:DropDownList runat="server" ID="ddlVivienda" OnSelectedIndexChanged="ddlVivienda_SelectedIndexChanged" AutoPostBack="true" CssClass="form-control is-valid">
                             <asp:ListItem>Casa</asp:ListItem>
@@ -43,13 +43,13 @@
                     </div>
 
 
-                    <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3 login">
                         <asp:Label Text="Direccion" runat="server" />
                         <asp:TextBox runat="server" ID="txtDireccion" AutoPostBack="true" OnTextChanged="txtDireccion_TextChanged" CssClass="form-control is-invalid" />
                         <div id="errorDireccion" runat="server" class ="invalid-feedback">Campo obligatorio.</div>
                     </div>
-
-                    <div class="mb-3 mt-3">
+                     
+                    <div class="mb-3 mt-3 login">
                         <asp:Label Text="Codigo postal" runat="server" />
                         <asp:TextBox runat="server" ID="txtCodigoPostal" OnTextChanged="txtCodigoPostal_TextChanged" AutoPostBack="true" CssClass="form-control is-invalid" />
                         <div id="errorCodigoPostal" runat="server"  class="invalid-feedback">Campo obligatorio.</div>
@@ -58,7 +58,7 @@
                     <%-- Si es departamento... --%>
                     <%if (ddlVivienda.SelectedValue == "Departamento")
                         {%>
-                    <div class="mb-3 mt-3">
+                    <div class="mb-3 mt-3 login">
                         <asp:Label Text="Departamento" runat="server" />
                         <asp:TextBox runat="server" ID="txtDepartamento" OnTextChanged="txtDepartamento_TextChanged" AutoPostBack="true" CssClass="form-control is-invalid" />
                         <div id="errorDepartamento"  runat="server" class="invalid-feedback">Campo obligatorio.</div>
@@ -125,6 +125,11 @@
         .containerArticulos {
             height: calc(550px - 50px);
             overflow-y: auto;
+        }
+
+        /*ESTILO*/
+        .login{
+            color:white;
         }
         
     </style>

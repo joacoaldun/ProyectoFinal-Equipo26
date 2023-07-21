@@ -3,13 +3,13 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-     <asp:Label Text="" ID="lblNroPedido" CssClass="nroPedido" runat="server" />
+     <asp:Label Text="" ID="lblNroPedido" CssClass="nroPedido login" runat="server" />
 
     <asp:UpdatePanel runat="server" ID="updatePedido" >
         <ContentTemplate>
 
 
-            <div class="row">
+            <div class="row login">
 
                 <%-- Listado arts... --%>
 
@@ -55,7 +55,8 @@
 
 
                     </div>
-                    <h4 style="color: black;">TOTAL: $<asp:Label ID="lblPrecioTotal" runat="server" Text=""></asp:Label></h4>
+
+                    <h4 class="login" >TOTAL: $<asp:Label ID="lblPrecioTotal"  runat="server" Text=""></asp:Label></h4>
                 </div>
 
                 <%-- Listado cliente, domicilio, estadopedido y btones --%>
@@ -210,7 +211,9 @@
              background-color:purple;
              border:none;
          }
-
+         .login{
+             color:white;
+         }
         
     </style>
 

@@ -10,7 +10,7 @@
 
     <asp:UpdatePanel runat="server" ID="updatePanelMarca" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="row">
+            <div class="row login">
 
                 <div class="col-4">
 
@@ -110,4 +110,10 @@
 
         </div>
     </div>--%>
+
+    <style>
+        .login{
+            color:white;
+        }
+    </style>
 </asp:Content>

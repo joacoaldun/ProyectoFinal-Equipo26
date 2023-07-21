@@ -11,7 +11,7 @@
     <style>
         .h1 {
             /*color: aliceblue;*/
-            color: black;
+            color: white;
             margin-bottom: 60px;
             margin-top: 30px;
             text-align: center

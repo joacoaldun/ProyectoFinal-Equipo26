@@ -43,8 +43,8 @@
 
     <div class="container-fluid banner-envio ">
         <div class="row item-banner">
-            <div class="col-md-12 text-center">
-                <iconify-icon icon="ic:baseline-local-shipping" width="80" height="80"></iconify-icon>
+            <div class="col-md-12 text-center banner">
+                <iconify-icon icon="ic:baseline-local-shipping" width="80" height="80" class="itemBanner"></iconify-icon>
                 <h2 class="banner">ENVÍOS</h2>
                 <h4>A TODO EL PAIS</h4>
             </div>
@@ -52,8 +52,8 @@
 
 
         <div class="row item-banner">
-            <div class="col-md-12 text-center">
-                <iconify-icon icon="ion:card-sharp" width="80" height="80"></iconify-icon>
+            <div class="col-md-12 text-center banner">
+                <iconify-icon icon="ion:card-sharp" width="80" height="80" class="itemBanner"></iconify-icon>
                 <h2 class="banner">MEDIOS DE PAGO</h2>
                 <h4>TARJETAS O TRANSFERENCIA BANCARIA</h4>
 
@@ -62,8 +62,8 @@
 
 
         <div class="row item-banner">
-            <div class="col-md-12 text-center">
-                <iconify-icon icon="charm:padlock" width="80" height="80"></iconify-icon>
+            <div class="col-md-12 text-center banner">
+                <iconify-icon icon="charm:padlock" width="80" height="80" class="itemBanner"></iconify-icon>
                 <h2 class="banner">SITIO SEGURO</h2>
                 <h4>PROTEGEMOS TUS DATOS</h4>
             </div>
@@ -144,6 +144,14 @@
         .logo{
             width:200px;
             height:150px;
+        }
+
+        /*ESTILO VISUAL*/
+        h2,h4,.banner{
+            color:white;
+        }
+        .itemBanner{
+            color:white;
         }
     </style>
 

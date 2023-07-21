@@ -6,7 +6,7 @@
 
     <asp:UpdatePanel runat="server" ID="updatePanelCliente" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="row">
+            <div class="row login">
 
                 <div class="col-4">
 
@@ -128,6 +128,9 @@
 
         .col-4 {
             flex-basis: 50%; /* O cualquier otro ancho deseado */
+        }
+        .login{
+            color:white
         }
     </style>
 

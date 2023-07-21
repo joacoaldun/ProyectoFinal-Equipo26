@@ -2,12 +2,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <h1>Lista de marcas a gestionar...</h1>
+     <h1 class="login">Lista de marcas a gestionar...</h1>
 
       <asp:UpdatePanel runat="server" Id="panelFiltros" >
         <ContentTemplate>   
         
-        <div class="row">
+        <div class="row login">
                 <div class="col-2">
                     <div class="mb-3 mt-3">
                         <asp:Label Text="Buscar por nombre" runat="server" />
@@ -51,4 +51,11 @@
 
             </ContentTemplate>
           </asp:UpdatePanel>
+
+    <style>
+        h1,.login{
+            color:white;
+        }
+    </style>
+
 </asp:Content>

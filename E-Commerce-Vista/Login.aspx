@@ -10,26 +10,26 @@
 
             <div class="row justify-content-center">
                 <div class="col-4">
-                    <div class="mb-3">
+                    <div class="mb-3 mt-3 login">
                         <h1>Iniciar sesión</h1>
                     </div>
-                    <div class="mb-3">
+                    <div class="mb-3 login">
                         <label class="form-label">Usuario</label>
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtUser" />
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 login">
                         <label class="form-label">Password</label>
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" TextMode="Password" />
                     </div>
 
-                    <div clas="mb-3">
+                    <div clas="mb-3 login">
                         <p>¿No tiene una cuenta?
                             <a href="Registro.aspx">Cree una.</a>
                         </p> 
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-3 login">
                         <a href="RecuperarCuenta.aspx">¿Olvidó su contraseña?</a>
                     </div>
 
@@ -75,6 +75,12 @@
             color:white;
             width:130px;
         }
+        /*ESTILO VISUAL*/
+        .login,p{
+            color:white;
+        }
+        
+       
     </style>
 
 </asp:Content>

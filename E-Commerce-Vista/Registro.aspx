@@ -6,7 +6,7 @@
      <asp:UpdatePanel runat="server" ID="updatePanelCliente" UpdateMode="Conditional">
         <ContentTemplate>
             <div class="row">
-                <div class="col-4">
+                <div class="col-4 login">
                     <div class="mb-3 mt-3">
                         <label for="txtNombre" class="form-label">Ingrese su Nombre</label>
                         <asp:TextBox ID="txtNombre" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtNombre_TextChanged" />
@@ -56,7 +56,7 @@
                 </div>
 
 
-                <div class="col-4">
+                <div class="col-4 login">
 
                     <div class="mb-3 mt-3">
                         <label for="txtDni" class="form-label">Ingrese su Dni</label>
@@ -106,6 +106,10 @@
             width:130px;
         }
 
+        /*ESTILO VISUAL*/
+       .login{
+           color:white;
+       }
     </style>
 
 

@@ -10,10 +10,10 @@
     %>
     <asp:UpdatePanel runat="server" ID="updatePanelCliente" UpdateMode="Conditional">
         <ContentTemplate>
-            <h3>Lista de Clientes a gestionar</h3>
+            <h3 class="login">Lista de Clientes a gestionar</h3>
 
 
-            <div class="row">
+            <div class="row login">
 
                 <div class="col-2">
 
@@ -73,7 +73,7 @@
             <h3>Lista de Admins a gestionar</h3>
 
 
-            <div class="row">
+            <div class="row login">
 
                 <div class="col-2">
 
@@ -116,6 +116,13 @@
 
         </ContentTemplate>
     </asp:UpdatePanel>
+
     <%} %>
+
+    <style>
+        h3,.login{
+            color:white;
+        }
+    </style>
 </asp:Content>
 
