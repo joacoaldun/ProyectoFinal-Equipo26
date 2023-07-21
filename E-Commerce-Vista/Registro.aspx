@@ -49,8 +49,8 @@
                     </div>
                     <%} %>
                     <div class="mb-3">
-                        <asp:Button Text="Aceptar" ID="btnAceptar" CssClass="btn btn-success" OnClick="btnAceptar_Click" runat="server" OnClientClick="return validarFormulario();" />
-                        <a href="Default.aspx" class="btn btn-primary">Cancelar</a>
+                        <asp:Button Text="Aceptar" ID="btnAceptar" CssClass="btn btn-dark btnAceptar" OnClick="btnAceptar_Click" runat="server" OnClientClick="return validarFormulario();" />
+                        <a href="Default.aspx" class="btn btn-dark btnCancelar">Cancelar</a>
 
                     </div>
                 </div>
@@ -93,6 +93,19 @@
         .col-4 {
             flex-basis: 50%; /* O cualquier otro ancho deseado */
         }
+
+        .btnCancelar{
+            background-color:black;
+            color:white;
+            width:130px;
+        }
+        
+        .btnAceptar{
+            background-color:purple;
+            color:white;
+            width:130px;
+        }
+
     </style>
 
 

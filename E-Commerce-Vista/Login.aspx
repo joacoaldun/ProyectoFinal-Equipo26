@@ -33,8 +33,8 @@
                         <a href="RecuperarCuenta.aspx">¿Olvidó su contraseña?</a>
                     </div>
 
-                    <asp:Button Text="Login" runat="server" CssClass="btn btn-success" ID="btnIngresar" OnClick="btnIngresar_Click" />
-                    <a href="Default.aspx" Class="btn btn-danger">Cancelar</a>
+                    <asp:Button Text="Login" runat="server" CssClass="btn btn-dark btnLogin" ID="btnIngresar" OnClick="btnIngresar_Click" />
+                    <a href="Default.aspx" Class="btn btn-dark btnCancelar">Cancelar</a>
 
 
 
@@ -63,5 +63,18 @@
         </ContentTemplate>
     </asp:UpdatePanel>
 
+    <style>
+         .btnCancelar{
+            background-color:black;
+            color:white;
+            width:130px;
+        }
+        
+        .btnLogin{
+            background-color:purple;
+            color:white;
+            width:130px;
+        }
+    </style>
 
 </asp:Content>

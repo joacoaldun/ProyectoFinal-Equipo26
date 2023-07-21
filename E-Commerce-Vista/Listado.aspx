@@ -215,6 +215,7 @@
         .btn-favorito-activo {
             color: purple;
         }
+        
     </style>
 
 
