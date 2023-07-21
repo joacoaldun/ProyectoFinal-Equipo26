@@ -4,6 +4,103 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
      <h1>Lista de pedidos a gestionar...</h1>
 
+    <asp:UpdatePanel runat="server">
+        <ContentTemplate>   
+
+
+     <div class="row">
+
+                <div class="col-2">
+                    <div class="mb-3 mt-3">
+                        <asp:Label Text="Buscar por numero" runat="server" />
+                        <asp:TextBox runat="server" ID="txtNumero" AutoPostBack="true"  CssClass="form-control" OnTextChanged="txtNumero_TextChanged" />
+                    </div>
+                </div>
+
+
+                 <div class="col-2">
+                    <div class="mb-3 mt-3">
+                        <asp:Label Text="Buscar por apellido" runat="server" />
+                        <asp:TextBox runat="server" ID="txtApellido"  AutoPostBack="true" CssClass="form-control" OnTextChanged="txtApellido_TextChanged"/>
+                    </div>
+                </div>  
+
+        <%--   <div class="col-2">
+                    <div class="mb-3 mt-3">
+                        <asp:Label Text="Buscar por fecha" runat="server" />
+                        <asp:TextBox runat="server" ID="txtFecha"  AutoPostBack="true" CssClass="form-control" OnTextChanged="txtApellido_TextChanged"/>
+                    </div>
+           </div>--%>
+
+           <div class="col-2">
+                    <div class="mb-3 mt-3">
+                        <asp:Label Text="Buscar por estado" runat="server" />
+                        <asp:DropDownList runat="server" ID="ddlEstado" CssClass="form-control"  AutoPostBack="true" OnTextChanged="ddlEstado_TextChanged" >
+                        </asp:DropDownList>
+                    </div>
+           </div>
+
+         
+           <div class="col-2">
+                    <div class="mb-3 mt-3">
+                        <asp:Label Text="Medio de pago" runat="server" />
+                        <asp:DropDownList runat="server" ID="ddlMedioPago" CssClass="form-control" AutoPostBack="true" OnTextChanged="ddlMedioPago_TextChanged">
+                        </asp:DropDownList>
+                    </div>
+           </div>
+
+          <div class="col-1">
+                    <div class="mb-3 mt-3">
+                        <asp:Label Text="Pagado" runat="server" />
+                        <asp:DropDownList runat="server" ID="ddlPagado" CssClass="form-control" AutoPostBack="true" OnTextChanged="ddlPagado_TextChanged" >
+                            <asp:ListItem Text="Si" />
+                            <asp:ListItem Text="No" />
+                        </asp:DropDownList>
+                    </div>
+           </div>
+
+
+
+                <div class="col-1">
+                    <div class="mb-3 mt-3">
+                        <asp:Label Text="Precio" runat="server" />
+                        
+                        <asp:DropDownList runat="server" ID="ddlCriterio" CssClass="form-control">
+                            <asp:ListItem Text="Igual a" />
+                            <asp:ListItem Text="Mayor a" />
+                            <asp:ListItem Text="Menor a" />
+                        </asp:DropDownList>
+                      
+                        <asp:TextBox runat="server"  ID="txtPrecio"  AutoPostBack="true" OnTextChanged="txtPrecio_TextChanged" CssClass="form-control" />
+                    </div>
+                </div>
+
+               
+
+         <div class="col-2">
+             <div class="mb-3 mt-3 dropdown">
+                       <button class="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" width:"80px";>
+                           Ordenar
+                       </button>
+                       <ul class="dropdown-menu">
+                           <li><a class="dropdown-item" href="#" runat="server" onserverclick="Option1_Click">A-Z</a></li>
+                           <li><a class="dropdown-item" href="#" runat="server" onserverclick="Option2_Click">Z-A</a></li>
+                           <li><a class="dropdown-item" href="#" runat="server" onserverclick="Option3_Click">Mayor a menor $</a></li>
+                           <li><a class="dropdown-item" href="#" runat="server" onserverclick="Option4_Click">Menor a mayor $</a></li>
+                       </ul>
+              </div>
+             <div class="mb-3 botonFILTRO">
+                    <asp:Button Text="Limpiar" runat="server" ID="btnQuitarFiltros" CssClass="btn btn-dark form-control" OnClick="btnQuitarFiltros_Click" style="width:100px"/>
+              </div>
+         </div>
+    </div>
+
+
+
+
+
+
+
      <asp:GridView ID="dgvPedidos" runat="server" OnSelectedIndexChanged="dgvPedidos_SelectedIndexChanged" CssClass="table table-striped"
         DataKeyNames="Id" AutoGenerateColumns="false" AllowPaging="true" PageSize="10" OnPageIndexChanging ="dgvPedidos_PageIndexChanging">  
 
@@ -24,5 +121,10 @@
 
 
 
+        </ContentTemplate>
+    </asp:UpdatePanel>
+
+
     <a href="PanelGestion.aspx">Volver</a>
+
 </asp:Content>
