@@ -28,7 +28,11 @@ namespace E_Commerce_Vista
 
                     repCarrito.DataSource = carrito.ListaArticulo;
                     repCarrito.DataBind();
-                    lblPrecioTotal.Text = "$" + carrito.PrecioTotal.ToString();
+                    //lblPrecioTotal.Text = "$" + carrito.PrecioTotal.ToString();
+                     string precio =  string.Format("{0:#,##0.00}", carrito.PrecioTotal.ToString());
+
+                    lblPrecioTotal.Text = precio;
+                    lblPrecioTotal.DataBind();
 
                 }
                
@@ -81,7 +85,11 @@ namespace E_Commerce_Vista
                     decimal precio = art.Precio;
                     decimal total = precio * cantidad;
                     Label lblTotalCantXart = (Label)e.Item.FindControl("lblTotalCantXart");
-                    lblTotalCantXart.Text = "$" + total.ToString();
+                    //lblTotalCantXart.Text = "$" + total.ToString();
+                    string precio2 = string.Format("{0:#,##0.00}", carrito.PrecioTotal);
+
+                    lblTotalCantXart.Text = precio2;
+                    lblTotalCantXart.DataBind();
                 }
 
 
@@ -138,7 +146,10 @@ namespace E_Commerce_Vista
 
                 repCarrito.DataSource = carrito.ListaArticulo;
                 repCarrito.DataBind();
-                lblPrecioTotal.Text = carrito.PrecioTotal.ToString();
+                string precio = string.Format("{0:#,##0.00}", carrito.PrecioTotal);
+
+                lblPrecioTotal.Text = precio;
+                lblPrecioTotal.DataBind();
 
             }
            

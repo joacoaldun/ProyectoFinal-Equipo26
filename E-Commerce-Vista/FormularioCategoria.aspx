@@ -4,9 +4,17 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+     <style>
+        h1{
+            color:white;
+        }
+    </style>
+   
+    <h1 class="text-center">Gestionando categoria</h1>
+
     <asp:UpdatePanel runat="server" ID="updatePanelCategoria" UpdateMode="Conditional">
         <ContentTemplate>
-            <div class="row login">
+            <div class="row login d-flex justify-content-center align-items-center mt-4">
                 <div class="col-6">
                     <%if (verId)
                         {%>
@@ -50,6 +58,9 @@
     <style>
     .login{
         color:white;
+    }
+    .form-label{
+        font-size:x-large;
     }
     </style>
 

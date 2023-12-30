@@ -191,6 +191,9 @@ namespace Negocio
                     pedido.Id = (int)datos.Lector["IdPedido"];
                     pedido.EstadoPago = (bool)datos.Lector["EstadoPago"];
                     pedido.ImporteTotal = Math.Round((decimal)datos.Lector["ImporteTotal"], 2);
+                    
+                    pedido.CodigoEnvio= datos.Lector["CodigoEnvio"] == DBNull.Value ? 0 : (int)datos.Lector["CodigoEnvio"];
+                    pedido.CodigoPago= datos.Lector["CodigoPago"] == DBNull.Value ? 0 : (int)datos.Lector["CodigoPago"];
 
                     Cliente cliente = new Cliente
                     {
@@ -222,6 +225,13 @@ namespace Negocio
                     };
                     pedido.MedioDePago = medioPago;
 
+                    MedioEnvio medioDeEnvio = new MedioEnvio
+                    {   
+                        Id= datos.Lector["IdMedioEnvio"] == DBNull.Value ? 0 : (int)datos.Lector["IdMedioEnvio"],
+                        NombreEnvio= datos.Lector["MedioEnvio"] == DBNull.Value ? "" : (string)datos.Lector["MedioEnvio"]
+                    
+                    };
+                    pedido.MedioDeEnvio= medioDeEnvio;
 
                     pedido.FechaPedido = (DateTime)datos.Lector["Fecha"];
                     pedido.EstadoEnvio = (EstadoEnvio)Enum.Parse(typeof(EstadoEnvio), (string)datos.Lector["EstadoPedido"]);
@@ -328,6 +338,10 @@ namespace Negocio
                 datos.setearParametros("@IdPedido", pedido.Id);
                 datos.setearParametros("@IdEstadoPedido", pedido.EstadoEnvio);
                 datos.setearParametros("@EstadoPago", pedido.EstadoPago);
+
+                datos.setearParametros("@CodigoEnvio", pedido.CodigoEnvio);
+                datos.setearParametros("@CodigoPago", pedido.CodigoPago);
+                datos.setearParametros("@IdMedioEnvio", pedido.MedioDeEnvio.Id);
 
                 datos.ejecutarAccion();
 

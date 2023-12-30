@@ -41,5 +41,10 @@ namespace Dominio
 
         public Domicilio DomicilioPedido { get; set; }
 
+        public int CodigoPago { get; set; }
+        public int CodigoEnvio { get; set; }
+
+        public MedioEnvio MedioDeEnvio { get; set; }
+
     }
 }

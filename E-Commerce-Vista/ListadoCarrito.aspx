@@ -33,7 +33,7 @@
 
     <div class="card mb-3" style="background-color: black;">
         <div class="row g-0">
-            <div class="col-md-12" style="color: white; font-weight: bold;">
+            <div class="col-md-12" style="color: white; ">
                 <div class="card-body d-flex">
                     <%--<div class="col-md-2 col-sm-2"></div>--%>
                     <!-- Columna vacía sin título -->
@@ -88,7 +88,7 @@
                                         <p class="card-text"><%# Eval("Marcas.NombreMarca") %></p>
                                     </div>
                                     <div class="col-md-2 itemsCarrito">
-                                        <p class="card-text">$ <%# Eval("Precio") %></p>
+                                        <p class="card-text">$ <%# Convert.ToDecimal(Eval("Precio")).ToString("#,##0.00", System.Globalization.CultureInfo.InvariantCulture) %></p>
                                     </div>
                                     <div class="col-md-2 itemsCarrito d-flex justify-content-evenly align-items-center ">
 
@@ -114,7 +114,7 @@
             </asp:Repeater>
 
             <div style="display: flex; justify-content: flex-end;">
-                <h4 style="color: black;">TOTAL: $<asp:Label ID="lblPrecioTotal" runat="server" Text=""></asp:Label></h4>
+                <h4 style="color: white;">TOTAL: $<asp:Label ID="lblPrecioTotal" runat="server" Text=""></asp:Label></h4>
 
                 <%--<h4 style="color: white;">TOTAL COMPRA: $<%: carrito.PrecioTotal %></h4>--%>
             </div>
@@ -135,7 +135,7 @@
                                 <% } %>
 
 
-                                <asp:Label ID="lblMensajeError" runat="server" Visible="false" CssClass="alert d-flex align-items-center" Style="margin-top: 1vh; color: orange;"></asp:Label>
+                                <asp:Label ID="lblMensajeError" runat="server" Visible="false" CssClass="alert d-flex align-items-center mensajeError" Style="margin-top: 1vh; color: orange;"></asp:Label>
                                 <asp:Timer ID="timerMensajeError" runat="server"  OnTick="timerMensajeError_Tick" Enabled="false"></asp:Timer>
                             </div>
 
@@ -161,6 +161,9 @@
         .itemsCarrito {
             margin: auto;
             text-align: center;
+        }
+        .mensajeError{
+            font-size:x-large;
         }
     </style>
 

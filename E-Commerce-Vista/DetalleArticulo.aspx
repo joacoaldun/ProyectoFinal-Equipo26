@@ -6,11 +6,12 @@
 
     <style>
         .card {
-            margin-top: 10vh;
+            margin-top: 5vh;
         }
 
         .carousel-image {
-            height: 500px;
+            /*width:50%;*/
+            height: 380px;
             object-fit: fill;
         }
     </style>
@@ -27,11 +28,13 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-md-8">
+                        <h1 class="card-title titulo"><%: articulo.Nombre %></h1>
                         <div class="card">
                             <div id="carouselExample" class="carousel slide">
                                 <div class="carousel-inner">
                                     <% for (int i = 0; i < articulo.Imagenes.Count; i++)
                                         { %>
+                                     
                                     <div class="carousel-item <%= i == 0 ? "active" : "" %>">
                                         <img src="<%= articulo.Imagenes[i].UrlImagen %>" class="d-block w-100 carousel-image" alt="Imagen <%= i %>" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3f/Placeholder_view_vector.svg/681px-Placeholder_view_vector.svg.png';">
                                     </div>
@@ -47,8 +50,10 @@
                                 </button>
                             </div>
 
+                           
+
                             <div class="card-body">
-                                <h5 class="card-title"><%: articulo.Nombre %></h5>
+                                
                                 <div class="details">
                                     <p><span class="label">Código del articulo:</span> <%: articulo.CodigoArticulo %></p>
                                 </div>
@@ -64,14 +69,22 @@
                                 </div>
 
                                 <div class="details">
-                                    <p><span class="label">Precio:</span> <%:"$" + articulo.Precio %></p>
+                                    <p><span class="label">Precio:</span> <%:"$" + Convert.ToDecimal(articulo.Precio).ToString("#,##0.00", System.Globalization.CultureInfo.InvariantCulture) %></p>
                                 </div>
                                 <div class="add-to-cart">
                                     <% if (articulo.StockArticulo.Cantidad > 0)
                                         {
 
                                     %>
-                                    <asp:Button Text="Agregar al carrito" ID="btnAgregar" CssClass="btn btn-success" runat="server" OnClick="btnAgregar_Click" OnClientClick="mostrarMensaje();" />
+                                   
+                                    <% if(Session["ClienteLogueado"] == null || Session["ClienteLogueado"] == null) { %>
+                                            <asp:Button Text="En stock" ID="btnEjemplo" CssClass="btn btn-success btnAgregar btn-pg-1 " runat="server"  CommandArgument='<%# Eval("Id") %>' OnClientClick="mostrarMensaje();" Enabled="false" />
+                                        <% } else { %>
+                                            <asp:Button Text="Agregar al carrito" ID="btnAgregar" CssClass="btn btn-success" runat="server" OnClick="btnAgregar_Click" OnClientClick="mostrarMensaje();" />
+
+                                    
+                                    <% } %>  
+
 
                                     <%}
                                         else
@@ -80,7 +93,15 @@
 
                                         <%}%>
                                     <asp:Button ID="btnVolver" runat="server" CssClass="btn btn-dark green-text" Text="Volver atras" OnClick="btnVolver_Click" />
+                                    
+                                     <%if(Session["Admin"] == null && Session["ClienteLogueado"] != null) {  %>
                                     <asp:Button Text="♥" Cssclass="btn btnFav" ID="btnFavorito"  OnClick="btnFavorito_Click" runat="server" CommandArgument='<%#Eval ("Id") %>' />
+                                     <%} %>
+                                
+
+                                           
+                                           
+                                           
                                 </div>
                             </div>
                         </div>
@@ -136,6 +157,16 @@
         .btn-favorito-activo {
             color: purple;
         }
+        .titulo{
+           
+            color:white;
+            margin-bottom:auto;
+            text-align:center;
+        }
+        p{
+            font-size:x-large;
+        }
+        
 
   </style>
 

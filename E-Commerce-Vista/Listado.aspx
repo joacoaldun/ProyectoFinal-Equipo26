@@ -168,13 +168,18 @@
                                         <div class="card-body">
                                             <h5 class="card-title"><%# Eval("Nombre") %> </h5>
                                             <p class="card-text"><%# Eval("CodigoArticulo")%></p>
-                                            <p class="card-text">$<%# Eval("Precio")%></p>
+                                            <p class="card-text">$<%# Convert.ToDecimal(Eval("Precio")).ToString("#,##0.00", System.Globalization.CultureInfo.InvariantCulture)%></p>
                                             <asp:Button Text="Ver Detalle" ID="btnDetalle" CssClass="btn btn-dark " runat="server" OnClick="btnDetalle_Click" CommandArgument='<%#Eval("Id")%>' />
+                                           <% if(Session["ClienteLogueado"] == null || Session["ClienteLogueado"] == null) { %>
+                                            <asp:Button Text="En stock"  CssClass="btn btn-success btnAgregar btn-pg-1 " runat="server" OnClick="btnAgregarCarrito_Click" CommandArgument='<%# Eval("Id") %>' OnClientClick="mostrarMensaje();" Enabled="false" />
+                                        <% } else { %>
+                                            <asp:Button Text="Agregar al carrito" ID="btnEjemplo" CssClass="btn btn-success btnAgregar btn-pg-1" runat="server" OnClick="btnAgregarCarrito_Click" CommandArgument='<%# Eval("Id") %>' OnClientClick="mostrarMensaje();" Enabled="true" />
+                                        <% } %>
 
-                                            <asp:Button Text="Agregar al carrito" ID="btnEjemplo" CssClass="btn btn-success btnAgregar btn-pg-1" runat="server" OnClick="btnAgregarCarrito_Click" CommandArgument='<%# Eval("Id") %>' OnClientClick="mostrarMensaje();" />
-
+                                            
+                                            <%if(Session["Admin"] == null && Session["ClienteLogueado"] != null) {  %>
                                             <asp:Button Text="♥" CssClass="btn btnFav" ID="btnFavorito" OnClick="btnFavorito_Click" CommandArgument='<%#Eval ("Id") %>' runat="server" />
-
+                                            <%} %>
                                         </div>
                                     </div>
                                 </div>

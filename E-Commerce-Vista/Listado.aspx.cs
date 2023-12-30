@@ -67,7 +67,7 @@ namespace E_Commerce_Vista
                     int marcaId = int.Parse(id.Substring(2));
                     ArticuloNegocio negocio = new ArticuloNegocio();
                     Marca marca = new Marca();
-                    Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Marcas.Id == marcaId).ToList());
+                    Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Marcas.Id == marcaId && a.Estado == true).ToList());
                     ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
                     repRepetidor.DataSource = ListaArticulo;
                     repRepetidor.DataBind();
@@ -77,7 +77,7 @@ namespace E_Commerce_Vista
                     int categoriaId = int.Parse(id.Substring(2));
                     ArticuloNegocio negocio = new ArticuloNegocio();
                     Categoria categoria = new Categoria();
-                    Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Categorias.Id == categoriaId).ToList());
+                    Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Categorias.Id == categoriaId && a.Estado == true).ToList());
                     ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
                     repRepetidor.DataSource = ListaArticulo;
                     repRepetidor.DataBind();
@@ -198,6 +198,7 @@ namespace E_Commerce_Vista
             {
                 Button btnDetalle = (Button)sender;
                 var id = btnDetalle.CommandArgument;
+                
                 Response.Redirect("DetalleArticulo.aspx?id=" + id);
             }
             catch (Exception ex)
@@ -357,9 +358,15 @@ namespace E_Commerce_Vista
 
         protected void btnQuitarFiltros_Click(object sender, EventArgs e)
         {
-            
-            repRepetidor.DataSource = Session["ListaArticulo"];
+
+            ArticuloNegocio negocio = new ArticuloNegocio();
+            Session.Add("ListaArticulo", negocio.listarConSP().Where(a => a.Estado == true).ToList());
+            ListaArticulo = (List<Articulo>)Session["ListaArticulo"];
+            repRepetidor.DataSource = ListaArticulo;
             repRepetidor.DataBind();
+
+            /*repRepetidor.DataSource = Session["ListaArticulo"];
+            repRepetidor.DataBind();*/
             Session["ListaFiltrada"] = null;
         }
 

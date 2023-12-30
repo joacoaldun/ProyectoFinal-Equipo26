@@ -9,17 +9,17 @@
 
                 <div class="col-4">
                     <div class="mb-3">
-                        <h1>Restablecer contraseña</h1>
+                        <h1 class="text-center">Restablecer contraseña</h1>
                     </div>
 
                     <%-- Si todavía no recuperó contraseña --%>
                     <%if (!codigoEnviado && !codigoValidado)
                         {%>
                     <div class="mb-3">
-                        <label for="txtEmail" class="form-label">Correo electrónico</label>
+                        <label for="txtEmail" class="form-label titulo mt-4">Correo electrónico</label>
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtEmail" />
                     </div>
-                    <asp:Button Text="Restablecer contraseña" CssClass="btn btn-success" runat="server" ID="btnRestablecer" OnClick="btnRestablecer_Click" />
+                    <asp:Button Text="Restablecer contraseña" CssClass="btn btn-success btnReestablecer" runat="server" ID="btnRestablecer" OnClick="btnRestablecer_Click" />
 
 
                     <%}
@@ -92,6 +92,14 @@
 
             </div>
 
+    <style>
+        h1, .titulo{
+            color:white;
+        }
+        .btnReestablecer, .titulo{
+            font-size:large;
+        }
+    </style>
 
 </asp:Content>
 

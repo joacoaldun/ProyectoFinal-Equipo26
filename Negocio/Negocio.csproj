@@ -48,6 +48,7 @@
     <Compile Include="EmailService.cs" />
     <Compile Include="ImagenNegocio.cs" />
     <Compile Include="MarcaNegocio.cs" />
+    <Compile Include="MedioEnvioNegocio.cs" />
     <Compile Include="MedioPagoNegocio.cs" />
     <Compile Include="PedidoNegocio.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

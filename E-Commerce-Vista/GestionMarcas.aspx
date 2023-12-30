@@ -2,12 +2,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-     <h1 class="login">Lista de marcas a gestionar...</h1>
+     <h1 class="login text-center">Lista de marcas a gestionar</h1>
 
       <asp:UpdatePanel runat="server" Id="panelFiltros" >
         <ContentTemplate>   
         
-        <div class="row login">
+        <div class="row login text-center d-flex justify-content-center align-items-center">
                 <div class="col-2">
                     <div class="mb-3 mt-3">
                         <asp:Label Text="Buscar por nombre" runat="server" />
@@ -37,10 +37,10 @@
 
     <asp:GridView ID="dgvMarcas" runat="server" OnSelectedIndexChanged="dgvMarcas_SelectedIndexChanged" CssClass="table table-striped"
         DataKeyNames="Id" AutoGenerateColumns="false" AllowPaging="true" PageSize="10" OnPageIndexChanging ="dgvMarcas_PageIndexChanging">  
-
+        <HeaderStyle CssClass="thead-dark" />
         <Columns>
             <asp:BoundField  HeaderText="Marca" DataField="NombreMarca"  /> 
-            <asp:CommandField ShowSelectButton="true" SelectText="♦" HeaderText="Gestionar" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
+            <asp:CommandField ShowSelectButton="true" SelectText="	&#x270D; " HeaderText="Gestionar" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
         </Columns>
 
     </asp:GridView>
@@ -56,6 +56,12 @@
         h1,.login{
             color:white;
         }
+        .thead-dark th {
+            background-color: black; 
+            color: white; 
+            font-weight:normal;
+        }
+
     </style>
 
 </asp:Content>

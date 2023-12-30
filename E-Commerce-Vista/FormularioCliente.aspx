@@ -4,6 +4,14 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
+     <style>
+        h1{
+            color:white;
+        }
+    </style>
+   
+    <h1 class="text-center">Gestionando cliente</h1>
+
     <asp:UpdatePanel runat="server" ID="updatePanelCliente" UpdateMode="Conditional">
         <ContentTemplate>
             <div class="row login">
@@ -131,6 +139,9 @@
         }
         .login{
             color:white
+        }
+        .invalid-feedback{
+         color:orange;   
         }
     </style>
 

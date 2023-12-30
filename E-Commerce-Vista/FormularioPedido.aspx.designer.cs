@@ -15,15 +15,6 @@ namespace E_Commerce_Vista
     {
 
         /// <summary>
-        /// Control lblNroPedido.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblNroPedido;
-
-        /// <summary>
         /// Control updatePedido.
         /// </summary>
         /// <remarks>
@@ -33,22 +24,13 @@ namespace E_Commerce_Vista
         protected global::System.Web.UI.UpdatePanel updatePedido;
 
         /// <summary>
-        /// Control repListadoArticulos.
+        /// Control lblNroPedido.
         /// </summary>
         /// <remarks>
         /// Campo generado automáticamente.
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater repListadoArticulos;
-
-        /// <summary>
-        /// Control lblPrecioTotal.
-        /// </summary>
-        /// <remarks>
-        /// Campo generado automáticamente.
-        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPrecioTotal;
+        protected global::System.Web.UI.WebControls.Label lblNroPedido;
 
         /// <summary>
         /// Control lblApellido.
@@ -132,6 +114,33 @@ namespace E_Commerce_Vista
         protected global::System.Web.UI.WebControls.Label lblNumeroDepartamento;
 
         /// <summary>
+        /// Control repListadoArticulos.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Repeater repListadoArticulos;
+
+        /// <summary>
+        /// Control lblPrecioTotal.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPrecioTotal;
+
+        /// <summary>
+        /// Control txtMedioPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMedioPago;
+
+        /// <summary>
         /// Control ddlPagado.
         /// </summary>
         /// <remarks>
@@ -141,6 +150,24 @@ namespace E_Commerce_Vista
         protected global::System.Web.UI.WebControls.DropDownList ddlPagado;
 
         /// <summary>
+        /// Control divPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlTableRow divPago;
+
+        /// <summary>
+        /// Control txtCodigoPago.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCodigoPago;
+
+        /// <summary>
         /// Control ddlEstadoPedido.
         /// </summary>
         /// <remarks>
@@ -148,6 +175,33 @@ namespace E_Commerce_Vista
         /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlEstadoPedido;
+
+        /// <summary>
+        /// Control divEnvio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl divEnvio;
+
+        /// <summary>
+        /// Control ddlMedioEnvio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMedioEnvio;
+
+        /// <summary>
+        /// Control txtCodigoEnvio.
+        /// </summary>
+        /// <remarks>
+        /// Campo generado automáticamente.
+        /// Para modificarlo, mueva la declaración del campo del archivo del diseñador al archivo de código subyacente.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtCodigoEnvio;
 
         /// <summary>
         /// Control btnGuardarCambios.

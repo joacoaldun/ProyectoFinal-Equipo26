@@ -5,13 +5,18 @@
     
     <%if (Session["error"] != null)
             {%>
-    <h1 >Hubo un problema...</h1>
+    <h1 class="text-center">Hubo un problema...</h1>
           <% } 
 
      else{%>
      <h1 >Oops!</h1>
     <%}%>
     
-    <asp:Label Text="text" Id="lblMensaje" runat="server" />
+    <asp:Label Text="text" Id="lblMensaje" runat="server" style="color:white;" />
 
+    <style>
+        h1{
+            color:white;
+        }
+    </style>
 </asp:Content>

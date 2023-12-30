@@ -44,7 +44,7 @@
                                         <div class="card-body">
                                             <h4 class="card-title"><%# Eval("Nombre") %></h4>
                                             <h5 class="card-title"><%# Eval("Marcas.NombreMarca") %></h5>
-                                            <h6 class="card-title">$<%# Eval("Precio") %></h6>
+                                            <h6 class="card-title">$<%# Convert.ToDecimal(Eval("Precio")).ToString("#,##0.00", System.Globalization.CultureInfo.InvariantCulture) %></h6>
 
 
 
@@ -72,9 +72,9 @@
                 </div>
                 <div class="card mb-3 text-bg-dark p-3" style="max-width: 360px;">
 
-                    <h4>Total: $<asp:Label ID="lblPrecioTotal" runat="server" Text=""></asp:Label></h4>
+                    <h4 class="text-center">Total: $<asp:Label ID="lblPrecioTotal" runat="server" Text=""></asp:Label></h4>
 
-                    <asp:Button Text="Pagar" CssClass="btn btn-light" runat="server" OnClientClick="return redirectToPage('ListadoCarrito.aspx');" />
+                    <asp:Button Text="Completar pedido" style="font-size:x-large;" CssClass="btn btn-light" runat="server" OnClientClick="return redirectToPage('ListadoCarrito.aspx');" />
                 </div>
 
 

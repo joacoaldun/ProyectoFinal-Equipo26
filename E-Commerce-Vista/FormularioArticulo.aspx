@@ -3,9 +3,17 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    <style>
+        h1{
+            color:white;
+        }
+        .form-label{
+            font-size:x-large;
+        }
+    </style>
     <%-- FORM CON VALIDACIONES --%>
 
+    <h1 class="text-center">Gestionando articulo</h1>
     <asp:UpdatePanel runat="server" ID="updatePanelArticulo" UpdateMode="Conditional">
         <ContentTemplate>
             <div class="row login">
@@ -24,14 +32,14 @@
 
 
                     <div class="mb-3 mt-3">
-                        <label for="txtNombre" class="form-label">Nombre Articulo</label>
+                        <label for="txtNombre" class="form-label">Codigo Articulo</label>
                         <asp:TextBox ID="txtNombre" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtNombre_TextChanged" />
                         <div id="errorNombre" class="invalid-feedback ">Campo obligatorio.</div>
 
                     </div>
 
                     <div class="mb-3 mt-3">
-                        <label for="txtCodigoArticulo" class="form-label">Codigo Articulo</label>
+                        <label for="txtCodigoArticulo" class="form-label">Nombre Articulo</label>
                         <asp:TextBox ID="txtCodigoArticulo" CssClass="form-control is-invalid" runat="server" AutoPostBack="true" OnTextChanged="txtCodigoArticulo_TextChanged" />
                         <div id="errorCodigoArticulo" class="invalid-feedback ">Campo obligatorio.</div>
 
@@ -77,11 +85,12 @@
 
 
                         <%if (confirmarEliminar)
-                            {%>
+                            {
+                                %>
 
                         <div class="mb-3 mt-3">
-                            <asp:CheckBox Text="Confirmar eliminación" ID="chkConfirmaEliminacion" runat="server" />
-                            <asp:Button Text="Eliminar" ID="btnConfirmaEliminacion" OnClick="btnConfirmaEliminacion_Click" CssClass="btn btn-outline-danger" runat="server" />
+                            <asp:CheckBox Text="Confirmar eliminación" ID="chkConfirmaEliminacion" runat="server" class="confirmarTexto" />
+                            <asp:Button Text="Eliminar" ID="btnConfirmaEliminacion" OnClick="btnConfirmaEliminacion_Click" CssClass="btn btn-danger" runat="server" />
 
                         </div>
 
@@ -128,7 +137,7 @@
                             <div class="carousel-inner carousel-container">
 
 
-                                <asp:Image ID="imgCarrusel" runat="server" CssClass="d-block w-100" Style="width: 50vh; height: 50vh;" />
+                                <asp:Image ID="imgCarrusel" runat="server" CssClass="d-block w-100" Style="width: 40vh; height: 40vh;" />
                                 <%List<string> urls_imagenes = (List<string>)Session["Imagenes"];
 
                                     if (Session["Imagenes"] != null && urls_imagenes.Count > 1)
@@ -224,6 +233,12 @@
         }
         .login{
             color:white;
+        }
+        .confirmarTexto{
+            font-size:x-large;
+        }
+        .invalid-feedback{
+            color:orange;
         }
     </style>
 

@@ -10,10 +10,10 @@
 
             <div class="row justify-content-center">
                 <div class="col-4">
-                    <div class="mb-3 mt-3 login">
-                        <h1>Iniciar sesión</h1>
+                    <div class="mb-3 mt-4 login">
+                        <h1 class="text-center">Iniciar sesión</h1>
                     </div>
-                    <div class="mb-3 login">
+                    <div class="mb-3 login mt-4">
                         <label class="form-label">Usuario</label>
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtUser" />
                     </div>
@@ -23,6 +23,7 @@
                         <asp:TextBox runat="server" CssClass="form-control" ID="txtPassword" TextMode="Password" />
                     </div>
 
+    <div class="text-center">
                     <div clas="mb-3 login">
                         <p>¿No tiene una cuenta?
                             <a href="Registro.aspx">Cree una.</a>
@@ -35,7 +36,7 @@
 
                     <asp:Button Text="Login" runat="server" CssClass="btn btn-dark btnLogin" ID="btnIngresar" OnClick="btnIngresar_Click" />
                     <a href="Default.aspx" Class="btn btn-dark btnCancelar">Cancelar</a>
-
+    </div>
 
 
                      <asp:UpdatePanel ID="updatePanelMensajeError" runat="server" UpdateMode="Conditional">
@@ -78,6 +79,14 @@
         /*ESTILO VISUAL*/
         .login,p{
             color:white;
+            font-size:x-large;
+        }
+        
+        a{  
+
+            
+            color:lightblue;
+            /*font-weight:bold;*/
         }
         
        

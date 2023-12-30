@@ -5,7 +5,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
     <div class="pedido-enviado">
-        <h1>Pedido recibido!</h1>
+        <i class="fa-solid fa-clipboard-check fa-5x"></i>
+        
+
+        <h1 class="text-center">Pedido recibido!</h1>
         <p></p>
         <p>En breve nos comunicaremos con vos para continuar con la gestión de tu pedido. </p>
         <div class="nroPedido text-center">
@@ -23,7 +26,7 @@
         }
 
         .pedido-enviado h1 {
-            font-size: 24px;
+           
         }
 
 
@@ -39,6 +42,9 @@
             background-color:black;
             color:white;
             margin: 0 auto;
+        }
+        h1, p, .nroPedido{
+            color:white;
         }
     </style>
 

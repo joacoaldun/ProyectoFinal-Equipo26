@@ -719,6 +719,8 @@ namespace E_Commerce_Vista
         {
 
             confirmarEliminar = true;
+            btnEliminarArticulo.Enabled = false;
+            btnEliminarArticulo.CssClass = "btn btn-secondary";
 
 
         }

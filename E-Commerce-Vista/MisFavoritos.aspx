@@ -2,7 +2,7 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1>Lista de favoritos</h1>
+    <h1 class="text-center">Lista de favoritos</h1>
 
      <style>
         h1 {
@@ -10,9 +10,14 @@
             color: black;
             margin-bottom: 60px;
             margin-top: 30px;
-            text-align: center
+            text-align: center;
+            color:white;
+            margin-bottom:4vh;
         }
-
+        p{
+            font-weight:normal;
+        }
+        
     </style>
 
      <%@ Import Namespace="Dominio" %>

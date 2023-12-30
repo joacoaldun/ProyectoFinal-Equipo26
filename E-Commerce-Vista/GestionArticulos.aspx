@@ -2,12 +2,12 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <h1 class="login">Lista de articulos a gestionar...</h1>
+    <h1 class="login text-center">Lista de articulos a gestionar</h1>
     
     <asp:UpdatePanel runat="server" Id="panelFiltros" >
         <ContentTemplate>   
 
-            <div class="row login">
+            <div class="row login text-center d-flex justify-content-center align-items-center">
                      
 
                 <div class="col-2 ">
@@ -25,11 +25,12 @@
                     </div>
                 </div>  
 
-                <div class="col-2">
-                    <div class="mb-3 mt-3">
-                        <asp:Label Text="Buscar por precio" runat="server" />
+                <div class="col-2 mb-3 mt-3">
+                    <asp:Label Text="Buscar por precio" runat="server" />
+                    <div class=" d-flex">
                         
-                        <asp:DropDownList runat="server" ID="ddlCriterio" CssClass="form-control">
+                        
+                        <asp:DropDownList runat="server" ID="ddlCriterio" CssClass="form-control ">
                             <asp:ListItem Text="Igual a" />
                             <asp:ListItem Text="Mayor a" />
                             <asp:ListItem Text="Menor a" />
@@ -78,7 +79,7 @@
 
     <asp:GridView ID="dgvArticulos" runat="server" OnSelectedIndexChanged="dgvArticulos_SelectedIndexChanged" CssClass="table table-striped"
         DataKeyNames="Id" AutoGenerateColumns="false" AllowPaging="true" PageSize="12" OnPageIndexChanging ="dgvArticulos_PageIndexChanging">  
-
+         <HeaderStyle CssClass="thead-dark" />
         <Columns>
             <asp:BoundField  HeaderText="Articulo" DataField="Nombre"/> 
             <asp:BoundField  HeaderText="Codigo" DataField="CodigoArticulo" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center"/> 
@@ -87,7 +88,7 @@
             <asp:BoundField  HeaderText="Precio" DataField="Precio" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center"/> 
             <asp:BoundField  HeaderText="Stock" DataField="StockArticulo.Cantidad" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center"/> 
             <asp:BoundField  HeaderText="Publicado" DataField="Estado" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center"/> 
-            <asp:CommandField ShowSelectButton="true" SelectText="♦" HeaderText="Gestionar" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
+            <asp:CommandField ShowSelectButton="true" SelectText="	&#x270D; " HeaderText="Gestionar" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
 
         </Columns>
 
@@ -104,5 +105,11 @@
         .login{
             color:white;
         }
+        .thead-dark th {
+            background-color: black; 
+            color: white; 
+            font-weight:normal;
+        }
+
     </style>
 </asp:Content>

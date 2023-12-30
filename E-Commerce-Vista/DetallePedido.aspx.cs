@@ -6,6 +6,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Web.UI.WebControls.WebParts;
 
 namespace E_Commerce_Vista
 {
@@ -24,7 +25,8 @@ namespace E_Commerce_Vista
                 if (Request.QueryString["id"] != null)
                 {
                     string nropedido = Request.QueryString["id"].ToString();
-                    lblNroPedido.Text = "Pedido NRO. #" + nropedido;
+                    //lblNroPedido.Text = "Pedido NRO. #" + nropedido;
+                    lblNroPedido.Text = "Detalle del Pedido NRO. #" + nropedido;
 
                     //CARGAMOS LISTADO DE ARTICULOS DE PEDIDO
                     PedidoNegocio negocio = new PedidoNegocio();
@@ -42,7 +44,23 @@ namespace E_Commerce_Vista
                     repListadoArticulos.DataBind();
 
 
-                    lblPrecioTotal.Text = pedido.ImporteTotal.ToString();
+
+
+                    //lblPrecioTotal.Text = pedido.ImporteTotal.ToString();
+
+                    decimal precio = pedido.ImporteTotal;
+
+
+                    string precioFormateado = string.Format("{0:#,##0.00}", precio);
+
+
+                    lblPrecioTotal.Text = "$" + precioFormateado;
+
+
+                    /*string precio = string.Format("{0:#,##0.00}", pedido.ImporteTotal.ToString());
+
+                    lblPrecioTotal.Text = precio;
+                    lblPrecioTotal.DataBind();*/
 
 
                     //DOMICILIO
@@ -70,7 +88,30 @@ namespace E_Commerce_Vista
                     
 
                     lblEstado.Text = pedido.EstadoEnvio.ToString();
-                    
+                    txtMedioPago.Text = pedido.MedioDePago.NombrePago;
+
+                    //CODIGO DE PAGO - INGRESAR SI SE QUIERE PONER COMO "PAGADO"
+                    txtCodigoPago.Text = pedido.CodigoPago.ToString();                 
+
+
+                    //CODIGO ENVIO - SI SE QUIERE PONER COMO ENVIADO PONER CODIGO DE ENVIO
+                    txtCodigoEnvio.Text = pedido.CodigoEnvio.ToString();
+
+                    if (pedido.CodigoEnvio == 0)
+                    {   
+                        divEnvio.Visible = false;
+                    }
+                    else
+                    {
+                        
+                        txtMedioEnvio.Text = pedido.MedioDeEnvio.NombreEnvio;
+                    }
+                    if (pedido.CodigoPago == 0)
+                    {
+                        divPago.Visible = false;
+                    }
+
+
 
                 }
                 else
@@ -109,7 +150,20 @@ namespace E_Commerce_Vista
                     int cantidad = carrito.ObtenerCantidadArticulo(art.Id);
                     lblCantidad.Text = cantidad.ToString();
 
-                    lblPrecio.Text = art.Precio.ToString();
+                    //lblPrecio.Text = art.Precio.ToString();
+                    /*string precio = string.Format("{0:#,##0.00}", art.Precio.ToString());
+
+                    lblPrecio.Text = precio;
+                    lblPrecio.DataBind();*/
+                    decimal precio = art.Precio;
+
+
+                    string precioFormateado = string.Format("{0:#,##0.00}", precio);
+
+
+                    lblPrecio.Text = "$" + precioFormateado;
+
+
                 }
 
             }

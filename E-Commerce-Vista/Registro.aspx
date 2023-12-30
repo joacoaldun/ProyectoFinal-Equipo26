@@ -5,6 +5,7 @@
 
      <asp:UpdatePanel runat="server" ID="updatePanelCliente" UpdateMode="Conditional">
         <ContentTemplate>
+            <h1 class="text-center">CREE SU CUENTA</h1>
             <div class="row">
                 <div class="col-4 login">
                     <div class="mb-3 mt-3">
@@ -75,7 +76,7 @@
 
                              <label for ="txtFechaNacimiento" class="form-label">Seleccione Fecha de Nacimiento</label>
                             <asp:TextBox ID="txtFechaNacimiento" runat="server" CssClass="form-control" AutoPostBack="true" OnTextChanged="txtFechaNacimiento_TextChanged" onkeydown="return false" TextMode="Date" />
-                           <span style="font-size: 12px;">Por favor, haz clic en el calendario para seleccionar una fecha.</span>
+                           
                         </div>
 
 
@@ -109,6 +110,16 @@
         /*ESTILO VISUAL*/
        .login{
            color:white;
+       }
+       h1{
+           color:white;
+       }
+       .form-label{
+           font-size:x-large;
+       }
+       .invalid-feedback{
+           color:orange;
+           font-size:x-large;
        }
     </style>
 

@@ -41,8 +41,11 @@ namespace E_Commerce_Vista
 
                 repCarrito.DataSource = carrito.ListaArticulo;
                 repCarrito.DataBind();
-                lblPrecioTotal.Text = carrito.PrecioTotal.ToString();
+                //lblPrecioTotal.Text = carrito.PrecioTotal.ToString();
+                string precio = string.Format("{0:#,##0.00}", carrito.PrecioTotal);
 
+                lblPrecioTotal.Text = precio;
+                lblPrecioTotal.DataBind();
             }
 
         }

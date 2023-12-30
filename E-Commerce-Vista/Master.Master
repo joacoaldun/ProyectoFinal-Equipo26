@@ -114,7 +114,8 @@
                             <li class="nav-item">
                                 <a class="nav-link active" aria-current="page" href="PanelGestion.aspx">Administrar</a>
                             </li>
-                            <%}%>
+                            <%}
+%>
 
 
                             <%-- CONTACTO --%>
@@ -204,11 +205,13 @@
                         </div>
 
 
-
+                      
 
                         <asp:UpdatePanel ID="panelContador" runat="server" UpdateMode="Conditional">
                             <contenttemplate>
                                 <%-- ICONO CARRITO --%>
+
+                                <%if (Session["ClienteLogueado"] != null && Session["Admin"] == null) {  %>
                                 <div class="cart-wrapper">
                                     <a class="nav-link active" aria-current="page" href="#" onclick="desplazarCarrito(event)">
                                         <i id="iconoCarrito" class="fas fa-shopping-cart"></i>
@@ -216,9 +219,11 @@
                                         <asp:Label ID="lblTotalCantCarrito" runat="server"></asp:Label>
                                     </a>
                                 </div>
+                                <%} %>
+
                             </contenttemplate>
                         </asp:UpdatePanel>
-
+                       
 
                         <%if (MostrarCarrito == true)
                             {%>
@@ -263,15 +268,15 @@
 
                     <h3>Desarrollado por</h3>
                     <!-- Github -->
-                    <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/joacoaldun?tab=repositories" role="button">Joaquín Alduncin   <i class="fab fa-github"></i></a>
-                    <a class="btn btn-outline-light btn-floating m-1" href="https://github.com/NoeliaSouza?tab=repositories" role="button">Noelia Afonso De Souza   <i class="fab fa-github"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1 footerStyle" href="https://github.com/joacoaldun?tab=repositories" role="button">Joaquín Alduncin   <i class="fab fa-github"></i></a>
+                    <a class="btn btn-outline-light btn-floating m-1 footerStyle" href="https://github.com/NoeliaSouza?tab=repositories" role="button">Noelia Afonso De Souza   <i class="fab fa-github"></i></a>
                 </section>
                 <!-- Section: Social media -->
             </div>
             <!-- Grid container -->
 
 
-            <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+            <div class="text-center p-3 footerStyle" style="background-color: rgba(0, 0, 0, 0.2);">
                 © 2023 Copyright: Equipo 26 - Joaquín Alduncin, Noelia Afonso de Souza.
     
             </div>
@@ -496,7 +501,7 @@
 
 
         .bienvenida{
-            font-size:medium;
+            font-size:large;
             margin-right:5px;
            
         }
@@ -508,18 +513,21 @@
         body {
          
         background-image: url("https://wallpapers.com/images/featured/grey-5xvepms9fbbi0bmh.jpg");
-        /*background-image: url("https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?cs=srgb&dl=pexels-lucie-liz-3165335.jpg&fm=jpg");*/
-        /*background-image: url("https://1.bp.blogspot.com/-ImkuaBR60yY/YOmby7RgCnI/AAAAAAAAiq0/h_rhcKMhzkscvRwZWBFE5J8nQmMnieMCgCLcBGAsYHQ/s1920/GAMER-WALLPAPER-HD.png");*/
-        /*background-image: url("https://www.solofondos.com/wp-content/uploads/2016/03/gamer-girl-anime-wallpaper.jpg");*/
-        /*background-image: url("https://c4.wallpaperflare.com/wallpaper/363/13/252/valorant-killjoy-valorant-digital-art-artwork-digital-hd-wallpaper-preview.jpg");*/
-        /*background-image: url("https://t4.ftcdn.net/jpg/03/52/80/13/360_F_352801385_bQpO3gRQryOKKjy73eT5Ac8EzduFm8aE.jpg");*/
-        /*background-image: url("https://wallpaper.dog/large/14174.png");*/
+     
         background-size: cover; 
         background-repeat: no-repeat; 
         background-attachment: fixed; 
         font-family: 'Bebas Neue', sans-serif;
         font-size:large;
     }
+
+        h3{
+            font-size:xx-large;
+        }
+
+        .footerStyle{
+            font-size:x-large;
+        }
 
 </style>
 

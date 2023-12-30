@@ -10,10 +10,10 @@
     %>
     <asp:UpdatePanel runat="server" ID="updatePanelCliente" UpdateMode="Conditional">
         <ContentTemplate>
-            <h3 class="login">Lista de Clientes a gestionar</h3>
+            <h3 class="login text-center">Lista de Clientes a gestionar</h3>
 
 
-            <div class="row login">
+            <div class="row login text-center d-flex justify-content-center align-items-center">
 
                 <div class="col-2">
 
@@ -44,7 +44,7 @@
 
             <asp:GridView ID="dgvClientes" runat="server" OnSelectedIndexChanged="dgvClientes_SelectedIndexChanged" CssClass="table table-striped"
                 DataKeyNames="Id" AutoGenerateColumns="false" AllowPaging="true" PageSize="12" OnPageIndexChanging="dgvClientes_PageIndexChanging">
-
+                <HeaderStyle CssClass="thead-dark" />
                 <Columns>
                     <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                     <asp:BoundField HeaderText="Apellido" DataField="Apellido" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
@@ -54,7 +54,7 @@
                     <asp:BoundField HeaderText="Fecha de nacimiento" DataField="FechaNacimiento" DataFormatString="{0:dd/MM/yyyy}" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
 
 
-                    <asp:CommandField ShowSelectButton="true" SelectText="♦" HeaderText="Gestionar" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
+                    <asp:CommandField ShowSelectButton="true" SelectText="	&#x270D; " HeaderText="Gestionar" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
 
                 </Columns>
 
@@ -85,7 +85,7 @@
                     </div>
                 </div>
                 <div class="col-2">
-                    <
+                    
             <div class="mb-3 mt-3">
                 <asp:Label Text="Filtrar por Email" runat="server" />
                 <asp:TextBox runat="server" ID="txtFiltrarPorMailAdmin" AutoPostBack="true" OnTextChanged="txtFiltrarMail_TextChanged" CssClass="form-control" />
@@ -97,7 +97,7 @@
 
             <asp:GridView ID="dgvAdmins" runat="server" OnSelectedIndexChanged="dgvAdmins_SelectedIndexChanged" CssClass="table table-striped"
                 DataKeyNames="Id" AutoGenerateColumns="false" AllowPaging="true" PageSize="12" OnPageIndexChanging="dgvAdmins_PageIndexChanging">
-
+                <HeaderStyle CssClass="thead-dark" />
                 <Columns>
                     <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                     <asp:BoundField HeaderText="Apellido" DataField="Apellido" HeaderStyle-CssClass="text-center" ItemStyle-CssClass="text-center" />
@@ -123,6 +123,12 @@
         h3,.login{
             color:white;
         }
+        .thead-dark th {
+            background-color: black; 
+            color: white; 
+            font-weight:normal;
+        }
+
     </style>
 </asp:Content>
 

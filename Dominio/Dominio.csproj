@@ -50,6 +50,7 @@
     <Compile Include="Domicilio.cs" />
     <Compile Include="Imagen.cs" />
     <Compile Include="Marca.cs" />
+    <Compile Include="MedioEnvio.cs" />
     <Compile Include="MedioPago.cs" />
     <Compile Include="Pedido.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

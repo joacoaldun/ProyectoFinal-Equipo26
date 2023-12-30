@@ -3,9 +3,13 @@
 </asp:Content>
 
 <asp:Content ID="Content3" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
+    <style>
+        h1{
+            color:white;
+        }
+    </style>
    
-    
+    <h1 class="text-center">Gestionando usuarios</h1>
      <asp:UpdatePanel runat="server" ID="updatePanelAdmin" UpdateMode="Conditional">
         <ContentTemplate>
             <div class="row login">

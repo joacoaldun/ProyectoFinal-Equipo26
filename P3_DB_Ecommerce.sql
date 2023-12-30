@@ -753,18 +753,20 @@ END
 --
 --select * from Domicilio 
 --select * from cliente
-
+select * from pedido
+select * from MediosEnvio
 
 
 go
 alter PROCEDURE listarPedidosSP 
 as 
     select P.Id as IdPedido, E.IdEstadoPedido as IdEstadoPedido, E.EstadoEnvio as EstadoPedido,
-    P.EstadoPago as EstadoPago, P.FechaPedido as Fecha, U.Apellido as Apellido, U.Nombre as Nombre,
-    U.Id as IdCliente, U.Email as Email, C.Dni as Dni, MP.Id as IdPago, MP.Nombre as MedioPago, 
-    P.ImporteTotal as ImporteTotal, D.CodigoPostal as CodigoPostal, D.Direccion as Direccion,
-    D.NumeroDepartamento as NumeroDepartamento, L.NombreLocalidad as Localidad, Prov.NombreProvincia as 
-    Provincia from Pedido P
+    P.EstadoPago as EstadoPago, P.FechaPedido as Fecha, P.IdMedioEnvio as IdMedioEnvio, ME.Descripcion as MedioEnvio,
+    P.CodigoEnvio as CodigoEnvio, 
+    P.CodigoPago as CodigoPago, U.Apellido as Apellido, U.Nombre as Nombre, U.Id as IdCliente, U.Email as Email, C.Dni as Dni, 
+    MP.Id as IdPago, MP.Nombre as MedioPago, P.ImporteTotal as ImporteTotal, D.CodigoPostal as CodigoPostal, 
+    D.Direccion as Direccion, D.NumeroDepartamento as NumeroDepartamento, L.NombreLocalidad as Localidad, 
+    Prov.NombreProvincia as Provincia from Pedido P
     left join EstadoPedido E on E.IdEstadoPedido=P.IdEstadoPedido
     left join Cliente C on C.Id=P.IdCliente
     left join Usuarios U on U.Id=C.Id
@@ -772,6 +774,7 @@ as
     left join Domicilio D on D.Id=P.IDDomicilio
     left join Localidades L on L.IDLocalidad=D.IdLocalidad
     left join Provincias Prov on Prov.IDProvincia =L.IDProvincia
+    left join MediosEnvio ME on ME.IdMedioEnvio=P.IdMedioEnvio
     
   -- select P.Id as IdPedido, E.IdEstadoPedido as IdEstadoPedido, E.EstadoEnvio as EstadoPedido,
   --  P.EstadoPago as EstadoPago, P.FechaPedido as Fecha, U.Apellido as Apellido, U.Nombre as Nombre,
@@ -818,13 +821,18 @@ AS
 
 -----------------------------MODIFICAR PEDIDO--------------------------------
 go
-create procedure modificarPedidoSP(
+alter procedure modificarPedidoSP(
     @IdPedido int,
     @IdEstadoPedido int,
-    @EstadoPago bit
+    @EstadoPago bit,
+
+    @CodigoEnvio int,
+    @CodigoPago int,
+    @IdMedioEnvio int
 )
 AS  
-   update pedido set IdEstadoPedido=@IdEstadoPedido, EstadoPago=@EstadoPago
+   update pedido set IdEstadoPedido=@IdEstadoPedido, EstadoPago=@EstadoPago, CodigoEnvio=@CodigoEnvio,
+   CodigoPago=@CodigoPago, IdMedioEnvio=@IdMedioEnvio
     where Id=@IdPedido
 
 
@@ -849,3 +857,43 @@ add IdDomicilio INT NOT NULL foreign key references Domicilio(Id)
 --    select * from 
 
 select * from usuarios
+update usuarios set email='noesouza@outlook.es' where id=2
+select * from cliente
+select * from pedido
+
+update usuarios set pass='cliente' where id=13
+
+select * from ArticulosPedido
+
+delete from ArticulosPedido where idPedido>0
+delete from pedido where id>0
+ 
+
+
+-- MEDIOS DE ENVIO -- 
+CREATE TABLE MediosEnvio (
+    IdMedioEnvio INT PRIMARY KEY IDENTITY(1,1),
+    Descripcion VARCHAR(50)
+);
+
+-- CODIGO DE ENVIO Y DE CODIGO DE PAGO DEL PEDIDO -- 
+ALTER TABLE Pedido
+ADD CodigoPago INT NULL,
+    CodigoEnvio INT NULL;
+
+ALTER TABLE Pedido
+ADD IdMedioEnvio INT NULL,
+    CONSTRAINT FK_IdMedioEnvio FOREIGN KEY (IdMedioEnvio) REFERENCES MediosEnvio(IdMedioEnvio);
+
+-- Insertar OCA
+INSERT INTO MediosEnvio (Descripcion)
+VALUES ('OCA');
+
+-- Insertar Correo Argentino
+INSERT INTO MediosEnvio (Descripcion)
+VALUES ('Correo Argentino');
+
+select * from pedido where id=42
+
+select * from mediosEnvio
+update pedido set IdEstadoPedido=1, codigoPago=0, codigoEnvio=0, EstadoPago=0, IdMedioEnvio=1 where id=42
